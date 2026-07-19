@@ -14,7 +14,13 @@ export default function Home() {
 
   useEffect(() => {
     document.title =
-      "Kunal Jain — Creative Developer";
+      "Kunal Jain — Creative Developer | Web Developer & Brand Designer in Ahmedabad";
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta)
+      meta.setAttribute(
+        "content",
+        "Kunal Jain is a creative developer in Ahmedabad, India — designing brand identities and building fast, modern websites and digital products for founders and small businesses."
+      );
   }, []);
 
   return (

@@ -620,3 +620,18 @@ body::after {
   box-shadow: 0 10px 26px -14px rgba(108,232,236,0.35);
 }
 .btn-ghost:active { transform: translateY(0) scale(.985); }
+
+/* ── mobile polish layer ─────────────────────────────────── */
+html { -webkit-text-size-adjust: 100%; }
+@media (max-width: 560px) {
+  .btn-primary, .btn-ghost {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+  .marquee { font-size: 15px; }
+  .section-mark { letter-spacing: 0.2em; }
+}
+@media (hover: none) {
+  .bcard-tilt { transform: none !important; }  /* no dead tilt on touch */
+}

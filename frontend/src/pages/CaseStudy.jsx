@@ -14,7 +14,9 @@ export default function CaseStudy() {
 
   useEffect(() => {
     if (project) {
-      document.title = `${project.title} — Case study · Kunal Jain`;
+      document.title = `${project.title} — Case study · Kunal Jain, Creative Developer`;
+      const meta = document.querySelector('meta[name="description"]');
+      if (meta) meta.setAttribute("content", `${project.title}: ${project.summary}`);
       window.scrollTo({ top: 0, behavior: "instant" });
     }
   }, [project]);
