@@ -648,3 +648,11 @@ html, body { overflow-x: clip; }
   .kj { width: 38px; height: 38px; font-size: 13px; }
   .scroll-progress { height: 2px; }
 }
+
+/* ── mobile card: hard-centered, can never overflow ──────── */
+@media (max-width: 1023px) {
+  [data-testid="business-card-3d"] {
+    margin-inline: auto !important;
+    max-width: min(100%, 420px) !important;
+  }
+}
