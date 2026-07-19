@@ -26,7 +26,7 @@ export const Hero = () => {
       <Particles count={20} className="z-[1]" />
 
       <div className="flex-1 flex items-center relative z-[2]">
-        <div className="max-w-[1240px] mx-auto px-6 md:px-10 w-full pt-20 md:pt-24 pb-10 md:pb-14">
+        <div className="max-w-[1240px] mx-auto px-6 md:px-10 w-full pt-32 md:pt-44 pb-10 md:pb-14">
           <div className="grid grid-cols-12 gap-8 lg:gap-12 items-center">
             <div className="col-span-12 lg:col-span-7 min-w-0" ref={headlineRef}>
               <h1
@@ -78,7 +78,7 @@ export const Hero = () => {
               </div>
             </div>
 
-            <div className="col-span-12 lg:col-span-5 flex lg:justify-end min-w-0 reveal lg:-mt-4" style={{ transitionDelay: "350ms" }}>
+            <div className="col-span-12 lg:col-span-5 flex justify-center lg:justify-end min-w-0 reveal mt-2 lg:-mt-4" style={{ transitionDelay: "350ms" }}>
               <div className="w-full max-w-[340px] sm:max-w-[420px] lg:max-w-[480px] mx-auto lg:mx-0">
                 <BusinessCard />
               </div>

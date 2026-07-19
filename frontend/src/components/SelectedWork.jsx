@@ -86,13 +86,13 @@ export const SelectedWork = () => {
                     <dt className="eyebrow text-[var(--ink-muted)] mb-1">Outcome</dt>
                     <dd className="text-[13.5px] leading-[1.65] text-[var(--ink-soft)]">{p.outcome}</dd>
                   </div>
-                  <div>
+                  <div className="hidden sm:block">
                     <dt className="eyebrow text-[var(--ink-muted)] mb-1">Role · Services</dt>
                     <dd className="text-[13.5px] leading-[1.65] text-[var(--ink-soft)]">
                       {p.role} — {p.services.join(", ")}
                     </dd>
                   </div>
-                  <div>
+                  <div className="hidden sm:block">
                     <dt className="eyebrow text-[var(--ink-muted)] mb-1">Stack</dt>
                     <dd className="text-[13.5px] leading-[1.65] text-[var(--ink-soft)]">{p.stack.join(" · ")}</dd>
                   </div>

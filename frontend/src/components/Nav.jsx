@@ -15,6 +15,20 @@ export const Nav = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState("");
+  const [hidden, setHidden] = useState(false);
+
+  // mobile: tuck the nav away while scrolling down, bring it back on scroll up
+  useEffect(() => {
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y > lastY && y > 120) setHidden(true);
+      else setHidden(false);
+      lastY = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // scroll-spy: highlight the section currently in view
   useEffect(() => {
@@ -62,13 +76,13 @@ export const Nav = () => {
     <>
       <header
         data-testid="site-nav"
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${scrolled ? "py-4" : "py-8"}`}
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${scrolled ? "py-3 md:py-4" : "py-4 md:py-8"} ${hidden && !open ? "-translate-y-full md:translate-y-0" : "translate-y-0"}`}
       >
         <div className="max-w-[1240px] mx-auto px-6 md:px-10">
           <div
             className={`flex items-center justify-between transition-all duration-500 ${
               scrolled
-                ? "rounded-full px-6 py-3 bg-[rgba(5,7,15,0.55)] border border-[rgba(255,255,255,0.09)]"
+                ? "rounded-full px-4 py-2 md:px-6 md:py-3 bg-[rgba(5,7,15,0.55)] border border-[rgba(255,255,255,0.09)]"
                 : "px-0 py-1.5"
             }`}
             style={scrolled ? { boxShadow: "0 0 30px rgba(108,232,236,0.10), 0 8px 32px rgba(0,0,0,0.35)", backdropFilter: "blur(28px) saturate(1.5)", WebkitBackdropFilter: "blur(28px) saturate(1.5)" } : {}}
