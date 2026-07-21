@@ -27,7 +27,7 @@ export const Hero = () => {
 
       <div className="flex-1 flex items-center relative z-[2]">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10 w-full pt-32 md:pt-44 pb-10 md:pb-14">
-          <div className="grid grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="grid grid-cols-12 gap-6 md:gap-8 lg:gap-12 items-center">
             <div className="col-span-12 lg:col-span-7 min-w-0" ref={headlineRef}>
               <h1
                 data-testid="hero-headline"

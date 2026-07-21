@@ -276,7 +276,7 @@ body::after {
 
 .mask-line { display: block; overflow: hidden; line-height: 1.05; }
 .mask-line > span {
-    display: inline-block;
+    display: block;
     transform: translateY(110%);
     transition: transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform;
@@ -654,5 +654,20 @@ html, body { overflow-x: clip; }
   [data-testid="business-card-3d"] {
     margin-inline: auto !important;
     max-width: min(100%, 420px) !important;
+  }
+}
+
+/* ── touch device hard guards ────────────────────────────── */
+@media (hover: none) {
+  [data-magnetic],
+  [data-magnetic] [data-magnetic-target] {
+    transform: none !important;
+  }
+}
+main > section, footer, .App > section { overflow-x: clip; }
+@media (max-width: 767px) {
+  .contact-list-guard {
+    max-width: calc(100vw - 48px) !important;
+    margin-inline: auto !important;
   }
 }

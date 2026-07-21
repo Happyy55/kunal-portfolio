@@ -56,7 +56,10 @@ export const BusinessCard = () => {
         aria-hidden
         style={{
           position: "absolute",
-          inset: "-12%",
+          top: "-12%",
+          bottom: "-12%",
+          left: 0,
+          right: 0,
           background:
             "radial-gradient(50% 50% at 35% 40%, rgba(108,232,236,0.28) 0%, transparent 70%), radial-gradient(60% 50% at 70% 70%, rgba(168,121,255,0.35) 0%, transparent 70%)",
           filter: "blur(40px)",

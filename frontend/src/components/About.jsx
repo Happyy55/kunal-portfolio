@@ -6,7 +6,7 @@ export const About = () => {
       className="border-t border-[var(--rule)]"
     >
       <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-16 md:py-28">
-        <div className="grid grid-cols-12 gap-8 md:gap-16 items-start">
+        <div className="grid grid-cols-12 gap-6 md:gap-16 items-start">
           <div className="col-span-12 md:col-span-5 lg:col-span-4 min-w-0 reveal">
             <div className="section-mark mb-6">About</div>
             <figure className="relative max-w-[320px] sm:max-w-none mx-auto sm:mx-0">

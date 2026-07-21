@@ -167,7 +167,7 @@ const CaseHeroPlate = ({ project }) => {
       <div className="relative">
         <div
           aria-hidden
-          className="absolute -inset-10 pointer-events-none"
+          className="absolute -inset-y-10 inset-x-0 pointer-events-none"
           style={{
             background:
               "radial-gradient(60% 50% at 50% 50%, rgba(108,232,236,0.22) 0%, transparent 70%), radial-gradient(60% 50% at 70% 80%, rgba(168,121,255,0.22) 0%, transparent 70%)",
@@ -200,9 +200,8 @@ const CaseHeroPlate = ({ project }) => {
             <span className="absolute bottom-3 left-3 w-3 h-3 border-b border-l border-[var(--cyan)] opacity-70" />
             <span className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-[var(--cyan)] opacity-70" />
           </div>
-          <figcaption className="mt-3 eyebrow flex items-center justify-between">
+          <figcaption className="mt-3 eyebrow">
             <span>{project.kicker}</span>
-            <span className="text-[var(--ink-muted)]">Mockup · 16:9</span>
           </figcaption>
         </figure>
       </div>
@@ -217,7 +216,7 @@ const IntroSection = ({ code, eyebrow, body }) => (
     className="border-t border-[var(--rule)] relative z-10"
   >
     <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-16 md:py-32">
-      <div className="grid grid-cols-12 gap-8 reveal">
+      <div className="grid grid-cols-12 gap-6 md:gap-8 reveal">
         <div className="col-span-12 md:col-span-3">
           <div className="section-mark">{code}</div>
           <div className="font-display text-[var(--ink)] mt-3">{eyebrow}</div>
@@ -243,7 +242,7 @@ const ChallengeSection = ({ code, eyebrow, body }) => (
     className="border-t border-[var(--rule)] relative z-10"
   >
     <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-16 md:py-32">
-      <div className="grid grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-12 gap-6 md:gap-8 items-start">
         <div className="col-span-12 md:col-span-4 md:sticky md:top-28 reveal">
           <div className="section-mark">{code}</div>
           <h3 className="font-tight text-[32px] sm:text-[44px] leading-[1.06] text-[var(--ink)] mt-4 max-w-[14ch]">
@@ -290,7 +289,7 @@ const ApproachSection = ({ code, eyebrow, body }) => (
     className="border-t border-[var(--rule)] relative z-10"
   >
     <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-16 md:py-32">
-      <div className="grid grid-cols-12 gap-8 reveal">
+      <div className="grid grid-cols-12 gap-6 md:gap-8 reveal">
         <div className="col-span-12 md:col-span-3">
           <div className="section-mark">{code}</div>
           <div className="font-display text-[var(--ink)] mt-3">{eyebrow}</div>
@@ -464,7 +463,7 @@ const BuildSection = ({ code, eyebrow, body, stack }) => {
       className="border-t border-[var(--rule)] relative z-10"
     >
       <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-16 md:py-32">
-        <div className="grid grid-cols-12 gap-8 mb-14 reveal">
+        <div className="grid grid-cols-12 gap-6 md:gap-8 mb-14 reveal">
           <div className="col-span-12 md:col-span-5">
             <div className="section-mark mb-4">{code}</div>
             <h3 className="font-tight text-[32px] sm:text-[48px] lg:text-[60px] leading-[1.04] text-[var(--ink)] max-w-[16ch]">

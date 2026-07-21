@@ -57,8 +57,8 @@ export const Contact = () => {
           </a>
         </div>
 
-        <div className="mt-14 md:mt-20 grid grid-cols-12 gap-8 md:gap-6 lg:gap-12">
-          <div className="col-span-12 max-w-[820px] mx-auto w-full reveal">
+        <div className="mt-14 md:mt-20 grid grid-cols-12 gap-6 lg:gap-12">
+          <div className="contact-list-guard col-span-12 max-w-[820px] mx-auto w-full reveal">
             <div className="eyebrow mb-5 text-center">
               <span>Other ways to reach me</span>
             </div>
