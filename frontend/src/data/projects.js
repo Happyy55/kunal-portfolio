@@ -127,6 +127,45 @@ export const projects = [
         "Shopkeepers open it, add their first party, and treat it like a notebook within ten seconds — no onboarding at all. It's now in daily use, and the WhatsApp share quietly became the feature people mention first.",
     },
   },
+  {
+    slug: "attendly",
+    number: "04",
+    title: "Attendly (AttendPro)",
+    kicker: "On-device face + location attendance",
+    year: "2026",
+    summary:
+      "An attendance app that verifies who clocked in and where — entirely on-device, no photos ever leaving the phone. I took it from a prototype that recognised almost no one to a system that tells identical-looking siblings apart and enrols a bearded face in bad light.",
+    overview:
+      "Face-and-location attendance app, rebuilt around a face-recognition pipeline that actually works in real conditions.",
+    businessGoal:
+      "Attendance you can trust — proving identity and location at the moment someone clocks in, not by trusting a tapped button.",
+    role: "Design & development",
+    services: ["Mobile app development", "On-device AI", "Face-recognition pipeline", "Backend & data"],
+    stack: ["React Native", "Expo", "TypeScript", "TensorFlow Lite", "Supabase"],
+    outcome:
+      "Enrollment that used to fail silently now saves reliably across beards, glasses and dim rooms. Check-in tells apart faces that fooled it before — including siblings.",
+    image: "/images/cover_attendly.png",
+    gallery: ["/images/attendly_dashboard.png", "/images/attendly_attendance.png", "/images/attendly_reports.png"],
+    imageLabels: ["Dashboard overview", "Attendance & check-in", "Shareable reports"],
+    pull: "The same face, a slightly different background — and it said no match. That's not the user's fault. That's the system fingerprinting the wrong thing.",
+    highlights: [
+      { label: "Role", value: "Design & dev" },
+      { label: "Type", value: "Mobile attendance app" },
+      { label: "Stack", value: "RN · TFLite · Supabase" },
+    ],
+    caseStudy: {
+      introduction:
+        "Attendly confirms attendance the way a good system should — by proving identity and location at the moment someone clocks in. A single tap runs two checks: GPS confirms the person is on-site, and on-device face recognition confirms who they are. No cloud face database, no employee photos stored anywhere — the face never leaves the device as an image.",
+      challenge:
+        "The face engine was the whole product, and it barely worked. It fingerprinted the entire photo, background included, so the same person failed the moment their surroundings or lighting changed. Enrollment silently rejected ordinary faces — a beard or a dim room was enough to save nothing at all. And the match threshold was caught in an impossible squeeze: loosen it and a brother clocked in as his sibling, tighten it and the real person got turned away.",
+      approach:
+        "I rebuilt recognition around the one step the original pipeline skipped: seeing the face before judging it. The detector already knew where each face was — the code just never used it. I decoded that output to crop tightly to the face, drop the background, and fingerprint only what matters. Enrollment was rebuilt to capture a person from several angles and store each one, so a check-in matches the closest expression instead of demanding a perfect repeat. Anti-spoofing moved off enrollment and onto check-in, where it belongs.",
+      build:
+        "React Native and Expo with a typed, native development build — on-device face detection and embedding models compiled in and running fully offline. One quick photo to check in, four to enrol; nothing stored but the numbers. GPS geofencing pairs with face verification against a Supabase backend with per-company data isolation, and every rejection now surfaces the exact match score, turning 'it didn't work' into a number that could actually be tuned.",
+      outcome:
+        "The app now does the one thing attendance software has to: recognise the right person and reject the wrong one. Enrollment saves reliably across beards, glasses and dim rooms. Check-in tells apart faces that used to fool it — including siblings — while still recognising the same person across expressions and backgrounds. And because every face is processed on-device and never stored as an image, privacy isn't a promise on a page, it's how the system is built.",
+    },
+  },
 ];
 
 export function getProject(slug) {

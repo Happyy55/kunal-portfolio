@@ -26,7 +26,7 @@ export const HowIWork = () => {
     <section
       id="how"
       data-testid="how-section"
-      className="border-t border-[var(--rule)]"
+      className=""
     >
       <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-16 md:py-28">
         <div className="grid grid-cols-12 gap-6 md:gap-8 items-end mb-14 md:mb-20 reveal">

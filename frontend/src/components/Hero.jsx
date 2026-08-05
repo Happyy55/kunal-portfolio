@@ -1,11 +1,19 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, lazy, Suspense } from "react";
 import { ArrowDownRight } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useMagnetic } from "../hooks/useMagnetic";
-import BusinessCard from "./Hero3D";
+import CompileMark from "./CompileMark";
 import Particles from "./Particles";
+
+const Scene3D = lazy(() => import("./Scene3D"));
+
+gsap.registerPlugin(ScrollTrigger);
 
 export const Hero = () => {
   const headlineRef = useRef(null);
+  const sectionRef = useRef(null);
+  const compileProgress = useRef(0);
   useMagnetic("[data-magnetic]", 0.28);
 
   useEffect(() => {
@@ -17,17 +25,31 @@ export const Hero = () => {
     });
   }, []);
 
+  useEffect(() => {
+    if (!sectionRef.current) return;
+    const st = ScrollTrigger.create({
+      trigger: sectionRef.current,
+      start: "top top",
+      end: "bottom top",
+      onUpdate: (self) => {
+        compileProgress.current = self.progress;
+      },
+    });
+    return () => st.kill();
+  }, []);
+
   return (
     <section
       id="top"
+      ref={sectionRef}
       data-testid="hero-section"
       className="relative min-h-[100svh] flex flex-col"
     >
       <Particles count={20} className="z-[1]" />
 
       <div className="flex-1 flex items-center relative z-[2]">
-        <div className="max-w-[1240px] mx-auto px-6 md:px-10 w-full pt-32 md:pt-44 pb-10 md:pb-14">
-          <div className="grid grid-cols-12 gap-6 md:gap-8 lg:gap-12 items-center">
+        <div className="max-w-[1240px] mx-auto px-6 md:px-10 w-full pt-20 md:pt-24 pb-10 md:pb-14">
+          <div className="grid grid-cols-12 gap-8 lg:gap-12 items-center">
             <div className="col-span-12 lg:col-span-7 min-w-0" ref={headlineRef}>
               <h1
                 data-testid="hero-headline"
@@ -78,9 +100,14 @@ export const Hero = () => {
               </div>
             </div>
 
-            <div className="col-span-12 lg:col-span-5 flex justify-center lg:justify-end min-w-0 reveal mt-2 lg:-mt-4" style={{ transitionDelay: "350ms" }}>
-              <div className="w-full max-w-[340px] sm:max-w-[420px] lg:max-w-[480px] mx-auto lg:mx-0">
-                <BusinessCard />
+            <div className="col-span-12 lg:col-span-5 flex lg:justify-end min-w-0 reveal lg:-mt-4" style={{ transitionDelay: "350ms" }}>
+              <div className="relative w-full max-w-[340px] sm:max-w-[420px] lg:max-w-[480px] mx-auto lg:mx-0" style={{ aspectRatio: "1 / 1" }}>
+                <Suspense fallback={null}>
+                  <Scene3D progressRef={compileProgress} className="absolute inset-0 z-0" />
+                </Suspense>
+                <div className="absolute inset-0 z-10 flex items-center justify-center">
+                  <CompileMark heroRef={sectionRef} />
+                </div>
               </div>
             </div>
           </div>

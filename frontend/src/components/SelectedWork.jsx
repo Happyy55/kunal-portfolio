@@ -1,8 +1,46 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import { projects } from "../data/projects";
+import { webpSrcSet, COVER_WIDTHS } from "../lib/responsiveImage";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export const SelectedWork = () => {
+  const listRef = useRef(null);
+
+  useGSAP(
+    () => {
+      const rows = listRef.current.querySelectorAll("[data-project-row]");
+      rows.forEach((row) => {
+        const wrap = row.querySelector(".plate-img-wrap");
+        const parallax = row.querySelector("[data-project-parallax]");
+        if (!wrap || !parallax) return;
+
+        gsap.fromTo(
+          wrap,
+          { clipPath: "inset(0 0 100% 0)" },
+          {
+            clipPath: "inset(0 0 0% 0)",
+            duration: 1.1,
+            ease: "power3.out",
+            scrollTrigger: { trigger: row, start: "top 82%", toggleActions: "play none none reverse" },
+          }
+        );
+
+        gsap.fromTo(
+          parallax,
+          { yPercent: -8 },
+          { yPercent: 8, ease: "none", scrollTrigger: { trigger: row, scrub: 0.6 } }
+        );
+      });
+    },
+    { scope: listRef }
+  );
+
   return (
     <section
       id="work"
@@ -24,10 +62,11 @@ export const SelectedWork = () => {
         </div>
       </div>
 
-      <ul className="space-y-px">
+      <ul ref={listRef} className="space-y-px">
         {projects.map((p, idx) => (
           <li
             key={p.slug}
+            data-project-row
             className={`reveal border-t border-[var(--rule-strong)] ${
               idx === projects.length - 1 ? "border-b" : ""
             }`}
@@ -45,13 +84,26 @@ export const SelectedWork = () => {
                     className="plate-img-wrap"
                     style={{ aspectRatio: "4 / 3", background: "var(--bg-elev)" }}
                   >
-                    <img
-                      src={p.image}
-                      alt={`${p.title} — ${p.overview}`}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                      data-testid={`project-image-${p.slug}`}
-                    />
+                    <div
+                      data-project-parallax
+                      className="absolute inset-0"
+                      style={{ transform: "scale(1.18)" }}
+                    >
+                      <picture className="contents">
+                        <source
+                          type="image/webp"
+                          srcSet={webpSrcSet(p.image, COVER_WIDTHS)}
+                          sizes="(max-width: 767px) 100vw, 500px"
+                        />
+                        <img
+                          src={p.image}
+                          alt={`${p.title} — ${p.overview}`}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                          data-testid={`project-image-${p.slug}`}
+                        />
+                      </picture>
+                    </div>
                     <div className="grain" />
                     <div
                       className="absolute inset-0 pointer-events-none"
@@ -86,13 +138,13 @@ export const SelectedWork = () => {
                     <dt className="eyebrow text-[var(--ink-muted)] mb-1">Outcome</dt>
                     <dd className="text-[13.5px] leading-[1.65] text-[var(--ink-soft)]">{p.outcome}</dd>
                   </div>
-                  <div className="hidden sm:block">
+                  <div>
                     <dt className="eyebrow text-[var(--ink-muted)] mb-1">Role · Services</dt>
                     <dd className="text-[13.5px] leading-[1.65] text-[var(--ink-soft)]">
                       {p.role} — {p.services.join(", ")}
                     </dd>
                   </div>
-                  <div className="hidden sm:block">
+                  <div>
                     <dt className="eyebrow text-[var(--ink-muted)] mb-1">Stack</dt>
                     <dd className="text-[13.5px] leading-[1.65] text-[var(--ink-soft)]">{p.stack.join(" · ")}</dd>
                   </div>

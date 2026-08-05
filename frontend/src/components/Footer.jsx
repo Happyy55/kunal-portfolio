@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowUpRight, Mail, MessageSquare } from "lucide-react";
+import { ArrowUpRight, Mail, MessageSquare, IdCard } from "lucide-react";
 
 const NAV = [
   { href: "#work", label: "Selected work" },
@@ -36,7 +36,7 @@ export const Footer = () => {
 
       <div className="relative max-w-[1240px] mx-auto px-6 md:px-10 pt-16 md:pt-24 pb-10 md:pb-12">
         {/* —— Big closing line —— */}
-        <div className="grid grid-cols-12 gap-6 md:gap-12 items-end pb-12 md:pb-16 border-b border-[var(--rule-strong)]">
+        <div className="grid grid-cols-12 gap-8 md:gap-12 items-end pb-12 md:pb-16 border-b border-[var(--rule-strong)]">
           <div className="col-span-12 md:col-span-8">
             <h2 className="font-tight text-[34px] sm:text-[50px] lg:text-[64px] leading-[1.05] text-[var(--ink)] max-w-[20ch]">
               Every project starts with{" "}
@@ -63,11 +63,15 @@ export const Footer = () => {
               <MessageSquare size={14} strokeWidth={1.8} />
               <span>WhatsApp</span>
             </a>
+            <Link to="/card" data-testid="footer-card-cta" className="btn-ghost">
+              <IdCard size={14} strokeWidth={1.8} />
+              <span>Business card</span>
+            </Link>
           </div>
         </div>
 
         {/* —— Columns —— */}
-        <div className="grid grid-cols-12 gap-6 md:gap-10 pt-12 md:pt-16">
+        <div className="grid grid-cols-12 gap-8 md:gap-10 pt-12 md:pt-16">
           {/* Brand */}
           <div className="col-span-12 md:col-span-5">
             <div className="flex items-center gap-3">
