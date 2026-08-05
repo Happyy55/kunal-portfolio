@@ -7,6 +7,8 @@ import HowIWork from "../components/HowIWork";
 import Toolkit from "../components/Toolkit";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
+import ScrollTrace from "../components/ScrollTrace";
+import SignatureSection from "../components/SignatureSection";
 import { useReveal } from "../hooks/useReveal";
 
 export default function Home() {
@@ -14,13 +16,7 @@ export default function Home() {
 
   useEffect(() => {
     document.title =
-      "Kunal Jain — Creative Developer | Web Developer & Brand Designer in Ahmedabad";
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta)
-      meta.setAttribute(
-        "content",
-        "Kunal Jain is a creative developer in Ahmedabad, India — designing brand identities and building fast, modern websites and digital products for founders and small businesses."
-      );
+      "Kunal Jain — Creative Developer";
   }, []);
 
   return (
@@ -28,10 +24,17 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
+        <ScrollTrace />
+        <SignatureSection />
+        <ScrollTrace />
         <SelectedWork />
+        <ScrollTrace />
         <About />
+        <ScrollTrace />
         <HowIWork />
+        <ScrollTrace />
         <Toolkit />
+        <ScrollTrace />
         <Contact />
       </main>
       <Footer />

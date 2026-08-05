@@ -17,7 +17,7 @@ export const Contact = () => {
   useMagnetic("[data-magnetic-contact]", 0.18);
 
   return (
-    <section id="contact" data-testid="contact-section" className="border-t border-[var(--rule)] relative overflow-hidden">
+    <section id="contact" data-testid="contact-section" className="relative overflow-hidden">
       <div
         aria-hidden
         className="absolute pointer-events-none -top-[10%] left-[20%] w-[60%] h-[70%]"
@@ -57,7 +57,7 @@ export const Contact = () => {
           </a>
         </div>
 
-        <div className="mt-14 md:mt-20 grid grid-cols-12 gap-6 lg:gap-12">
+        <div className="mt-14 md:mt-20 grid grid-cols-12 gap-8 md:gap-6 lg:gap-12">
           <div className="contact-list-guard col-span-12 max-w-[820px] mx-auto w-full reveal">
             <div className="eyebrow mb-5 text-center">
               <span>Other ways to reach me</span>

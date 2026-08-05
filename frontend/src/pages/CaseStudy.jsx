@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import Particles from "../components/Particles";
 import { getProject, projects } from "../data/projects";
 import { useReveal } from "../hooks/useReveal";
+import { webpSrcSet, COVER_WIDTHS, WIDE_WIDTHS, PORTRAIT_WIDTHS } from "../lib/responsiveImage";
 
 export default function CaseStudy() {
   const { slug } = useParams();
@@ -14,9 +15,7 @@ export default function CaseStudy() {
 
   useEffect(() => {
     if (project) {
-      document.title = `${project.title} — Case study · Kunal Jain, Creative Developer`;
-      const meta = document.querySelector('meta[name="description"]');
-      if (meta) meta.setAttribute("content", `${project.title}: ${project.summary}`);
+      document.title = `${project.title} — Case study · Kunal Jain`;
       window.scrollTo({ top: 0, behavior: "instant" });
     }
   }, [project]);
@@ -167,7 +166,7 @@ const CaseHeroPlate = ({ project }) => {
       <div className="relative">
         <div
           aria-hidden
-          className="absolute -inset-y-10 inset-x-0 pointer-events-none"
+          className="absolute -inset-10 pointer-events-none"
           style={{
             background:
               "radial-gradient(60% 50% at 50% 50%, rgba(108,232,236,0.22) 0%, transparent 70%), radial-gradient(60% 50% at 70% 80%, rgba(168,121,255,0.22) 0%, transparent 70%)",
@@ -188,20 +187,28 @@ const CaseHeroPlate = ({ project }) => {
             }}
             data-testid="case-hero-image-wrap"
           >
-            <img
-              src={project.image}
-              alt={`${project.title} — primary plate`}
-              className="w-full h-full object-cover"
-              data-testid="case-hero-image"
-            />
+            <picture className="contents">
+              <source
+                type="image/webp"
+                srcSet={webpSrcSet(project.image, COVER_WIDTHS)}
+                sizes="(max-width: 1240px) 100vw, 1200px"
+              />
+              <img
+                src={project.image}
+                alt={`${project.title} — primary plate`}
+                className="w-full h-full object-cover"
+                data-testid="case-hero-image"
+              />
+            </picture>
             <div className="grain" />
             <span className="absolute top-3 left-3 w-3 h-3 border-t border-l border-[var(--cyan)] opacity-70" />
             <span className="absolute top-3 right-3 w-3 h-3 border-t border-r border-[var(--cyan)] opacity-70" />
             <span className="absolute bottom-3 left-3 w-3 h-3 border-b border-l border-[var(--cyan)] opacity-70" />
             <span className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-[var(--cyan)] opacity-70" />
           </div>
-          <figcaption className="mt-3 eyebrow">
+          <figcaption className="mt-3 eyebrow flex items-center justify-between">
             <span>{project.kicker}</span>
+            <span className="text-[var(--ink-muted)]">Mockup · 16:9</span>
           </figcaption>
         </figure>
       </div>
@@ -216,7 +223,7 @@ const IntroSection = ({ code, eyebrow, body }) => (
     className="border-t border-[var(--rule)] relative z-10"
   >
     <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-16 md:py-32">
-      <div className="grid grid-cols-12 gap-6 md:gap-8 reveal">
+      <div className="grid grid-cols-12 gap-8 reveal">
         <div className="col-span-12 md:col-span-3">
           <div className="section-mark">{code}</div>
           <div className="font-display text-[var(--ink)] mt-3">{eyebrow}</div>
@@ -242,7 +249,7 @@ const ChallengeSection = ({ code, eyebrow, body }) => (
     className="border-t border-[var(--rule)] relative z-10"
   >
     <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-16 md:py-32">
-      <div className="grid grid-cols-12 gap-6 md:gap-8 items-start">
+      <div className="grid grid-cols-12 gap-8 items-start">
         <div className="col-span-12 md:col-span-4 md:sticky md:top-28 reveal">
           <div className="section-mark">{code}</div>
           <h3 className="font-tight text-[32px] sm:text-[44px] leading-[1.06] text-[var(--ink)] mt-4 max-w-[14ch]">
@@ -289,7 +296,7 @@ const ApproachSection = ({ code, eyebrow, body }) => (
     className="border-t border-[var(--rule)] relative z-10"
   >
     <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-16 md:py-32">
-      <div className="grid grid-cols-12 gap-6 md:gap-8 reveal">
+      <div className="grid grid-cols-12 gap-8 reveal">
         <div className="col-span-12 md:col-span-3">
           <div className="section-mark">{code}</div>
           <div className="font-display text-[var(--ink)] mt-3">{eyebrow}</div>
@@ -373,20 +380,26 @@ const GallerySection = ({ project }) => {
           <div
             className="relative overflow-hidden rounded-[12px] border border-[var(--rule-strong)] bg-[var(--bg-elev)] mx-auto"
             style={{
-              aspectRatio: project.slug === "ledger" ? "9 / 16" : "16 / 9",
-              maxWidth: project.slug === "ledger" ? "380px" : "100%",
+              aspectRatio: ["ledger", "attendly"].includes(project.slug) ? "9 / 16" : "16 / 9",
+              maxWidth: ["ledger", "attendly"].includes(project.slug) ? "380px" : "100%",
               boxShadow: "0 60px 120px -50px rgba(0,0,0,0.85), 0 30px 80px -50px rgba(108,232,236,0.32)",
             }}
           >
             {gallery.map((src, idx) => (
-              <img
-                key={src + idx}
-                src={src}
-                alt={`${project.title} plate ${idx + 1}`}
-                loading={idx === 0 ? "eager" : "lazy"}
-                data-testid={`case-gallery-image-${idx}`}
-                className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-700 ease-out ${idx === i ? "opacity-100" : "opacity-0"}`}
-              />
+              <picture key={src + idx} className="contents">
+                <source
+                  type="image/webp"
+                  srcSet={webpSrcSet(src, ["ledger", "attendly"].includes(project.slug) ? PORTRAIT_WIDTHS : WIDE_WIDTHS)}
+                  sizes={["ledger", "attendly"].includes(project.slug) ? "(max-width: 480px) 90vw, 380px" : "(max-width: 1240px) 100vw, 1200px"}
+                />
+                <img
+                  src={src}
+                  alt={`${project.title} plate ${idx + 1}`}
+                  loading={idx === 0 ? "eager" : "lazy"}
+                  data-testid={`case-gallery-image-${idx}`}
+                  className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-700 ease-out ${idx === i ? "opacity-100" : "opacity-0"}`}
+                />
+              </picture>
             ))}
             <div className="grain pointer-events-none" />
             <span className="absolute top-3 left-3 w-3 h-3 border-t border-l border-[var(--cyan)] opacity-70" />
@@ -463,7 +476,7 @@ const BuildSection = ({ code, eyebrow, body, stack }) => {
       className="border-t border-[var(--rule)] relative z-10"
     >
       <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-16 md:py-32">
-        <div className="grid grid-cols-12 gap-6 md:gap-8 mb-14 reveal">
+        <div className="grid grid-cols-12 gap-8 mb-14 reveal">
           <div className="col-span-12 md:col-span-5">
             <div className="section-mark mb-4">{code}</div>
             <h3 className="font-tight text-[32px] sm:text-[48px] lg:text-[60px] leading-[1.04] text-[var(--ink)] max-w-[16ch]">

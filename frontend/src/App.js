@@ -1,19 +1,26 @@
 import "@/App.css";
+import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import CaseStudy from "./pages/CaseStudy";
 import AmbientCursor from "./components/AmbientCursor";
+import PageLoader from "./components/PageLoader";
 import { Toaster } from "sonner";
+
+const Home = lazy(() => import("./pages/Home"));
+const CaseStudy = lazy(() => import("./pages/CaseStudy"));
+const Card = lazy(() => import("./pages/Card"));
 
 function App() {
   return (
     <div className="App">
       <AmbientCursor />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/work/:slug" element={<CaseStudy />} />
-        </Routes>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/work/:slug" element={<CaseStudy />} />
+            <Route path="/card" element={<Card />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
       <Toaster
         theme="dark"
