@@ -8,6 +8,7 @@ import Toolkit from "../components/Toolkit";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import ScrollTrace from "../components/ScrollTrace";
+import SignatureSection from "../components/SignatureSection";
 import { useReveal } from "../hooks/useReveal";
 
 export default function Home() {
@@ -23,6 +24,8 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
+        <ScrollTrace />
+        <SignatureSection />
         <ScrollTrace />
         <SelectedWork />
         <ScrollTrace />
