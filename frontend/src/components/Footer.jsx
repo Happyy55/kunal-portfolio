@@ -10,7 +10,7 @@ const NAV = [
 ];
 
 const SOCIAL = [
-  { label: "LinkedIn", href: "https://www.linkedin.com/" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/kunaljain" },
   { label: "Email", href: "mailto:kunalsethia73800@gmail.com" },
   { label: "WhatsApp", href: "https://wa.me/916353633045" },
 ];
@@ -39,34 +39,44 @@ export const Footer = () => {
         <div className="grid grid-cols-12 gap-8 md:gap-12 items-end pb-12 md:pb-16 border-b border-[var(--rule-strong)]">
           <div className="col-span-12 md:col-span-8">
             <h2 className="font-tight text-[34px] sm:text-[50px] lg:text-[64px] leading-[1.05] text-[var(--ink)] max-w-[20ch]">
-              Every project starts with{" "}
-              <em className="font-italic text-[var(--cyan)]">a conversation.</em>
+              You bring the idea.{" "}
+              <em className="font-italic text-[var(--cyan)]">I'll make sure it survives the build.</em>
             </h2>
+            <p className="mt-4 text-[14px] md:text-[15px] leading-[1.85] text-[var(--ink-soft)] max-w-[46ch]">
+              If that's the kind of build you want, email is the fastest way
+              to actually start one.
+            </p>
           </div>
-          <div className="col-span-12 md:col-span-4 flex flex-wrap items-center gap-3 md:justify-end">
+          <div className="col-span-12 md:col-span-4 flex flex-col items-start md:items-end gap-4">
             <a
               href="mailto:kunalsethia73800@gmail.com"
               data-testid="footer-email-cta"
-              className="btn-primary text-[14px]"
+              className="btn-primary text-[14.5px] py-[16px] px-[24px]"
             >
-              <Mail size={14} strokeWidth={1.8} />
+              <Mail size={15} strokeWidth={1.8} />
               <span>Send an email</span>
               <span className="arrow-dot" />
             </a>
-            <a
-              href="https://wa.me/916353633045"
-              target="_blank"
-              rel="noreferrer"
-              data-testid="footer-whatsapp-cta"
-              className="btn-ghost"
-            >
-              <MessageSquare size={14} strokeWidth={1.8} />
-              <span>WhatsApp</span>
-            </a>
-            <Link to="/card" data-testid="footer-card-cta" className="btn-ghost">
-              <IdCard size={14} strokeWidth={1.8} />
-              <span>Business card</span>
-            </Link>
+            <div className="flex items-center gap-5">
+              <a
+                href="https://wa.me/916353633045"
+                target="_blank"
+                rel="noreferrer"
+                data-testid="footer-whatsapp-cta"
+                className="inline-flex items-center gap-1.5 text-[13.5px] font-display text-[var(--ink-soft)] hover:text-[var(--cyan)] transition-colors duration-300"
+              >
+                <MessageSquare size={13} strokeWidth={1.8} />
+                <span>WhatsApp</span>
+              </a>
+              <Link
+                to="/card"
+                data-testid="footer-card-cta"
+                className="inline-flex items-center gap-1.5 text-[13.5px] font-display text-[var(--ink-soft)] hover:text-[var(--cyan)] transition-colors duration-300"
+              >
+                <IdCard size={13} strokeWidth={1.8} />
+                <span>Business card</span>
+              </Link>
+            </div>
           </div>
         </div>
 

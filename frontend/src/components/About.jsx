@@ -1,3 +1,5 @@
+import { ImageOff } from "lucide-react";
+
 export const About = () => {
   return (
     <section
@@ -8,28 +10,36 @@ export const About = () => {
       <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-16 md:py-28">
         <div className="grid grid-cols-12 gap-8 md:gap-16 items-start">
           <div className="col-span-12 md:col-span-5 lg:col-span-4 min-w-0 reveal">
-            <div className="section-mark mb-6">About</div>
+            <div className="section-mark mb-6">The Beginning</div>
             <figure className="relative max-w-[320px] sm:max-w-none mx-auto sm:mx-0">
               <div
-                className="relative overflow-hidden rounded-[10px] border border-[var(--rule-strong)]"
+                className="relative overflow-hidden rounded-[10px] border border-[var(--rule-strong)] flex items-center justify-center"
                 style={{
                   aspectRatio: "4 / 5",
+                  background: "linear-gradient(140deg, rgba(108, 232, 236, 0.14) 0%, rgba(168, 121, 255, 0.10) 100%)",
                   boxShadow:
                     "0 50px 100px -50px rgba(0,0,0,0.8), 0 30px 60px -30px rgba(108,232,236,0.18)",
                 }}
               >
-                <img
-                  src="https://customer-assets.emergentagent.com/job_magazine-dev/artifacts/mlpz2bq4_WhatsApp%20Image%202026-05-07%20at%201.09.19%20PM.jpeg"
-                  alt="Portrait — Kunal Jain"
+                {/* Placeholder — swap for a real portrait when ready. Deliberately not a
+                    stock photo or a hotlinked URL (the previous version pointed at a
+                    third-party artifact link, which is exactly the kind of thing that
+                    breaks silently). This keeps the slot honest until there's a real one. */}
+                <span
                   data-testid="about-portrait"
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
+                  aria-label="Portrait placeholder — image not yet uploaded"
+                  className="flex flex-col items-center gap-3 text-[var(--ink-muted)]"
+                >
+                  <ImageOff size={40} strokeWidth={1.3} />
+                </span>
                 <div className="grain" />
                 <div
                   className="absolute inset-0 pointer-events-none"
                   style={{ background: "linear-gradient(180deg, transparent 60%, rgba(5,7,15,0.85) 100%)" }}
                 />
+                <span className="absolute bottom-4 left-1/2 -translate-x-1/2 font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--ink-muted)]">
+                  photo · pending
+                </span>
               </div>
             </figure>
           </div>

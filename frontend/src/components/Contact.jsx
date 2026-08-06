@@ -1,5 +1,11 @@
-import { Mail, MessageSquare } from "lucide-react";
+import { useRef } from "react";
+import { Mail, MessageSquare, ArrowUpRight } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import { useMagnetic } from "../hooks/useMagnetic";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const EMAIL = "kunalsethia73800@gmail.com";
 const PHONE = "+91 63536 33045";
@@ -9,12 +15,33 @@ const WHATSAPP_URL = `https://wa.me/916353633045?text=${encodeURIComponent("Hi K
 const LINES = [
   { label: "WhatsApp", value: PHONE, href: WHATSAPP_URL, testid: "contact-whatsapp", external: true },
   { label: "Phone", value: PHONE, href: `tel:${PHONE_TEL}`, testid: "contact-phone" },
-  { label: "LinkedIn", value: "linkedin.com/in/kunaljain", href: "https://www.linkedin.com/", testid: "social-linkedin", external: true },
+  { label: "LinkedIn", value: "linkedin.com/in/kunaljain", href: "https://www.linkedin.com/in/kunaljain", testid: "social-linkedin", external: true },
   { label: "Email", value: EMAIL, href: `mailto:${EMAIL}`, testid: "social-email" },
 ];
 
 export const Contact = () => {
+  const listRef = useRef(null);
   useMagnetic("[data-magnetic-contact]", 0.18);
+
+  useGSAP(
+    () => {
+      const rows = listRef.current?.querySelectorAll("li");
+      if (!rows?.length) return;
+      gsap.fromTo(
+        rows,
+        { opacity: 0, x: -16 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.5,
+          stagger: 0.08,
+          ease: "power2.out",
+          scrollTrigger: { trigger: listRef.current, start: "top 85%", toggleActions: "play none none reverse" },
+        }
+      );
+    },
+    { scope: listRef }
+  );
 
   return (
     <section id="contact" data-testid="contact-section" className="relative overflow-hidden">
@@ -30,16 +57,16 @@ export const Contact = () => {
 
       <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-16 md:py-28 relative">
         <div className="reveal text-center">
-          <div className="section-mark mb-6 md:mb-8 justify-center">Contact</div>
+          <div className="section-mark mb-6 md:mb-8 justify-center">Let's Create</div>
           <h2 className="font-tight text-[36px] sm:text-[54px] lg:text-[72px] leading-[1.04] text-[var(--ink)] max-w-[16ch] mx-auto">
-            Have a project{" "}
-            <em className="font-italic text-[var(--cyan)]">in mind?</em>
+            Got something{" "}
+            <em className="font-italic text-[var(--cyan)]">worth building?</em>
           </h2>
           <p className="mt-6 md:mt-8 text-[15px] md:text-[16.5px] leading-[1.85] text-[var(--ink)] max-w-[46ch] mx-auto">
-            Let's create something exceptional together.
+            You bring the idea, and I'll make sure it survives the build.
           </p>
           <p className="mt-3 text-[14px] md:text-[15px] leading-[1.85] text-[var(--ink-soft)] max-w-[54ch] mx-auto">
-            Email or WhatsApp — whichever feels right. I read every message and reply within a day.
+            Email or WhatsApp, whichever's faster for you. I read everything, and reply within a day.
           </p>
         </div>
 
@@ -58,11 +85,11 @@ export const Contact = () => {
         </div>
 
         <div className="mt-14 md:mt-20 grid grid-cols-12 gap-8 md:gap-6 lg:gap-12">
-          <div className="contact-list-guard col-span-12 max-w-[820px] mx-auto w-full reveal">
+          <div className="contact-list-guard col-span-12 max-w-[820px] mx-auto w-full">
             <div className="eyebrow mb-5 text-center">
               <span>Other ways to reach me</span>
             </div>
-            <ul className="border-t border-[var(--rule-strong)]">
+            <ul className="border-t border-[var(--rule-strong)]" ref={listRef}>
               {LINES.map((row) => (
                 <li key={row.label} className="border-b border-[var(--rule-strong)]">
                   <a
@@ -73,7 +100,14 @@ export const Contact = () => {
                     className="group flex items-baseline justify-between gap-6 py-6 transition-colors hover:text-[var(--cyan)]"
                   >
                     <span className="font-display text-[15px] text-[var(--ink-soft)] group-hover:text-[var(--cyan)] transition-colors">{row.label}</span>
-                    <span className="font-display text-[15px] sm:text-[17px] text-[var(--ink)] group-hover:text-[var(--cyan)] transition-colors text-right break-all">{row.value}</span>
+                    <span className="inline-flex items-baseline gap-2">
+                      <span className="font-display text-[15px] sm:text-[17px] text-[var(--ink)] group-hover:text-[var(--cyan)] transition-colors text-right break-all">{row.value}</span>
+                      <ArrowUpRight
+                        size={14}
+                        strokeWidth={1.8}
+                        className="text-[var(--cyan)] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
+                      />
+                    </span>
                   </a>
                 </li>
               ))}

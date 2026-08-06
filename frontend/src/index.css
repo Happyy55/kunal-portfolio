@@ -17,7 +17,7 @@
     /* ink */
     --ink: #f3eee5;
     --ink-soft: #a4a6b3;
-    --ink-muted: #6e7180;
+    --ink-muted: #7d808f;
     --ink-faint: #3c3e4a;
 
     /* rules */
@@ -149,6 +149,22 @@ body::after {
 
 ::selection { background: var(--cyan); color: var(--bg); }
 
+/* Focus states — the site had none; keyboard users were relying on the
+   browser's unstyled default outline, which reads badly against rounded
+   pills and dark surfaces. This mirrors the cyan glow already used for
+   hover/active states elsewhere, so it feels like part of the design
+   rather than a bolted-on accessibility patch. */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 3px;
+    border-radius: 4px;
+    box-shadow: 0 0 0 4px var(--cyan-glow);
+}
+
 /* Shadcn tokens */
 @layer base {
     :root {
@@ -268,8 +284,8 @@ body::after {
 .reveal {
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 1100ms cubic-bezier(0.22, 1, 0.36, 1),
-                transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: opacity 650ms cubic-bezier(0.22, 1, 0.36, 1),
+                transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
     will-change: opacity, transform;
 }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
@@ -278,7 +294,7 @@ body::after {
 .mask-line > span {
     display: inline-block;
     transform: translateY(110%);
-    transition: transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform;
 }
 .mask-line.is-visible > span { transform: translateY(0); }
