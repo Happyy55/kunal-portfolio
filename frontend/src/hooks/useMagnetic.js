@@ -7,9 +7,6 @@ import { useEffect } from "react";
  */
 export function useMagnetic(selector = "[data-magnetic]", strength = 0.35) {
   useEffect(() => {
-    // Touch devices get stray pointermove events that permanently shift
-    // the buttons — disable the effect entirely without a fine pointer.
-    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     const els = document.querySelectorAll(selector);
     const handlers = [];
 

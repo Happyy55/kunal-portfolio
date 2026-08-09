@@ -4,9 +4,10 @@
 
 /* Kunal Jain — independent developer · iteration 5
    Cyan-led holographic atmosphere · midnight base · gold as small accent only.
+   Fonts are loaded once, via the <link> in public/index.html (includes Syne) —
+   do not re-add an @import here, it duplicated every family and blocked
+   CSS parsing until Google Fonts responded twice.
 */
-
-@import url("https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap");
 
 :root {
     /* surface — midnight, not pure black */
@@ -47,6 +48,19 @@
     --live: #62e3a5;
     --live-glow: rgba(98, 227, 165, 0.45);
 }
+
+/* ── Type scale (reference, not enforced) ─────────────────────
+   Section headings across the site converge on these three tiers.
+   New sections should pick one of these rather than inventing a
+   fourth arbitrary bracket value:
+
+   Display  (Hero h1 only)     40px → 56px → 64/70px → 76/80px   font-tight, leading-[1.02–1.05]
+   Section  (h2 per section)   32px → 44/46px → 54/56px          font-tight, leading-[1.04–1.06]
+   Sub      (section-mark)     11–12px mono, tracking-[0.16–0.24em], uppercase — "eyebrow"/"section-mark" classes
+   Body     (paragraph copy)   14–15px → 15–17px                 leading-[1.75–1.9]
+
+   All four scale up at the same sm/md/lg breakpoints already used
+   throughout (Hero, About, HowIWork, Toolkit, Contact). */
 
 html {
     scroll-behavior: smooth;
@@ -143,9 +157,24 @@ body::after {
 /* —— Typography —— */
 .font-display { font-family: "Geist", sans-serif; font-weight: 500; letter-spacing: -0.03em; }
 .font-tight   { font-family: "Geist", sans-serif; font-weight: 500; letter-spacing: -0.04em; }
-.font-serif   { font-family: "Instrument Serif", serif; font-weight: 400; letter-spacing: -0.005em; }
 .font-italic  { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; letter-spacing: -0.005em; }
 .font-mono    { font-family: "JetBrains Mono", ui-monospace, monospace; }
+.font-hero    { font-family: "Syne", "Geist", sans-serif; font-weight: 800; letter-spacing: -0.02em; }
+
+.hero-word-highlight {
+    color: var(--cyan);
+    text-shadow: 0 0 30px var(--cyan-glow);
+}
+.hero-underline {
+    position: absolute;
+    left: -2%;
+    right: -2%;
+    bottom: -0.14em;
+    width: 104%;
+    height: 0.22em;
+    overflow: visible;
+    pointer-events: none;
+}
 
 ::selection { background: var(--cyan); color: var(--bg); }
 
@@ -223,8 +252,6 @@ textarea:focus-visible {
     box-shadow: 0 0 10px var(--cyan-glow);
 }
 
-.hairline { height: 1px; background: var(--rule); width: 100%; }
-
 /* Live indicator — keeps green */
 .live-pill {
     display: inline-flex;
@@ -271,15 +298,6 @@ textarea:focus-visible {
 }
 .link:hover::after { transform: scaleX(1); }
 
-.link-accent {
-    color: var(--cyan);
-    text-decoration: none;
-    padding-bottom: 2px;
-    border-bottom: 1px solid rgba(108, 232, 236, 0.45);
-    transition: all 240ms ease;
-}
-.link-accent:hover { border-bottom-color: var(--cyan); color: #b8f3f6; text-shadow: 0 0 14px var(--cyan-glow); }
-
 /* Reveal */
 .reveal {
     opacity: 0;
@@ -289,15 +307,6 @@ textarea:focus-visible {
     will-change: opacity, transform;
 }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
-
-.mask-line { display: block; overflow: hidden; line-height: 1.05; }
-.mask-line > span {
-    display: inline-block;
-    transform: translateY(110%);
-    transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: transform;
-}
-.mask-line.is-visible > span { transform: translateY(0); }
 
 /* KJ monogram — cyan-led */
 .kj {
@@ -468,13 +477,18 @@ textarea:focus-visible {
     overflow: hidden;
     transition: border-color 420ms ease, transform 600ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 600ms ease;
 }
+.holo-card {
+    --card-accent: var(--cyan);
+    --card-accent-soft: rgba(108, 232, 236, 0.35);
+    --card-accent-glow: var(--cyan-glow);
+}
 .holo-card::before {
     content: "";
     position: absolute;
     inset: 0;
     border-radius: 14px;
     padding: 1px;
-    background: linear-gradient(140deg, rgba(108, 232, 236, 0.55) 0%, rgba(168, 121, 255, 0.25) 50%, transparent 70%, rgba(108, 232, 236, 0.35) 100%);
+    background: linear-gradient(140deg, var(--card-accent-glow) 0%, var(--card-accent-soft) 50%, transparent 70%, var(--card-accent-glow) 100%);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
             mask-composite: exclude;
@@ -482,15 +496,25 @@ textarea:focus-visible {
     transition: opacity 420ms ease;
     pointer-events: none;
 }
+.holo-card::after {
+    content: "";
+    position: absolute;
+    inset: -30%;
+    background: radial-gradient(360px 260px at 15% 0%, var(--card-accent-glow), transparent 68%);
+    opacity: 0;
+    transition: opacity 420ms ease;
+    pointer-events: none;
+}
 .holo-card:hover::before { opacity: 1; }
+.holo-card:hover::after { opacity: 0.85; }
 .holo-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 40px 80px -40px rgba(108, 232, 236, 0.32), 0 30px 60px -40px rgba(168, 121, 255, 0.24);
+    box-shadow: 0 40px 80px -40px var(--card-accent-glow), 0 30px 60px -40px var(--card-accent-soft);
 }
 .holo-card .scanner {
     position: absolute; left: -30%; right: -30%; top: 0; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(108, 232, 236, 0.9), transparent);
-    box-shadow: 0 0 16px rgba(108, 232, 236, 0.65);
+    background: linear-gradient(90deg, transparent, var(--card-accent), transparent);
+    box-shadow: 0 0 16px var(--card-accent-glow);
     transform: translateY(0);
     opacity: 0;
     transition: opacity 320ms ease;
@@ -504,8 +528,64 @@ textarea:focus-visible {
     100% { transform: translateY(360px); }
 }
 
-/* Capsule */
-.cap {
+/* Connect panel — glass card housing the contact-channel icons */
+.connect-panel {
+    position: relative;
+    border-radius: 24px;
+    padding: 40px 28px 36px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid var(--rule-strong);
+    backdrop-filter: blur(28px) saturate(110%);
+    -webkit-backdrop-filter: blur(28px) saturate(110%);
+    overflow: hidden;
+    box-shadow:
+        0 0 90px -20px var(--cyan-glow),
+        0 0 140px -30px var(--violet-glow),
+        0 30px 60px -30px rgba(0, 0, 0, 0.6);
+}
+.connect-panel-glow {
+    position: absolute;
+    inset: -30%;
+    background: radial-gradient(520px 320px at 50% 0%, var(--cyan-glow), transparent 60%),
+                radial-gradient(460px 360px at 50% 100%, var(--violet-glow), transparent 60%);
+    opacity: 0.8;
+    filter: blur(10px);
+    pointer-events: none;
+}
+.connect-icon-link { outline-offset: 6px; }
+.connect-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--rule-strong);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--ink-soft);
+    transition: color 320ms ease, border-color 320ms ease, background 320ms ease, box-shadow 320ms ease, transform 320ms ease;
+}
+.connect-icon-link:hover .connect-icon,
+.connect-icon-link:focus-visible .connect-icon {
+    color: var(--bg);
+    background: var(--connect-accent);
+    border-color: var(--connect-accent);
+    box-shadow: 0 0 24px -2px var(--connect-accent);
+    transform: translateY(-3px);
+}
+
+/* Hero proof-point marquee — continuous scroll with faded edges */
+.hero-marquee-mask {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+/* Shared chip — replaces the old .cap / .capability-pill duplicates.
+   Accent color comes in via --chip-accent / --chip-accent-glow (see
+   components/ui/Chip.jsx); glow only appears on hover — resting state
+   stays quiet on purpose. */
+.ui-chip {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -515,21 +595,21 @@ textarea:focus-visible {
     border-radius: 999px;
     font-family: "Geist", sans-serif;
     font-size: 13px;
-    color: var(--ink);
-    transition: all 280ms ease;
+    color: var(--ink-soft);
+    transition: border-color 280ms ease, color 280ms ease, box-shadow 280ms ease, transform 280ms ease;
     backdrop-filter: blur(8px);
 }
-.cap:hover {
-    border-color: rgba(108, 232, 236, 0.6);
-    color: var(--cyan);
-    box-shadow: 0 0 18px rgba(108, 232, 236, 0.28);
+.ui-chip:hover {
+    border-color: var(--chip-accent, var(--cyan));
+    color: var(--ink);
+    box-shadow: 0 0 18px -4px var(--chip-accent-glow, var(--cyan-glow));
+    transform: translateY(-1px);
 }
-.cap .cap-dot {
+.ui-chip-dot {
     width: 4px; height: 4px; border-radius: 50%;
-    background: var(--cyan);
-    box-shadow: 0 0 6px var(--cyan);
+    background: var(--chip-accent, var(--cyan));
+    box-shadow: 0 0 6px var(--chip-accent-glow, var(--cyan-glow));
 }
-.cap:hover .cap-dot { box-shadow: 0 0 10px var(--cyan); }
 
 /* Particles */
 .particles {
@@ -556,6 +636,28 @@ textarea:focus-visible {
     background: #ffffff;
     box-shadow: 0 0 8px rgba(255, 255, 255, 0.55);
 }
+.twinkle-star {
+    position: absolute;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 6px 1px rgba(255, 255, 255, 0.8);
+    animation: twinkle-star 3.2s ease-in-out infinite;
+}
+/* Depth: every third star reads as "closer" — bigger, brighter, slower drift. */
+.twinkle-star:nth-child(3n) {
+    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.9);
+    transform: scale(1.4);
+}
+/* Every fifth star reads as "farther" — dimmer, quicker flicker. */
+.twinkle-star:nth-child(5n) {
+    box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.5);
+    opacity: 0.6;
+}
+@keyframes twinkle-star {
+    0%, 100% { opacity: 0; transform: scale(0.6); }
+    50%      { opacity: 1; transform: scale(1.15); }
+}
+
 @keyframes drift {
     0%   { transform: translate3d(0, 0, 0); opacity: 0; }
     10%  { opacity: 0.7; }
@@ -563,35 +665,11 @@ textarea:focus-visible {
     100% { transform: translate3d(20px, -120px, 0); opacity: 0; }
 }
 
-/* 3D Business card flip */
-.bcard-stage {
-    perspective: 1800px;
-    width: 100%;
-    aspect-ratio: 1.62 / 1;
-}
-.bcard {
-    position: relative;
-    width: 100%; height: 100%;
-    transform-style: preserve-3d;
-    transition: transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: transform;
-}
-.bcard-stage:hover .bcard { transform: rotateY(180deg); }
-.bcard .face {
-    position: absolute;
-    inset: 0;
-    border-radius: 14px;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    overflow: hidden;
-}
-.bcard .face.back { transform: rotateY(180deg); }
-
 /* Marquee */
 .marquee {
     display: flex;
     gap: 4rem;
-    animation: marquee 42s linear infinite;
+    animation: marquee 68s linear infinite;
     width: max-content;
 }
 @keyframes marquee {
@@ -614,14 +692,257 @@ textarea:focus-visible {
 /* Reduce motion */
 @media (prefers-reduced-motion: reduce) {
     .reveal { opacity: 1; transform: none; transition: none; }
-    .mask-line > span { transform: none; }
     .live-pill .dot, body::before, .marquee, .particles span { animation: none; }
-    .plate-wrap:hover .plate, .bcard-stage:hover .bcard { transform: none; }
+    .plate-wrap:hover .plate { transform: none; }
     html { scroll-behavior: auto; }
 }
 
 /* ── refinement layer ─────────────────────────────────────── */
 .kj { width: 42px; height: 42px; font-size: 14.5px; }
+
+/* Hero headline: stagger the lines off a straight left edge, and let
+   each line nudge toward the cyan accent on hover for a bit of life. */
+.hero-line {
+  display: inline-block;
+  transition: transform .4s cubic-bezier(.2,.7,.2,1), color .3s;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.hero-line-1 { margin-left: 0; }
+.hero-line-2 { margin-left: clamp(0px, 4vw, 56px); }
+.hero-line-3 { margin-left: 0; }
+.hero-line:hover { transform: translateX(6px); color: var(--cyan); }
+@media (max-width: 640px) {
+  .hero-line-2, .hero-line-3 { margin-left: 0; }
+}
+
+/* Slight per-line tilt for a hand-set, poster-typography feel. */
+.hero-line-tilt-1 { display: block; transform: rotate(-1.1deg); }
+.hero-line-tilt-2 { display: block; transform: rotate(0.8deg); }
+.hero-line-tilt-3 { display: block; transform: rotate(-0.5deg); }
+@media (max-width: 640px) {
+  .hero-line-tilt-1, .hero-line-tilt-2, .hero-line-tilt-3 { transform: none; }
+}
+
+/* Larger hero-only CTA variant, layered on top of the site-wide .btn-primary/.btn-ghost. */
+.btn-hero-lg { padding: 21px 32px; font-size: 16px; }
+
+/* A soft light beam that sweeps across the hero every ~13s. */
+.hero-light-sweep {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+.hero-light-sweep::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: -30%;
+  width: 22%;
+  background: linear-gradient(100deg, transparent 0%, rgba(108, 232, 236, 0.10) 45%, rgba(168, 121, 255, 0.14) 55%, transparent 100%);
+  transform: skewX(-14deg);
+  animation: hero-sweep 13s ease-in-out infinite;
+}
+@keyframes hero-sweep {
+  0%   { left: -30%; opacity: 0; }
+  8%   { opacity: 1; }
+  22%  { opacity: 1; }
+  30%  { left: 130%; opacity: 0; }
+  100% { left: 130%; opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-light-sweep::after { animation: none; display: none; }
+}
+
+/* ── Footer glow wordmark ─────────────────────────────────────── */
+.footer-glow-wordmark {
+  position: relative;
+}
+.footer-glow-line {
+  position: relative;
+  text-align: center;
+  line-height: 0.98;
+  font-family: "Geist", sans-serif;
+  font-weight: 800;
+  font-size: clamp(40px, 9vw, 130px);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  cursor: default;
+}
+.footer-glow-base,
+.footer-glow-shine {
+  display: block;
+}
+.footer-glow-base {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--rule-strong);
+}
+.footer-glow-shine {
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  -webkit-text-stroke: 1.5px transparent;
+  background: linear-gradient(90deg, var(--cyan) 0%, var(--violet) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.footer-glow-line.is-active .footer-glow-shine {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer-glow-shine { display: none; }
+}
+
+/* ── Capabilities section: glass cards + cube stage ──────────── */
+.capability-card {
+  position: relative;
+  border-radius: 28px;
+  padding: 28px 26px;
+  background: linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
+  border: 1px solid var(--rule);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  overflow: hidden;
+  transition: border-color .35s ease, box-shadow .35s ease;
+  cursor: default;
+}
+.capability-card:hover {
+  border-color: var(--rule-strong);
+  box-shadow: 0 24px 60px -24px rgba(0,0,0,0.55);
+}
+.capability-card-glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .4s ease;
+  pointer-events: none;
+}
+.capability-card:hover .capability-card-glow { opacity: 1; }
+.capability-card-number {
+  position: absolute;
+  top: 20px;
+  right: 22px;
+  font-family: "Geist Mono", monospace;
+  font-size: 12px;
+  letter-spacing: .05em;
+  opacity: 0.8;
+}
+.capability-card-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+.capability-card-title {
+  font-family: "Geist", sans-serif;
+  font-weight: 600;
+  font-size: 19px;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.capability-card-desc {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+.capability-stage-glow {
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(600px 500px at 50% 20%, var(--violet-glow), transparent 60%);
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* —— How I Build: numbered timeline cards —— */
+.how-num-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ink-faint);
+  box-shadow: none;
+  transition: background .35s ease, box-shadow .35s ease;
+}
+.how-row:hover .how-num-dot {
+  background: var(--accent-color);
+  box-shadow: 0 0 14px var(--accent-glow);
+}
+.how-num {
+  color: var(--ink-muted);
+  text-shadow: none;
+  transition: color .35s ease, text-shadow .35s ease;
+}
+.how-row:hover .how-num {
+  color: var(--accent-color);
+  text-shadow: 0 0 14px var(--accent-glow);
+}
+.how-item-card {
+  position: relative;
+  border-radius: 20px;
+  border: 1px solid var(--rule-strong);
+  background: linear-gradient(160deg, rgba(255,255,255,0.03), rgba(255,255,255,0.008));
+  transition: border-color .35s ease, transform .35s ease, box-shadow .35s ease;
+}
+.how-row:hover .how-item-card {
+  border-color: var(--accent-color);
+  transform: translateY(-3px);
+  box-shadow: 0 28px 60px -32px rgba(0,0,0,0.6), 0 0 40px -20px var(--accent-glow);
+}
+.how-icon-badge {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--accent-color);
+  background: rgba(255,255,255,0.03);
+  color: var(--accent-color);
+  box-shadow: 0 0 20px -8px var(--accent-glow);
+  transition: transform .35s cubic-bezier(.2,.7,.2,1);
+}
+.how-row:hover .how-icon-badge { transform: translateY(-2px) rotate(-4deg); }
+.how-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 1px solid var(--accent-color);
+  color: var(--accent-color);
+}
+.how-arrow-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--rule-strong);
+  color: var(--ink-muted);
+  transition: transform .35s cubic-bezier(.2,.7,.2,1), border-color .35s ease, color .35s ease, box-shadow .35s ease;
+}
+.how-row:hover .how-arrow-btn {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  box-shadow: 0 0 20px -6px var(--accent-glow);
+  transform: translate(3px, -3px);
+}
 .btn-primary,
 .btn-ghost {
   transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s cubic-bezier(.2,.7,.2,1), background .35s, color .35s, border-color .35s;

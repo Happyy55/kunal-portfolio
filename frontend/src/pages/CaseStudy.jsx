@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
-import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, Users, Layers3, Code2 } from "lucide-react";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
-import Particles from "../components/Particles";
+import CapabilityCard from "../components/CapabilityCard";
+import { Chip } from "../components/ui/Chip";
 import { getProject, projects } from "../data/projects";
 import { useReveal } from "../hooks/useReveal";
 import { webpSrcSet, COVER_WIDTHS, WIDE_WIDTHS, PORTRAIT_WIDTHS } from "../lib/responsiveImage";
@@ -44,37 +45,23 @@ export default function CaseStudy() {
       <div className="scroll-progress" aria-hidden />
       <Nav />
       <main className="relative">
-        <Particles count={18} className="!fixed inset-0 z-[0] pointer-events-none" />
-
         {/* —— HEADER —— */}
         <CaseHeader project={project} />
 
         {/* —— HERO MOCKUP —— */}
         <CaseHeroPlate project={project} />
 
-        {/* —— 01 INTRODUCTION —— editorial left */}
-        <IntroSection
-          code="01"
-          eyebrow="Introduction"
-          body={project.caseStudy.introduction}
-        />
+        {/* —— 01 INTRODUCTION —— */}
+        <ArticleSection code="01" eyebrow="Introduction" body={project.caseStudy.introduction} />
 
-        {/* —— 02 CHALLENGE —— split sticky label */}
-        <ChallengeSection
-          code="02"
-          eyebrow="The challenge"
-          body={project.caseStudy.challenge}
-        />
+        {/* —— 02 CHALLENGE —— */}
+        <ArticleSection code="02" eyebrow="The challenge" body={project.caseStudy.challenge} />
 
         {/* —— PULL QUOTE —— */}
         <PullQuote text={project.pull} />
 
-        {/* —— 03 APPROACH —— text-only, full width —— */}
-        <ApproachSection
-          code="03"
-          eyebrow="The approach"
-          body={project.caseStudy.approach}
-        />
+        {/* —— 03 APPROACH —— */}
+        <ArticleSection code="03" eyebrow="The approach" body={project.caseStudy.approach} />
 
         {/* —— GALLERY —— slideshow */}
         <GallerySection project={project} />
@@ -101,7 +88,7 @@ export default function CaseStudy() {
 /* ===================================================================== */
 
 const CaseHeader = ({ project }) => (
-  <header className="max-w-[1240px] mx-auto px-6 md:px-10 pt-28 md:pt-36 pb-10 md:pb-12 relative z-10">
+  <header className="max-w-[1400px] mx-auto px-6 md:px-10 pt-28 md:pt-36 pb-10 md:pb-12 relative z-10">
     <Link
       to="/#work"
       data-testid="case-back-link"
@@ -120,20 +107,11 @@ const CaseHeader = ({ project }) => (
         <p className="mt-7 md:mt-10 max-w-[62ch] text-[15px] md:text-[17px] leading-[1.8] md:leading-[1.85] text-[var(--ink-soft)]">
           {project.summary}
         </p>
-        <dl className="mt-9 md:mt-12 grid grid-cols-1 sm:grid-cols-3 gap-x-10 gap-y-5 border-t border-[var(--rule-strong)] pt-6 max-w-[900px]">
-          <div>
-            <dt className="eyebrow text-[var(--ink-muted)] mb-2">Role</dt>
-            <dd className="text-[14px] leading-[1.7] text-[var(--ink-soft)]">{project.role}</dd>
-          </div>
-          <div>
-            <dt className="eyebrow text-[var(--ink-muted)] mb-2">Services</dt>
-            <dd className="text-[14px] leading-[1.7] text-[var(--ink-soft)]">{project.services.join(", ")}</dd>
-          </div>
-          <div>
-            <dt className="eyebrow text-[var(--ink-muted)] mb-2">Stack</dt>
-            <dd className="text-[14px] leading-[1.7] text-[var(--ink-soft)]">{project.stack.join(" · ")}</dd>
-          </div>
-        </dl>
+        <div className="mt-9 md:mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-[900px]">
+          <CapabilityCard icon={Users} number="" title="Role" description={project.role} accent="cyan" className="!p-5" />
+          <CapabilityCard icon={Layers3} number="" title="Services" description={project.services.join(", ")} accent="gold" className="!p-5" />
+          <CapabilityCard icon={Code2} number="" title="Stack" description={project.stack.join(" · ")} accent="cyan" className="!p-5" />
+        </div>
       </div>
     </div>
   </header>
@@ -146,6 +124,7 @@ const CaseHeroPlate = ({ project }) => {
     const el = ref.current;
     if (!el) return;
     if (window.matchMedia("(hover: none)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const onMove = (e) => {
       const r = el.getBoundingClientRect();
       const px = (e.clientX - (r.left + r.width / 2)) / r.width;
@@ -162,14 +141,13 @@ const CaseHeroPlate = ({ project }) => {
   }, []);
 
   return (
-    <section className="max-w-[1240px] mx-auto px-6 md:px-10 pb-16 md:pb-24 relative z-10">
+    <section className="max-w-[1400px] mx-auto px-6 md:px-10 pb-16 md:pb-24 relative z-10">
       <div className="relative">
         <div
           aria-hidden
           className="absolute -inset-10 pointer-events-none"
           style={{
-            background:
-              "radial-gradient(60% 50% at 50% 50%, rgba(108,232,236,0.22) 0%, transparent 70%), radial-gradient(60% 50% at 70% 80%, rgba(168,121,255,0.22) 0%, transparent 70%)",
+            background: "radial-gradient(55% 45% at 50% 40%, rgba(108,232,236,0.12) 0%, transparent 70%)",
             filter: "blur(50px)",
           }}
         />
@@ -182,8 +160,7 @@ const CaseHeroPlate = ({ project }) => {
             className="relative w-full overflow-hidden rounded-[14px] border border-[var(--rule-strong)] bg-[var(--bg-elev)]"
             style={{
               aspectRatio: "16 / 9",
-              boxShadow:
-                "0 80px 160px -50px rgba(0,0,0,0.85), 0 40px 100px -50px rgba(108,232,236,0.32)",
+              boxShadow: "0 60px 120px -50px rgba(0,0,0,0.75)",
             }}
             data-testid="case-hero-image-wrap"
           >
@@ -201,10 +178,6 @@ const CaseHeroPlate = ({ project }) => {
               />
             </picture>
             <div className="grain" />
-            <span className="absolute top-3 left-3 w-3 h-3 border-t border-l border-[var(--cyan)] opacity-70" />
-            <span className="absolute top-3 right-3 w-3 h-3 border-t border-r border-[var(--cyan)] opacity-70" />
-            <span className="absolute bottom-3 left-3 w-3 h-3 border-b border-l border-[var(--cyan)] opacity-70" />
-            <span className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-[var(--cyan)] opacity-70" />
           </div>
           <figcaption className="mt-3 eyebrow flex items-center justify-between">
             <span>{project.kicker}</span>
@@ -216,61 +189,27 @@ const CaseHeroPlate = ({ project }) => {
   );
 };
 
-/* —— 01 INTRODUCTION —— editorial intro, oversize statement —— */
-const IntroSection = ({ code, eyebrow, body }) => (
+/* —— Article section —— one consistent, quiet pattern reused for
+   Introduction, Challenge, and Approach instead of three different
+   bespoke treatments (sticky panel, glass box, gradient bars, corner
+   brackets). Small label, plain heading line, readable body copy. */
+const ArticleSection = ({ code, eyebrow, body }) => (
   <section
     data-testid={`case-section-${code}`}
     className="border-t border-[var(--rule)] relative z-10"
   >
-    <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-16 md:py-32">
+    <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-14 md:py-24">
       <div className="grid grid-cols-12 gap-8 reveal">
         <div className="col-span-12 md:col-span-3">
-          <div className="section-mark">{code}</div>
-          <div className="font-display text-[var(--ink)] mt-3">{eyebrow}</div>
-          <div className="mt-6 h-px bg-gradient-to-r from-[var(--cyan)] via-[var(--violet)] to-transparent w-32 reveal" style={{ boxShadow: "0 0 14px var(--cyan-glow)" }} />
+          <div className="eyebrow text-[var(--ink-muted)]">{code} · {eyebrow}</div>
         </div>
         <div className="col-span-12 md:col-span-9">
-          <p className="font-tight text-[26px] sm:text-[34px] lg:text-[42px] leading-[1.25] text-[var(--ink)] max-w-[24ch]">
+          <p className="font-tight text-[22px] sm:text-[28px] leading-[1.4] text-[var(--ink)] max-w-[36ch]">
             {firstSentence(body)}
           </p>
-          <p className="mt-8 max-w-[62ch] text-[15.5px] leading-[1.9] text-[var(--ink-soft)]">
+          <p className="mt-6 max-w-[62ch] text-[15px] leading-[1.85] text-[var(--ink-soft)]">
             {restOfBody(body)}
           </p>
-        </div>
-      </div>
-    </div>
-  </section>
-);
-
-/* —— 02 CHALLENGE —— sticky left label, glass panel right —— */
-const ChallengeSection = ({ code, eyebrow, body }) => (
-  <section
-    data-testid={`case-section-${code}`}
-    className="border-t border-[var(--rule)] relative z-10"
-  >
-    <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-16 md:py-32">
-      <div className="grid grid-cols-12 gap-8 items-start">
-        <div className="col-span-12 md:col-span-4 md:sticky md:top-28 reveal">
-          <div className="section-mark">{code}</div>
-          <h3 className="font-tight text-[32px] sm:text-[44px] leading-[1.06] text-[var(--ink)] mt-4 max-w-[14ch]">
-            {eyebrow}
-          </h3>
-          <p className="mt-5 text-[13.5px] leading-[1.7] text-[var(--ink-muted)] max-w-[34ch]">
-            What was broken, and where the project actually started.
-          </p>
-        </div>
-        <div className="col-span-12 md:col-span-8 reveal" style={{ transitionDelay: "120ms" }}>
-          <div className="glass p-8 md:p-12 relative overflow-hidden">
-            {/* corner brackets */}
-            <span className="absolute top-3 left-3 w-3 h-3 border-t border-l border-[var(--cyan)] opacity-60" />
-            <span className="absolute top-3 right-3 w-3 h-3 border-t border-r border-[var(--cyan)] opacity-60" />
-            <span className="absolute bottom-3 left-3 w-3 h-3 border-b border-l border-[var(--cyan)] opacity-60" />
-            <span className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-[var(--cyan)] opacity-60" />
-
-            <p className="font-tight text-[22px] sm:text-[28px] leading-[1.45] text-[var(--ink)]">
-              {body}
-            </p>
-          </div>
         </div>
       </div>
     </div>
@@ -280,46 +219,22 @@ const ChallengeSection = ({ code, eyebrow, body }) => (
 /* —— Pull quote moment —— */
 const PullQuote = ({ text }) => (
   <section className="border-t border-[var(--rule)] relative z-10">
-    <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-16 md:py-32 text-center reveal">
-      <div className="font-italic text-[var(--cyan)] text-[36px] sm:text-[64px] md:text-[80px] leading-[1.06] tracking-[-0.02em] mx-auto max-w-[22ch]"
-        style={{ textShadow: "0 0 32px var(--cyan-glow)" }}>
+    <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-14 md:py-24 text-center reveal">
+      <div className="font-italic text-[var(--cyan)] text-[26px] sm:text-[38px] md:text-[46px] leading-[1.3] tracking-[-0.01em] mx-auto max-w-[28ch]">
           “{text}”
       </div>
     </div>
   </section>
 );
 
-/* —— 03 APPROACH —— editorial, text-only —— */
-const ApproachSection = ({ code, eyebrow, body }) => (
-  <section
-    data-testid={`case-section-${code}`}
-    className="border-t border-[var(--rule)] relative z-10"
-  >
-    <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-16 md:py-32">
-      <div className="grid grid-cols-12 gap-8 reveal">
-        <div className="col-span-12 md:col-span-3">
-          <div className="section-mark">{code}</div>
-          <div className="font-display text-[var(--ink)] mt-3">{eyebrow}</div>
-          <div className="mt-6 h-px bg-gradient-to-r from-[var(--cyan)] via-[var(--violet)] to-transparent w-32" style={{ boxShadow: "0 0 14px var(--cyan-glow)" }} />
-        </div>
-        <div className="col-span-12 md:col-span-9">
-          <p className="font-tight text-[26px] sm:text-[34px] lg:text-[40px] leading-[1.2] text-[var(--ink)] max-w-[24ch]">
-            {firstSentence(body)}
-          </p>
-          <p className="mt-8 max-w-[62ch] text-[15.5px] leading-[1.9] text-[var(--ink-soft)]">
-            {restOfBody(body)}
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-);
-
 /* —— Gallery —— slideshow / carousel —— */
+const PORTRAIT_GALLERY_SLUGS = ["ledger", "attendly"];
+
 const GallerySection = ({ project }) => {
   const gallery = project.gallery?.length ? project.gallery : [project.image];
   const [i, setI] = useState(0);
   const total = gallery.length;
+  const isPortrait = PORTRAIT_GALLERY_SLUGS.includes(project.slug);
 
   const go = (dir) => setI((p) => (p + dir + total) % total);
 
@@ -345,7 +260,7 @@ const GallerySection = ({ project }) => {
       data-testid="case-section-gallery"
       className="border-t border-[var(--rule)] relative z-10"
     >
-      <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-16 md:py-32">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 md:py-32">
         <div className="flex items-end justify-between mb-12 reveal">
           <div>
             <div className="section-mark mb-4">Gallery</div>
@@ -365,33 +280,18 @@ const GallerySection = ({ project }) => {
         </div>
 
         <div className="reveal relative" data-testid="case-gallery-slideshow" ref={stageRef}>
-          {/* ambient glow */}
-          <div
-            aria-hidden
-            className="absolute -inset-6 pointer-events-none opacity-80"
-            style={{
-              background:
-                "radial-gradient(45% 40% at 30% 50%, rgba(108,232,236,0.18) 0%, transparent 70%), radial-gradient(45% 40% at 70% 50%, rgba(168,121,255,0.16) 0%, transparent 70%)",
-              filter: "blur(40px)",
-            }}
-          />
-
           {/* stage */}
           <div
             className="relative overflow-hidden rounded-[12px] border border-[var(--rule-strong)] bg-[var(--bg-elev)] mx-auto"
             style={{
-              aspectRatio: ["ledger", "attendly"].includes(project.slug) ? "9 / 16" : "16 / 9",
-              maxWidth: ["ledger", "attendly"].includes(project.slug) ? "380px" : "100%",
-              boxShadow: "0 60px 120px -50px rgba(0,0,0,0.85), 0 30px 80px -50px rgba(108,232,236,0.32)",
+              aspectRatio: isPortrait ? "9 / 16" : "16 / 9",
+              maxWidth: isPortrait ? "380px" : "100%",
+              boxShadow: "0 40px 90px -50px rgba(0,0,0,0.7)",
             }}
           >
-            {gallery.map((src, idx) => (
-              <picture key={src + idx} className="contents">
-                <source
-                  type="image/webp"
-                  srcSet={webpSrcSet(src, ["ledger", "attendly"].includes(project.slug) ? PORTRAIT_WIDTHS : WIDE_WIDTHS)}
-                  sizes={["ledger", "attendly"].includes(project.slug) ? "(max-width: 480px) 90vw, 380px" : "(max-width: 1240px) 100vw, 1200px"}
-                />
+            {gallery.map((src, idx) => {
+              const hasWebpVariants = /\.png$/i.test(src);
+              const img = (
                 <img
                   src={src}
                   alt={`${project.title} plate ${idx + 1}`}
@@ -399,13 +299,20 @@ const GallerySection = ({ project }) => {
                   data-testid={`case-gallery-image-${idx}`}
                   className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-700 ease-out ${idx === i ? "opacity-100" : "opacity-0"}`}
                 />
-              </picture>
-            ))}
+              );
+              if (!hasWebpVariants) return <span key={src + idx} className="contents">{img}</span>;
+              return (
+                <picture key={src + idx} className="contents">
+                  <source
+                    type="image/webp"
+                    srcSet={webpSrcSet(src, isPortrait ? PORTRAIT_WIDTHS : WIDE_WIDTHS)}
+                    sizes={isPortrait ? "(max-width: 480px) 90vw, 380px" : "(max-width: 1240px) 100vw, 1200px"}
+                  />
+                  {img}
+                </picture>
+              );
+            })}
             <div className="grain pointer-events-none" />
-            <span className="absolute top-3 left-3 w-3 h-3 border-t border-l border-[var(--cyan)] opacity-70" />
-            <span className="absolute top-3 right-3 w-3 h-3 border-t border-r border-[var(--cyan)] opacity-70" />
-            <span className="absolute bottom-3 left-3 w-3 h-3 border-b border-l border-[var(--cyan)] opacity-70" />
-            <span className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-[var(--cyan)] opacity-70" />
 
             {total > 1 && (
               <>
@@ -475,30 +382,27 @@ const BuildSection = ({ code, eyebrow, body, stack }) => {
       data-testid={`case-section-${code}`}
       className="border-t border-[var(--rule)] relative z-10"
     >
-      <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-16 md:py-32">
-        <div className="grid grid-cols-12 gap-8 mb-14 reveal">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-14 md:py-24">
+        <div className="grid grid-cols-12 gap-8 mb-12 reveal">
           <div className="col-span-12 md:col-span-5">
-            <div className="section-mark mb-4">{code}</div>
-            <h3 className="font-tight text-[32px] sm:text-[48px] lg:text-[60px] leading-[1.04] text-[var(--ink)] max-w-[16ch]">
-              {eyebrow}
-            </h3>
+            <div className="eyebrow text-[var(--ink-muted)] mb-3">{code} · {eyebrow}</div>
           </div>
           <div className="col-span-12 md:col-span-6 md:col-start-7 flex flex-wrap gap-2.5 self-end">
             {stack.map((s) => (
-              <span key={s} className="cap"><span className="cap-dot" />{s}</span>
+              <Chip key={s}>{s}</Chip>
             ))}
           </div>
         </div>
 
         {/* timeline */}
         <div className="relative">
-          <div className="absolute left-[15px] sm:left-[19px] top-0 bottom-0 w-px bg-gradient-to-b from-[var(--cyan)] via-[var(--violet)] to-transparent opacity-60" style={{ boxShadow: "0 0 12px var(--cyan-glow)" }} />
+          <div className="absolute left-[15px] sm:left-[19px] top-0 bottom-0 w-px bg-[var(--rule-strong)]" />
           <ol className="space-y-12">
             {phases.map((p, i) => (
               <li key={i} className="grid grid-cols-12 gap-6 reveal" data-testid={`build-phase-${i}`}>
                 <div className="col-span-12 md:col-span-3 flex items-baseline gap-4 pl-1 sm:pl-2">
                   <span className="relative inline-flex items-center justify-center mt-[6px]">
-                    <span className="w-3 h-3 rounded-full bg-[var(--cyan)]" style={{ boxShadow: "0 0 14px var(--cyan-glow)" }} />
+                    <span className="w-3 h-3 rounded-full bg-[var(--cyan)]" />
                   </span>
                   <div>
                     <div className="font-mono text-[10px] tracking-[0.24em] text-[var(--cyan)] uppercase">
@@ -532,19 +436,18 @@ const OutcomeSection = ({ project }) => (
       className="absolute pointer-events-none"
       style={{
         top: "-10%", left: "50%", transform: "translateX(-50%)",
-        width: "80%", height: "80%",
-        background:
-          "radial-gradient(closest-side, rgba(108,232,236,0.18) 0%, transparent 70%), radial-gradient(closest-side, rgba(168,121,255,0.16) 0%, transparent 70%)",
+        width: "70%", height: "70%",
+        background: "radial-gradient(closest-side, rgba(108,232,236,0.10) 0%, transparent 70%)",
         filter: "blur(60px)",
       }}
     />
-    <div className="max-w-[1240px] mx-auto px-6 md:px-10 py-20 md:py-44 relative">
+    <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 md:py-28 relative">
       <div className="reveal">
-        <div className="section-mark mb-6 md:mb-7">05 · Final outcome</div>
-        <h3 className="font-tight text-[36px] sm:text-[68px] lg:text-[96px] leading-[1.02] text-[var(--ink)] max-w-[18ch]">
+        <div className="eyebrow text-[var(--ink-muted)] mb-5">05 · Final outcome</div>
+        <h3 className="font-tight text-[30px] sm:text-[44px] lg:text-[54px] leading-[1.15] text-[var(--ink)] max-w-[22ch]">
           {firstSentence(project.caseStudy.outcome)}
         </h3>
-        <p className="mt-8 md:mt-10 max-w-[62ch] text-[15px] md:text-[16.5px] leading-[1.85] md:leading-[1.9] text-[var(--ink-soft)]">
+        <p className="mt-6 md:mt-8 max-w-[62ch] text-[15px] md:text-[16px] leading-[1.85] text-[var(--ink-soft)]">
           {restOfBody(project.caseStudy.outcome)}
         </p>
       </div>
@@ -555,8 +458,7 @@ const OutcomeSection = ({ project }) => (
           {project.highlights.map((h, i) => (
             <div key={h.label} className="bg-[var(--bg)] p-6 md:p-9" data-testid={`case-metric-${i}`}>
               <div className="eyebrow text-[var(--ink-muted)]">{h.label}</div>
-              <div className="mt-3 font-tight text-[30px] sm:text-[44px] text-[var(--ink)] lining-nums"
-                style={{ textShadow: "0 0 18px rgba(108,232,236,0.18)" }}>
+              <div className="mt-3 font-tight text-[28px] sm:text-[38px] text-[var(--ink)] lining-nums">
                 {h.value}
               </div>
             </div>
@@ -569,7 +471,7 @@ const OutcomeSection = ({ project }) => (
 
 const NextCase = ({ next }) => (
   <nav
-    className="max-w-[1240px] mx-auto px-6 md:px-10 py-16 border-t border-[var(--rule)] flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 relative z-10"
+    className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 border-t border-[var(--rule)] flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 relative z-10"
     data-testid="case-next-nav"
   >
     <Link to="/#work" className="eyebrow hover:text-[var(--cyan)] transition-colors">

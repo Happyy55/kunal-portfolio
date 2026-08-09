@@ -145,8 +145,15 @@ export const projects = [
     outcome:
       "Enrollment that used to fail silently now saves reliably across beards, glasses and dim rooms. Check-in tells apart faces that fooled it before — including siblings.",
     image: "/images/cover_attendly.png",
-    gallery: ["/images/attendly_dashboard.png", "/images/attendly_attendance.png", "/images/attendly_reports.png"],
-    imageLabels: ["Dashboard overview", "Attendance & check-in", "Shareable reports"],
+    gallery: [
+      "/images/attendly/attendly-signin.jpeg",
+      "/images/attendly/attendly-dashboard.jpeg",
+      "/images/attendly/attendly-add-employee.jpeg",
+      "/images/attendly/attendly-attendance.jpeg",
+      "/images/attendly/attendly-employees.jpeg",
+      "/images/attendly/attendly-reports.jpeg",
+    ],
+    imageLabels: ["Sign in", "Dashboard", "Add employee", "Attendance", "Employees", "Reports"],
     pull: "The same face, a slightly different background — and it said no match. That's not the user's fault. That's the system fingerprinting the wrong thing.",
     highlights: [
       { label: "Role", value: "Design & dev" },

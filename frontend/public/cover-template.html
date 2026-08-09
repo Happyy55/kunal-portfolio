@@ -1,0 +1,282 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cyan: #6ce8ec;
+    --cyan-glow: rgba(108, 232, 236, 0.55);
+    --gold: #d4b486;
+    --gold-glow: rgba(212, 180, 134, 0.45);
+    --violet: #a879ff;
+    --violet-glow: rgba(168, 121, 255, 0.45);
+    --ink: #f3eee5;
+    --ink-soft: #a4a6b3;
+    --bg: #05070f;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1600px;
+    height: 900px;
+    background: var(--bg);
+    overflow: hidden;
+    font-family: "Geist", sans-serif;
+  }
+  .frame {
+    position: relative;
+    width: 1600px;
+    height: 900px;
+    background:
+      radial-gradient(900px 600px at 82% 50%, var(--accent-glow) 0%, transparent 68%),
+      linear-gradient(160deg, #070a14 0%, #05070f 60%);
+  }
+  .grid-overlay {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(1100px 800px at 60% 50%, black 40%, transparent 85%);
+  }
+  .noise-vignette {
+    position: absolute; inset: 0;
+    box-shadow: inset 0 0 220px 60px rgba(0,0,0,0.55);
+  }
+  .bracket {
+    position: absolute;
+    width: 34px; height: 34px;
+    border-color: var(--accent);
+    opacity: 0.55;
+  }
+  .bracket.tl { top: 44px; left: 44px; border-top: 2px solid; border-left: 2px solid; }
+  .bracket.br { bottom: 44px; right: 44px; border-bottom: 2px solid; border-right: 2px solid; }
+  .status-row {
+    position: absolute;
+    top: 48px; left: 90px;
+    display: flex; align-items: center; gap: 10px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 15px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .status-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 0 10px var(--accent-glow);
+  }
+  .content {
+    position: absolute;
+    left: 90px; top: 0; bottom: 0;
+    width: 800px;
+    display: flex; flex-direction: column; justify-content: center;
+    gap: 26px;
+  }
+  .kicker {
+    display: flex; align-items: center; gap: 12px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 19px; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .kicker .dash { width: 26px; height: 1px; background: var(--accent); }
+  .title {
+    font-weight: 800;
+    font-size: 128px;
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .divider { display: flex; align-items: center; gap: 12px; width: 100%; }
+  .divider .line { flex: 1; height: 1px; background: rgba(255,255,255,0.18); }
+  .divider .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
+  .pull {
+    font-family: "Geist", sans-serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 27px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 640px;
+  }
+  .chips { display: flex; gap: 14px; margin-top: 6px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.03);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  .chip b { color: var(--ink); font-weight: 500; }
+  .chip .cdot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+
+  .art {
+    position: absolute;
+    right: 60px; top: 50%; transform: translateY(-50%);
+    width: 620px; height: 620px;
+  }
+  .art svg { width: 100%; height: 100%; display: block; }
+
+  .particles span {
+    position: absolute; width: 2px; height: 2px; border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+  }
+</style>
+</head>
+<body>
+  <div class="frame" id="frame">
+    <div class="grid-overlay"></div>
+    <div class="bracket tl"></div>
+    <div class="bracket br"></div>
+    <div class="status-row"><span class="status-dot"></span><span id="statusText"></span></div>
+    <div class="content">
+      <div class="kicker"><span class="dash"></span><span id="kicker"></span></div>
+      <div class="title" id="title"></div>
+      <div class="divider"><span class="dot"></span><span class="line"></span></div>
+      <div class="pull" id="pull"></div>
+      <div class="chips" id="chips"></div>
+    </div>
+    <div class="art" id="art"></div>
+    <div class="particles" id="particles"></div>
+    <div class="noise-vignette"></div>
+  </div>
+
+<script>
+  const ACCENTS = {
+    cyan: { c: "#6ce8ec", g: "rgba(108,232,236,0.55)" },
+    gold: { c: "#d4b486", g: "rgba(212,180,134,0.5)" },
+    violet: { c: "#a879ff", g: "rgba(168,121,255,0.5)" },
+  };
+
+  function render(cfg) {
+    const a = ACCENTS[cfg.accent];
+    document.documentElement.style.setProperty("--accent", a.c);
+    document.documentElement.style.setProperty("--accent-glow", a.g);
+    document.getElementById("statusText").textContent = cfg.status;
+    document.getElementById("kicker").textContent = cfg.kicker;
+    document.getElementById("title").textContent = cfg.title;
+    document.getElementById("pull").textContent = "“" + cfg.pull + "”";
+    const chipsEl = document.getElementById("chips");
+    chipsEl.innerHTML = cfg.chips.map(c => `<span class="chip"><span class="cdot"></span>${c.label} &nbsp;<b>${c.value}</b></span>`).join("");
+    document.getElementById("art").innerHTML = cfg.art(a.c, a.g);
+
+    // particles
+    const p = document.getElementById("particles");
+    p.innerHTML = "";
+    for (let i = 0; i < 26; i++) {
+      const s = document.createElement("span");
+      s.style.left = Math.random() * 1600 + "px";
+      s.style.top = Math.random() * 900 + "px";
+      s.style.opacity = (0.15 + Math.random() * 0.5).toFixed(2);
+      p.appendChild(s);
+    }
+  }
+
+  const ART = {
+    radar: (c, g) => `
+      <svg viewBox="0 0 620 620">
+        <defs><radialGradient id="rg" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="${c}" stop-opacity="0.35"/>
+          <stop offset="100%" stop-color="${c}" stop-opacity="0"/>
+        </radialGradient></defs>
+        <circle cx="310" cy="310" r="290" fill="url(#rg)"/>
+        ${[110,175,240,290].map(r => `<circle cx="310" cy="310" r="${r}" fill="none" stroke="${c}" stroke-opacity="0.35" stroke-width="1.5"/>`).join("")}
+        <line x1="310" y1="20" x2="310" y2="600" stroke="${c}" stroke-opacity="0.18"/>
+        <line x1="20" y1="310" x2="600" y2="310" stroke="${c}" stroke-opacity="0.18"/>
+        <path d="M310 310 L520 130 A290 290 0 0 0 310 20 Z" fill="${c}" opacity="0.14"/>
+        <line x1="310" y1="310" x2="520" y2="130" stroke="${c}" stroke-width="2"/>
+        <circle cx="440" cy="205" r="6" fill="${c}"/>
+        <circle cx="310" cy="310" r="7" fill="${c}"/>
+        <circle cx="470" cy="440" r="5" fill="${c}" opacity="0.7"/>
+        <circle cx="200" cy="470" r="5" fill="${c}" opacity="0.7"/>
+      </svg>`,
+    finance: (c, g) => `
+      <svg viewBox="0 0 620 620">
+        <defs><radialGradient id="rg2" cx="45%" cy="45%" r="55%">
+          <stop offset="0%" stop-color="${c}" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="${c}" stop-opacity="0"/>
+        </radialGradient></defs>
+        <circle cx="310" cy="310" r="300" fill="url(#rg2)"/>
+        <text x="310" y="420" font-family="Geist" font-weight="800" font-size="440" fill="${c}" fill-opacity="0.22" text-anchor="middle">₹</text>
+        <path d="M100 480 L520 480" stroke="${c}" stroke-opacity="0.25" stroke-width="1.5"/>
+        <path d="M140 420 L230 380 L300 430 L400 340 L500 300" fill="none" stroke="${c}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+        <circle cx="500" cy="300" r="7" fill="${c}"/>
+        <circle cx="400" cy="340" r="5" fill="${c}" opacity="0.7"/>
+        <circle cx="230" cy="380" r="5" fill="${c}" opacity="0.7"/>
+      </svg>`,
+    face: (c, g) => `
+      <svg viewBox="0 0 620 620">
+        <defs><radialGradient id="rg3" cx="50%" cy="42%" r="55%">
+          <stop offset="0%" stop-color="${c}" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="${c}" stop-opacity="0"/>
+        </radialGradient></defs>
+        <circle cx="310" cy="300" r="280" fill="url(#rg3)"/>
+        <rect x="70" y="70" width="480" height="480" fill="none" stroke="${c}" stroke-opacity="0.25" stroke-width="1.5" rx="18"/>
+        <path d="M60 60 L60 130 M60 60 L130 60" stroke="${c}" stroke-width="3" fill="none"/>
+        <path d="M560 60 L560 130 M560 60 L490 60" stroke="${c}" stroke-width="3" fill="none"/>
+        <path d="M60 560 L60 490 M60 560 L130 560" stroke="${c}" stroke-width="3" fill="none"/>
+        <path d="M560 560 L560 490 M560 560 L490 560" stroke="${c}" stroke-width="3" fill="none"/>
+        ${(() => {
+          const pts = [[220,190],[400,190],[460,270],[430,360],[380,300],[310,270],[240,360],[180,270]];
+          const edges = [[0,1],[1,2],[2,3],[3,4],[4,5],[5,0],[5,6],[6,3],[6,7],[7,0],[5,2]];
+          const lines = edges.map(([i,j]) => `<line x1="${pts[i][0]}" y1="${pts[i][1]}" x2="${pts[j][0]}" y2="${pts[j][1]}" stroke="${c}" stroke-width="1.5" opacity="0.7"/>`).join("");
+          const dots = pts.map(p2 => `<circle cx="${p2[0]}" cy="${p2[1]}" r="5" fill="${c}"/>`).join("");
+          return lines + dots;
+        })()}
+      </svg>`,
+    cloud: (c, g) => `
+      <svg viewBox="0 0 620 620">
+        <defs><radialGradient id="rg4" cx="55%" cy="45%" r="55%">
+          <stop offset="0%" stop-color="${c}" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="${c}" stop-opacity="0"/>
+        </radialGradient></defs>
+        <circle cx="330" cy="300" r="300" fill="url(#rg4)"/>
+        <path d="M180 380 Q140 380 140 340 Q140 300 180 300 Q185 250 240 250 Q260 210 320 220 Q370 190 420 230 Q470 220 480 270 Q520 280 510 330 Q515 380 460 380 Z"
+          fill="none" stroke="${c}" stroke-width="2.5" opacity="0.85"/>
+        <circle cx="190" cy="340" r="5" fill="${c}"/>
+        <circle cx="470" cy="330" r="5" fill="${c}"/>
+        <circle cx="330" cy="230" r="5" fill="${c}"/>
+        <path d="M190 340 L330 230 L470 330" stroke="${c}" stroke-opacity="0.4" stroke-width="1.5" fill="none"/>
+        <circle cx="330" cy="310" r="120" fill="none" stroke="${c}" stroke-opacity="0.2" stroke-width="1"/>
+        <circle cx="330" cy="310" r="180" fill="none" stroke="${c}" stroke-opacity="0.14" stroke-width="1"/>
+      </svg>`,
+  };
+
+  window.renderCover = function(name) {
+    const CFG = {
+      smalblu: {
+        accent: "cyan", status: "01 · SmalBlu",
+        kicker: "Cloud infrastructure product", title: "SmalBlu",
+        pull: "Cloud-agnostic by design. Built to explain everything underneath.",
+        chips: [{label:"Role",value:"Design & dev"},{label:"Type",value:"Product site"},{label:"Stack",value:"React · Node"}],
+        art: ART.cloud,
+      },
+      alpharadar: {
+        accent: "gold", status: "02 · Alpha Radar India",
+        kicker: "Business analytics consultancy", title: "Alpha Radar",
+        pull: "Every blip on the radar is an opportunity waiting to be acted on.",
+        chips: [{label:"Role",value:"Design & dev"},{label:"Type",value:"Consultancy site"},{label:"Stack",value:"React · Motion"}],
+        art: ART.radar,
+      },
+      ledger: {
+        accent: "violet", status: "03 · Ledger Book",
+        kicker: "Mobile finance tool", title: "Ledger Book",
+        pull: "Open the app. Add the entry. Close the app. A notebook that adds for you.",
+        chips: [{label:"Role",value:"Full product"},{label:"Type",value:"Mobile app"},{label:"Data",value:"On-device only"}],
+        art: ART.finance,
+      },
+      attendly: {
+        accent: "cyan", status: "04 · Attendly",
+        kicker: "On-device face + location attendance", title: "Attendly",
+        pull: "The same face, a slightly different background — and it said no match.",
+        chips: [{label:"Role",value:"Design & dev"},{label:"Type",value:"Attendance app"},{label:"Stack",value:"RN · TFLite"}],
+        art: ART.face,
+      },
+    };
+    render(CFG[name]);
+  };
+</script>
+</body>
+</html>

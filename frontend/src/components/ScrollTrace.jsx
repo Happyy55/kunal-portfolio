@@ -34,7 +34,7 @@ export const ScrollTrace = () => {
         .to(line, { strokeDashoffset: 0, duration: 1.1, ease: "power2.inOut" })
         .to(dotRef.current, { opacity: 1, duration: 0.15 }, 0)
         .to(dotRef.current, {
-          motionPath: { path: line },
+          motionPath: { path: line, align: line, alignOrigin: [0.5, 0.5] },
           duration: 1.1,
           ease: "power2.inOut",
         }, 0)
@@ -55,7 +55,10 @@ export const ScrollTrace = () => {
       style={{ display: "block", overflow: "visible" }}
     >
       <line x1="0" y1="1" x2="1200" y2="1" stroke="var(--rule)" strokeWidth="1" />
-      <path ref={lineRef} d="M0,1 L1200,1" stroke="var(--cyan)" strokeWidth="1" fill="none" />
+      {/* <path>, not <line> — MotionPathPlugin's shape-to-path conversion for
+          <line> elements was crashing (_align reading an empty raw path);
+          a real <path> is the plugin's fully-supported case. */}
+      <path ref={lineRef} d="M0,1 L1200,1" fill="none" stroke="var(--cyan)" strokeWidth="1" />
       <circle ref={dotRef} r="3" fill="var(--cyan)" style={{ filter: "drop-shadow(0 0 6px var(--cyan))" }} />
     </svg>
   );
