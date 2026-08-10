@@ -36,7 +36,7 @@ export const About = () => {
                     placeholder rather than a bug until there's a real one. */}
                 <span
                   data-testid="about-portrait"
-                  aria-label="Portrait placeholder — coming soon"
+                  aria-label="Portrait placeholder, coming soon"
                   className="font-hero text-[52px] sm:text-[60px] leading-none tracking-[-0.02em]"
                   style={{ color: "var(--ink-faint)" }}
                 >
@@ -62,12 +62,12 @@ export const About = () => {
 
             <div className="space-y-6 md:space-y-7 text-[15px] md:text-[16px] leading-[1.85] md:leading-[1.9] text-[var(--ink)] max-w-[62ch]">
               <p>
-                I started by making things I wanted to exist — logos first,
+                I started by making things I wanted to exist: logos first,
                 then layouts, then the code to bring them to life. Somewhere
                 along the way the two halves merged, and now I work in the
                 space between design and engineering. That overlap is the
                 point: because I both design and build, nothing gets lost in
-                a handoff — the type, the spacing, the small interactions
+                a handoff. The type, the spacing, the small interactions
                 that make a site feel considered survive all the way to
                 production.
               </p>
@@ -80,7 +80,7 @@ export const About = () => {
               <p className="text-[var(--ink-soft)]">
                 I work best with founders and small teams who want one
                 person to care about the whole picture. Bring me a rough
-                idea and I'll give you an honest read — what's worth
+                idea and I'll give you an honest read: what's worth
                 building, what isn't, and what it should look like when
                 it's done.
               </p>

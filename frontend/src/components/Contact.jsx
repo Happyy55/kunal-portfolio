@@ -78,7 +78,7 @@ export const Contact = () => {
                 <span>Other ways to reach me</span>
               </div>
               <p className="text-center text-[14px] md:text-[15px] leading-[1.85] text-[var(--ink-soft)] max-w-[42ch] mx-auto">
-                Pick whichever's easiest — I'm reachable on all of these.
+                Pick whichever's easiest. I'm reachable on all of these.
               </p>
 
               <ul ref={listRef} className="mt-9 md:mt-11 flex flex-wrap items-start justify-center gap-x-8 gap-y-8 sm:gap-x-12">

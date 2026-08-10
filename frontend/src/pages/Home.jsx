@@ -16,7 +16,7 @@ export default function Home() {
 
   useEffect(() => {
     document.title =
-      "Kunal Jain — Creative Developer";
+      "Kunal Jain, Creative Developer";
   }, []);
 
   return (

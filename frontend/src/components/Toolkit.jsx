@@ -132,7 +132,7 @@ export const Toolkit = () => {
           </div>
           <div className="col-span-12 md:col-span-3 md:text-right">
             <p className="text-[14px] leading-relaxed text-[var(--ink-muted)] max-w-[32ch] md:ml-auto">
-              Grouped the way I actually use them — design and development, side by side.
+              Grouped the way I actually use them: design and development, side by side.
             </p>
           </div>
         </div>
@@ -144,7 +144,7 @@ export const Toolkit = () => {
         </div>
 
         <p className="mt-8 text-[13px] text-[var(--ink-muted)]">
-          I also build with Claude and GitHub Copilot day to day — tools, not a substitute for the thinking.
+          I also build with Claude and GitHub Copilot day to day. Tools, not a substitute for the thinking.
         </p>
       </div>
     </section>

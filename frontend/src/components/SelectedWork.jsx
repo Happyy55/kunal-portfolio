@@ -97,7 +97,7 @@ export const SelectedWork = () => {
                       />
                       <img
                         src={p.image}
-                        alt={`${p.title} — ${p.overview}`}
+                        alt={`${p.title}: ${p.overview}`}
                         className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
                         loading="lazy"
                         data-testid={`project-image-${p.slug}`}
@@ -156,7 +156,7 @@ export const SelectedWork = () => {
                   {[
                     { label: "Goal", value: p.businessGoal, accent: "var(--cyan)" },
                     { label: "Outcome", value: p.outcome, accent: "var(--gold)" },
-                    { label: "Role & Services", value: `${p.role} — ${p.services.join(", ")}`, accent: "var(--cyan)" },
+                    { label: "Role & Services", value: `${p.role}: ${p.services.join(", ")}`, accent: "var(--cyan)" },
                     { label: "Stack", value: p.stack.join(" · "), accent: "var(--gold)" },
                   ].map((item) => (
                     <div key={item.label}>
@@ -164,7 +164,7 @@ export const SelectedWork = () => {
                         className="font-mono text-[10.5px] tracking-[0.2em] uppercase mb-1.5"
                         style={{ color: item.accent }}
                       >
-                        <span className="sr-only">{p.title} — </span>
+                        <span className="sr-only">{p.title}: </span>
                         {item.label}
                       </dt>
                       <dd className="text-[13.5px] leading-[1.65] text-[var(--ink-soft)]">{item.value}</dd>

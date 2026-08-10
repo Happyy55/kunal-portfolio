@@ -70,7 +70,7 @@ export const Footer = () => {
             </div>
             <p className="mt-6 max-w-[42ch] text-[14px] leading-[1.85] text-[var(--ink-soft)]">
               I design brand identities and build fast, reliable websites
-              for founders and small businesses — one person, end to end,
+              for founders and small businesses. One person, end to end,
               working from Ahmedabad.
             </p>
           </div>
@@ -137,7 +137,7 @@ export const Footer = () => {
         {/* —— Baseline row —— */}
         <div className="mt-7 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 eyebrow">
           <span className="text-[var(--ink-muted)]">
-            © {year} Kunal Jain. Built and maintained from Ahmedabad.
+            © {year} Kunal Jain. All rights reserved.
           </span>
           <span>Ahmedabad · India</span>
         </div>

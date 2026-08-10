@@ -8,10 +8,10 @@ export const projects = [
     kicker: "Cloud infrastructure product",
     year: "2025",
     summary:
-      "SmalBlu optimises cloud infrastructure automatically — but its website couldn't explain that to the people who mattered. I designed and built a site that speaks to engineers and decision-makers at the same time.",
+      "SmalBlu optimises cloud infrastructure automatically, but its website couldn't explain that to the people who mattered. I designed and built a site that speaks to engineers and decision-makers at the same time.",
     overview: "Marketing site for a cloud infrastructure product.",
     businessGoal:
-      "Make a technical product legible — so engineers take it seriously and decision-makers understand the value without a demo.",
+      "Make a technical product legible, so engineers take it seriously and decision-makers understand the value without a demo.",
     role: "Design & development",
     services: ["Web design", "Front-end development", "Content structure"],
     stack: ["React", "Tailwind", "Node.js", "MongoDB"],
@@ -32,11 +32,11 @@ export const projects = [
     ],
     caseStudy: {
       introduction:
-        "SmalBlu plugs into AWS, Azure and GCP and quietly optimises what runs there — no host installs, working within a day. Good product, invisible website. The team needed a public site that carried the same confidence as the engineering behind it.",
+        "SmalBlu plugs into AWS, Azure and GCP and quietly optimises what runs there, with no host installs and working within a day. Good product, invisible website. The team needed a public site that carried the same confidence as the engineering behind it.",
       challenge:
         "Three very different readers land on the same page: DevOps engineers tuning workloads, finance people watching cloud spend, and founders deciding whether to book a call. The old site spoke in taglines and lost all three. The new one had to be genuinely useful within a single scroll.",
       approach:
-        "I structured the page around four honest claims the product can actually back up — cloud-agnostic, ecosystem-aware, cross-layer, measurable. Each claim gets one panel: a plain-language headline, one paragraph of substance, and a real screen from the dashboard. No stock imagery, no filler sections.",
+        "I structured the page around four honest claims the product can actually back up: cloud-agnostic, ecosystem-aware, cross-layer, measurable. Each claim gets one panel: a plain-language headline, one paragraph of substance, and a real screen from the dashboard. No stock imagery, no filler sections.",
       build:
         "React and Tailwind on the front, a small Node and MongoDB service behind the demo-request form. I kept the total image budget under 300 KB so the site lands instantly on an average laptop, and the deploy pipeline ships changes in under a minute.",
       outcome:
@@ -50,7 +50,7 @@ export const projects = [
     kicker: "Business analytics consultancy",
     year: "2025",
     summary:
-      "A consultancy that finds where businesses leak revenue — with a website that previously said none of that. I rebuilt it around one idea: a radar scanning for the next opportunity.",
+      "A consultancy that finds where businesses leak revenue, with a website that previously said none of that. I rebuilt it around one idea: a radar scanning for the next opportunity.",
     overview: "Website for a business analytics and growth consultancy.",
     businessGoal:
       "Position the consultancy as a serious, numbers-first partner and turn visitors into qualified strategy calls.",
@@ -58,7 +58,7 @@ export const projects = [
     services: ["Web design", "Brand direction", "Front-end development"],
     stack: ["React", "Tailwind", "Framer Motion", "Node.js"],
     outcome:
-      "Enquiries now arrive pre-qualified — founders come to the first call already knowing what the engagement covers.",
+      "Enquiries now arrive pre-qualified. Founders come to the first call already knowing what the engagement covers.",
     image: "/images/cover_alpharadar.png",
     gallery: [
       "/images/alpharadar_hero.png",
@@ -74,15 +74,15 @@ export const projects = [
     ],
     caseStudy: {
       introduction:
-        "Alpha Radar India analyses businesses the way an engineer reads a system — finding revenue leaks, mispriced offers and sales processes that quietly lose customers. The founders needed a website that communicated that precision instead of generic consulting language.",
+        "Alpha Radar India analyses businesses the way an engineer reads a system, finding revenue leaks, mispriced offers and sales processes that quietly lose customers. The founders needed a website that communicated that precision instead of generic consulting language.",
       challenge:
         "The old site couldn't answer the three questions every visitor silently asks: is this for me, what do we actually work on, and why should I book a call now. Without those answers, even interested founders left.",
       approach:
-        "I built the whole site around a single visual metaphor — a radar sweeping the business landscape. Every section maps to something the consultancy genuinely analyses: pricing against true value, sales conversion, cash-flow predictability, and full visibility into what drives revenue. The copy reads like answers across a table, not a brochure.",
+        "I built the whole site around a single visual metaphor: a radar sweeping the business landscape. Every section maps to something the consultancy genuinely analyses: pricing against true value, sales conversion, cash-flow predictability, and full visibility into what drives revenue. The copy reads like answers across a table, not a brochure.",
       build:
-        "React and Tailwind with a restrained set of Framer Motion reveals — the page breathes without performing. Matte black, one warm gold accent, sharp rules between sections. A small Node backend routes enquiries straight to the founders' inbox.",
+        "React and Tailwind with a restrained set of Framer Motion reveals. The page breathes without performing. Matte black, one warm gold accent, sharp rules between sections. A small Node backend routes enquiries straight to the founders' inbox.",
       outcome:
-        "The site now reads like the consultancy works: precise and unhurried. Visitors stay longer, enquiries tripled, and first calls start further along — the visitor has already understood the offer before anyone picks up the phone.",
+        "The site now reads like the consultancy works: precise and unhurried. Visitors stay longer, enquiries tripled, and first calls start further along, because the visitor has already understood the offer before anyone picks up the phone.",
     },
   },
   {
@@ -95,7 +95,7 @@ export const projects = [
       "Shopkeepers track who owes what in paper notebooks because every app demands accounts, ads and subscriptions. I built the digital notebook they actually asked for.",
     overview: "A party-wise credit and debit tracker for small shopkeepers.",
     businessGoal:
-      "Replace the paper ledger without adding a single thing the notebook didn't have — no signup, no cloud, no ads.",
+      "Replace the paper ledger without adding a single thing the notebook didn't have: no signup, no cloud, no ads.",
     role: "Concept, design & development",
     services: ["Product design", "Mobile development"],
     stack: ["React Native", "Tailwind", "Local storage"],
@@ -116,15 +116,15 @@ export const projects = [
     ],
     caseStudy: {
       introduction:
-        "Ledger Book started with one shopkeeper's request: something simpler than every ledger app on the store. Log the entry, read the balance, send it on WhatsApp — and nothing else.",
+        "Ledger Book started with one shopkeeper's request: something simpler than every ledger app on the store. Log the entry, read the balance, send it on WhatsApp, and nothing else.",
       challenge:
         "Every existing option wanted a phone number, push permissions, a banner ad or a monthly plan. The brief was the exact opposite: a digital version of the paper notebook he already trusted, with zero learning curve.",
       approach:
-        "The home screen carries three actions — add a party, add a transaction, share the balance. Each party shows their running total and recent entries at a glance. Everything lives on the device; nothing ever touches a server.",
+        "The home screen carries three actions: add a party, add a transaction, share the balance. Each party shows their running total and recent entries at a glance. Everything lives on the device; nothing ever touches a server.",
       build:
         "React Native over a small local-storage store. The share feature produces a clean plain-text summary in one tap, ready for WhatsApp. Search by name or phone, edit or delete any entry, export the whole book as a backup file.",
       outcome:
-        "Shopkeepers open it, add their first party, and treat it like a notebook within ten seconds — no onboarding at all. It's now in daily use, and the WhatsApp share quietly became the feature people mention first.",
+        "Shopkeepers open it, add their first party, and treat it like a notebook within ten seconds, with no onboarding at all. It's now in daily use, and the WhatsApp share quietly became the feature people mention first.",
     },
   },
   {
@@ -134,16 +134,16 @@ export const projects = [
     kicker: "On-device face + location attendance",
     year: "2026",
     summary:
-      "An attendance app that verifies who clocked in and where — entirely on-device, no photos ever leaving the phone. I took it from a prototype that recognised almost no one to a system that tells identical-looking siblings apart and enrols a bearded face in bad light.",
+      "An attendance app that verifies who clocked in and where, entirely on-device, with no photos ever leaving the phone. I took it from a prototype that recognised almost no one to a system that tells identical-looking siblings apart and enrols a bearded face in bad light.",
     overview:
       "Face-and-location attendance app, rebuilt around a face-recognition pipeline that actually works in real conditions.",
     businessGoal:
-      "Attendance you can trust — proving identity and location at the moment someone clocks in, not by trusting a tapped button.",
+      "Attendance you can trust: proving identity and location at the moment someone clocks in, not by trusting a tapped button.",
     role: "Design & development",
     services: ["Mobile app development", "On-device AI", "Face-recognition pipeline", "Backend & data"],
     stack: ["React Native", "Expo", "TypeScript", "TensorFlow Lite", "Supabase"],
     outcome:
-      "Enrollment that used to fail silently now saves reliably across beards, glasses and dim rooms. Check-in tells apart faces that fooled it before — including siblings.",
+      "Enrollment that used to fail silently now saves reliably across beards, glasses and dim rooms. Check-in tells apart faces that fooled it before, including siblings.",
     image: "/images/cover_attendly.png",
     gallery: [
       "/images/attendly/attendly-signin.jpeg",
@@ -154,7 +154,7 @@ export const projects = [
       "/images/attendly/attendly-reports.jpeg",
     ],
     imageLabels: ["Sign in", "Dashboard", "Add employee", "Attendance", "Employees", "Reports"],
-    pull: "The same face, a slightly different background — and it said no match. That's not the user's fault. That's the system fingerprinting the wrong thing.",
+    pull: "The same face, a slightly different background, and it said no match. That's not the user's fault. That's the system fingerprinting the wrong thing.",
     highlights: [
       { label: "Role", value: "Design & dev" },
       { label: "Type", value: "Mobile attendance app" },
@@ -162,15 +162,15 @@ export const projects = [
     ],
     caseStudy: {
       introduction:
-        "Attendly confirms attendance the way a good system should — by proving identity and location at the moment someone clocks in. A single tap runs two checks: GPS confirms the person is on-site, and on-device face recognition confirms who they are. No cloud face database, no employee photos stored anywhere — the face never leaves the device as an image.",
+        "Attendly confirms attendance the way a good system should: by proving identity and location at the moment someone clocks in. A single tap runs two checks: GPS confirms the person is on-site, and on-device face recognition confirms who they are. No cloud face database, no employee photos stored anywhere. The face never leaves the device as an image.",
       challenge:
-        "The face engine was the whole product, and it barely worked. It fingerprinted the entire photo, background included, so the same person failed the moment their surroundings or lighting changed. Enrollment silently rejected ordinary faces — a beard or a dim room was enough to save nothing at all. And the match threshold was caught in an impossible squeeze: loosen it and a brother clocked in as his sibling, tighten it and the real person got turned away.",
+        "The face engine was the whole product, and it barely worked. It fingerprinted the entire photo, background included, so the same person failed the moment their surroundings or lighting changed. Enrollment silently rejected ordinary faces; a beard or a dim room was enough to save nothing at all. And the match threshold was caught in an impossible squeeze: loosen it and a brother clocked in as his sibling, tighten it and the real person got turned away.",
       approach:
-        "I rebuilt recognition around the one step the original pipeline skipped: seeing the face before judging it. The detector already knew where each face was — the code just never used it. I decoded that output to crop tightly to the face, drop the background, and fingerprint only what matters. Enrollment was rebuilt to capture a person from several angles and store each one, so a check-in matches the closest expression instead of demanding a perfect repeat. Anti-spoofing moved off enrollment and onto check-in, where it belongs.",
+        "I rebuilt recognition around the one step the original pipeline skipped: seeing the face before judging it. The detector already knew where each face was; the code just never used it. I decoded that output to crop tightly to the face, drop the background, and fingerprint only what matters. Enrollment was rebuilt to capture a person from several angles and store each one, so a check-in matches the closest expression instead of demanding a perfect repeat. Anti-spoofing moved off enrollment and onto check-in, where it belongs.",
       build:
-        "React Native and Expo with a typed, native development build — on-device face detection and embedding models compiled in and running fully offline. One quick photo to check in, four to enrol; nothing stored but the numbers. GPS geofencing pairs with face verification against a Supabase backend with per-company data isolation, and every rejection now surfaces the exact match score, turning 'it didn't work' into a number that could actually be tuned.",
+        "React Native and Expo with a typed, native development build: on-device face detection and embedding models compiled in and running fully offline. One quick photo to check in, four to enrol; nothing stored but the numbers. GPS geofencing pairs with face verification against a Supabase backend with per-company data isolation, and every rejection now surfaces the exact match score, turning 'it didn't work' into a number that could actually be tuned.",
       outcome:
-        "The app now does the one thing attendance software has to: recognise the right person and reject the wrong one. Enrollment saves reliably across beards, glasses and dim rooms. Check-in tells apart faces that used to fool it — including siblings — while still recognising the same person across expressions and backgrounds. And because every face is processed on-device and never stored as an image, privacy isn't a promise on a page, it's how the system is built.",
+        "The app now does the one thing attendance software has to: recognise the right person and reject the wrong one. Enrollment saves reliably across beards, glasses and dim rooms. Check-in tells apart faces that used to fool it (including siblings) while still recognising the same person across expressions and backgrounds. And because every face is processed on-device and never stored as an image, privacy isn't a promise on a page, it's how the system is built.",
     },
   },
 ];

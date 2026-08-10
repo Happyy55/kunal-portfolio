@@ -47,7 +47,7 @@ export const CapabilityCard = ({ icon: Icon, number, title, description, accent 
       </motion.div>
 
       <h3 className="capability-card-title">
-        {srPrefix && <span className="sr-only">{srPrefix} — </span>}
+        {srPrefix && <span className="sr-only">{srPrefix}: </span>}
         {title}
       </h3>
       <p className="capability-card-desc">{description}</p>

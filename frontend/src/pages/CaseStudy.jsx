@@ -16,7 +16,7 @@ export default function CaseStudy() {
 
   useEffect(() => {
     if (project) {
-      document.title = `${project.title} — Case study · Kunal Jain`;
+      document.title = `${project.title} · Case study · Kunal Jain`;
       window.scrollTo({ top: 0, behavior: "instant" });
     }
   }, [project]);
@@ -172,7 +172,7 @@ const CaseHeroPlate = ({ project }) => {
               />
               <img
                 src={project.image}
-                alt={`${project.title} — primary plate`}
+                alt={`${project.title}: primary plate`}
                 className="w-full h-full object-cover"
                 data-testid="case-hero-image"
               />

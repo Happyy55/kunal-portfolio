@@ -123,8 +123,8 @@ export const Hero = () => {
                 >
                   <p className="col-span-12 text-[16px] md:text-[18px] leading-[1.75] text-[var(--ink-soft)] max-w-[52ch] mx-auto lg:mx-0">
                     I'm <span className="text-[var(--ink)]">Kunal Jain</span>. I
-                    design and build every site myself, from Ahmedabad — no
-                    handoffs, no diluted ideas. What you approve is exactly
+                    design and build every site myself, from Ahmedabad, with no
+                    handoffs and no diluted ideas. What you approve is exactly
                     what ships.
                   </p>
 

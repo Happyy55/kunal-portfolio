@@ -19,7 +19,7 @@ const POINTS = [
     accent: "cyan",
     tag: "Fast response",
     title: "Reply within a day.",
-    body: "If I can't take the work, I'll say so on the first message — not two weeks of silence, not a vague maybe. You'll know where you stand before the day is out.",
+    body: "If I can't take the work, I'll say so on the first message, not two weeks of silence or a vague maybe. You'll know where you stand before the day is out.",
   },
   {
     num: "02",
@@ -43,7 +43,7 @@ const POINTS = [
     accent: "violet",
     tag: "Transparency always",
     title: "Honest about limits.",
-    body: "If something's outside what I do well — heavy backend infrastructure, say — I'll tell you plainly and point you to someone better, instead of stretching to cover it badly.",
+    body: "If something's outside what I do well (heavy backend infrastructure, say), I'll tell you plainly and point you to someone better, instead of stretching to cover it badly.",
   },
 ];
 
