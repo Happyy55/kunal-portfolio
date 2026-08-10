@@ -86,7 +86,7 @@ export const SelectedWork = () => {
               >
                 <div className="plate h-full flex items-center" data-testid={`project-plate-${p.slug}`}>
                   <div
-                    className="plate-img-wrap aspect-video w-full"
+                    className="plate-img-wrap cover-crop aspect-video w-full"
                     style={{ background: "var(--bg-elev)" }}
                   >
                     <picture className="contents">

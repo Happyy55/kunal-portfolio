@@ -73,7 +73,7 @@ export const Nav = () => {
           <div
             className={`flex items-center justify-between transition-all duration-500 ${
               scrolled
-                ? "rounded-full px-6 py-3 bg-[rgba(5,7,15,0.55)] border border-[rgba(255,255,255,0.09)]"
+                ? "rounded-full px-6 py-3 bg-[rgba(5,7,15,0.92)] border border-[rgba(255,255,255,0.09)]"
                 : "px-0 py-1.5"
             }`}
             style={scrolled ? { boxShadow: "0 0 30px rgba(108,232,236,0.10), 0 8px 32px rgba(0,0,0,0.35)", backdropFilter: "blur(28px) saturate(1.5)", WebkitBackdropFilter: "blur(28px) saturate(1.5)" } : {}}

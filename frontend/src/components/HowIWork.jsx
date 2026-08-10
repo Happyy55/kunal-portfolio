@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { Clock, FileCheck2, Activity, ShieldCheck, ArrowUpRight } from "lucide-react";
+import { Clock, FileCheck2, Activity, ShieldCheck } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -128,16 +128,10 @@ export const HowIWork = () => {
                     </div>
                   </div>
 
-                  <div className="col-span-12 sm:col-span-6 lg:col-span-7">
+                  <div className="col-span-12 sm:col-span-7 lg:col-span-8">
                     <p className="text-[14px] md:text-[14.5px] leading-[1.85] text-[var(--ink-soft)]">
                       {p.body}
                     </p>
-                  </div>
-
-                  <div className="hidden sm:flex col-span-1 justify-end">
-                    <span className="how-arrow-btn">
-                      <ArrowUpRight size={16} strokeWidth={1.8} />
-                    </span>
                   </div>
                 </div>
               </div>

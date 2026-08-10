@@ -20,7 +20,10 @@ const accentGlowOf = (a) => (a === "gold" ? "rgba(212,180,134,0.4)" : a === "vio
 const ProofMarquee = () => (
   <div className="hero-marquee-mask" data-testid="hero-proof-marquee">
     <div className="marquee">
-      {Array.from({ length: 2 }).map((_, k) => (
+      {/* 4 copies (not 2) so the strip never runs out of content mid-loop
+          on very wide viewports — translateX(-25%) in the keyframe below
+          is scaled to match, so the visible scroll speed is unchanged. */}
+      {Array.from({ length: 4 }).map((_, k) => (
         <div key={k} className="flex items-center gap-14 pr-14">
           {PROOF_ITEMS.map((item, idx) => {
             const color = accentVarOf(item.accent);

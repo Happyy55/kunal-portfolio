@@ -139,7 +139,14 @@ export const Footer = () => {
           <span className="text-[var(--ink-muted)]">
             © {year} Kunal Jain. All rights reserved.
           </span>
-          <span>Ahmedabad · India</span>
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            data-testid="footer-back-to-top"
+            className="text-[var(--ink-soft)] hover:text-[var(--cyan)] transition-colors duration-300 text-left sm:text-right"
+          >
+            Back to top
+          </button>
         </div>
       </div>
 
