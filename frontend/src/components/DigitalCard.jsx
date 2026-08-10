@@ -2,15 +2,15 @@ import { useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import { Phone, Mail, Globe, Linkedin, ArrowUpRight } from "lucide-react";
 
-const NAME = "Kunal Jain";
-const TITLE = "Creative Developer";
-const SITE = "kjcreator.com";
-const SITE_URL = "https://kjcreator.com";
-const PHONE = "+91 63536 33045";
-const PHONE_TEL = "+916353633045";
-const EMAIL = "kunalsethia73800@gmail.com";
-const LINKEDIN_LABEL = "linkedin.com/in/KunalJain";
-const LINKEDIN_URL = "https://www.linkedin.com/in/KunalJain";
+export const NAME = "Kunal Jain";
+export const TITLE = "Creative Developer";
+export const SITE = "kjcreator.com";
+export const SITE_URL = "https://kjcreator.com";
+export const PHONE = "+91 63536 33045";
+export const PHONE_TEL = "+916353633045";
+export const EMAIL = "kunalsethia73800@gmail.com";
+export const LINKEDIN_LABEL = "linkedin.com/in/KunalJain";
+export const LINKEDIN_URL = "https://www.linkedin.com/in/KunalJain";
 
 const gridBg = {
   backgroundImage:
@@ -70,25 +70,18 @@ const Front = () => (
         <p className="mt-2 text-[14px] sm:text-[15px] text-[var(--ink-soft)]">{TITLE}</p>
       </div>
 
-      <div className="flex items-center justify-between">
-        <a
-          href={SITE_URL}
-          target="_blank"
-          rel="noreferrer"
-          onClick={(e) => e.stopPropagation()}
-          className="inline-flex items-center gap-2 text-[13px] font-mono text-[var(--ink)] px-3 py-2 rounded-lg"
-          style={{ background: "rgba(108,232,236,0.08)", border: "1px solid var(--rule-strong)" }}
-          data-testid="card-site-link"
-        >
-          <ArrowUpRight size={13} className="text-[var(--cyan)]" />
-          {SITE}
-        </a>
-        <div className="flex items-end gap-[3px]" aria-hidden>
-          {[6, 10, 14, 18].map((h, i) => (
-            <span key={i} style={{ width: 3, height: h, background: "var(--cyan)", boxShadow: "0 0 6px var(--cyan-glow)" }} />
-          ))}
-        </div>
-      </div>
+      <a
+        href={SITE_URL}
+        target="_blank"
+        rel="noreferrer"
+        onClick={(e) => e.stopPropagation()}
+        className="inline-flex items-center gap-2 self-start text-[13px] font-mono text-[var(--ink)] px-3 py-2 rounded-lg"
+        style={{ background: "rgba(108,232,236,0.08)", border: "1px solid var(--rule-strong)" }}
+        data-testid="card-site-link"
+      >
+        <ArrowUpRight size={13} className="text-[var(--cyan)]" />
+        {SITE}
+      </a>
     </div>
   </div>
 );
@@ -149,14 +142,6 @@ const Back = () => (
             <span className="text-[var(--ink-soft)]">portfolio</span>
           </div>
         </div>
-      </div>
-
-      <div
-        className="mt-6 pt-4 flex items-center justify-between text-[10px] tracking-[.14em] uppercase text-[var(--ink-muted)]"
-        style={{ borderTop: "1px solid var(--rule)" }}
-      >
-        <span>Kunal Jain Studio</span>
-        <div className="w-16 h-[3px] rounded-full" style={{ background: "linear-gradient(90deg, var(--cyan), var(--violet))" }} />
       </div>
     </div>
   </div>
