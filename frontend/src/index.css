@@ -432,10 +432,6 @@ textarea:focus-visible {
         0 50px 100px -50px rgba(168, 121, 255, 0.26);
 }
 .plate-img-wrap { position: relative; overflow: hidden; }
-/* Cover art has its logo lockup concentrated in a narrow band with dead
-   space above/below baked into the source file; zoom the wrapper (clipped
-   by .plate's overflow:hidden) to crop that margin out instead of showing it. */
-.plate-img-wrap.cover-crop { transform: scale(1.5); transform-origin: 15% 42%; }
 .plate img { transition: transform 1300ms cubic-bezier(0.22, 1, 0.36, 1); }
 .plate-wrap:hover .plate img { transform: scale(1.05); }
 

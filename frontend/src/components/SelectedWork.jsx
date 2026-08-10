@@ -76,17 +76,18 @@ export const SelectedWork = () => {
                 <span className="mt-3 flex-1 w-px" style={{ background: `linear-gradient(${accentVar}, transparent)` }} />
               </div>
 
-              {/* image — locked to its own 16:9 crop and centered in the
-                  column, so it's never stretched, cropped, or letterboxed
-                  unevenly regardless of how tall the content column runs */}
+              {/* image — box sized to the image's own native aspect ratio
+                  and top-aligned in the column, so the box never runs taller
+                  than the image itself (no dead space above/below) and the
+                  full source image shows with no extra crop */}
               <Link
                 to={`/work/${p.slug}`}
                 data-testid={`project-row-${p.slug}`}
-                className="col-span-12 md:col-span-4 plate-wrap block overflow-hidden rounded-2xl h-full"
+                className="col-span-12 md:col-span-4 plate-wrap block overflow-hidden rounded-2xl self-start"
               >
-                <div className="plate h-full flex items-center" data-testid={`project-plate-${p.slug}`}>
+                <div className="plate flex items-center" data-testid={`project-plate-${p.slug}`}>
                   <div
-                    className="plate-img-wrap cover-crop aspect-video w-full"
+                    className="plate-img-wrap aspect-[4/3] w-full"
                     style={{ background: "var(--bg-elev)" }}
                   >
                     <picture className="contents">
