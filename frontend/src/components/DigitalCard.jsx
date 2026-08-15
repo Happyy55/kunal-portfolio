@@ -8,7 +8,7 @@ export const SITE = "kjcreator.com";
 export const SITE_URL = "https://kjcreator.com";
 export const PHONE = "+91 63536 33045";
 export const PHONE_TEL = "+916353633045";
-export const EMAIL = "kunalsethia73800@gmail.com";
+export const EMAIL = "KJCreator10@gmail.com";
 export const LINKEDIN_LABEL = "linkedin.com/in/KunalJain";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/KunalJain";
 
@@ -23,17 +23,15 @@ const faceShell =
 
 const KJBadge = ({ size = 52 }) => (
   <div
-    className="rounded-[14px] flex items-center justify-center font-tight font-bold"
+    className="rounded-[14px] flex items-center justify-center"
     style={{
       width: size,
       height: size,
-      fontSize: size * 0.4,
       background: "linear-gradient(135deg, var(--violet-deep), var(--cyan-deep))",
-      color: "#0a0d18",
       boxShadow: "0 8px 24px -8px rgba(124,76,240,.55)",
     }}
   >
-    KJ
+    <img src="/images/kj-mark-dark.png" alt="KJ" style={{ height: size * 0.56, width: "auto" }} />
   </div>
 );
 

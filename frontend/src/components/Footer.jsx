@@ -12,7 +12,7 @@ const NAV = [
 
 const SOCIAL = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/kunaljain" },
-  { label: "Email", href: "mailto:kunalsethia73800@gmail.com" },
+  { label: "Email", href: "mailto:KJCreator10@gmail.com" },
   { label: "WhatsApp", href: "https://wa.me/916353633045" },
 ];
 
@@ -60,7 +60,7 @@ export const Footer = () => {
           {/* Brand */}
           <div className="md:col-span-5">
             <div className="flex items-center gap-3">
-              <span className="kj">KJ</span>
+              <img src="/images/kj-mark.png" alt="KJ" className="kj-mark" />
               <div className="leading-tight">
                 <div className="font-display text-[var(--ink)] text-[15px]">Kunal Jain</div>
                 <div className="eyebrow text-[var(--ink-muted)] mt-1 normal-case tracking-[0.1em]">

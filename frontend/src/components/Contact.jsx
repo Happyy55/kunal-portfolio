@@ -6,7 +6,7 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-const EMAIL = "kunalsethia73800@gmail.com";
+const EMAIL = "KJCreator10@gmail.com";
 const PHONE = "+91 63536 33045";
 const PHONE_TEL = "+916353633045";
 const WHATSAPP_URL = `https://wa.me/916353633045?text=${encodeURIComponent("Hi Kunal, I'd like to talk about a project.")}`;

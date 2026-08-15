@@ -79,7 +79,7 @@ export const Nav = () => {
             style={scrolled ? { boxShadow: "0 0 30px rgba(108,232,236,0.10), 0 8px 32px rgba(0,0,0,0.35)", backdropFilter: "blur(28px) saturate(1.5)", WebkitBackdropFilter: "blur(28px) saturate(1.5)" } : {}}
           >
             <Link to="/" data-testid="nav-brand" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-              <span className="kj">KJ</span>
+              <img src="/images/kj-mark.png" alt="KJ" className="kj-mark" />
               <span className="hidden sm:flex flex-col leading-none">
                 <span className="font-display text-[16.5px] text-[var(--ink)]">Kunal Jain</span>
                 <span className="font-mono text-[9.5px] text-[var(--ink-muted)] tracking-[0.24em] mt-1">

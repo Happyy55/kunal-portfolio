@@ -34,14 +34,14 @@ export const About = () => {
                     breaks silently). Uses the site's own KJ monogram rather than a
                     "broken image" glyph, so the empty slot reads as a deliberate
                     placeholder rather than a bug until there's a real one. */}
-                <span
+                <img
+                  src="/images/kj-mark.png"
+                  alt="KJ"
                   data-testid="about-portrait"
                   aria-label="Portrait placeholder, coming soon"
-                  className="font-hero text-[52px] sm:text-[60px] leading-none tracking-[-0.02em]"
-                  style={{ color: "var(--ink-faint)" }}
-                >
-                  KJ
-                </span>
+                  className="w-[34%] max-w-[120px] h-auto"
+                  style={{ filter: "drop-shadow(0 0 24px rgba(108,232,236,0.18))" }}
+                />
                 <div className="grain" />
                 <div
                   className="absolute inset-0 pointer-events-none"
