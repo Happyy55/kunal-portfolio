@@ -319,6 +319,11 @@ textarea:focus-visible {
 .kj-mark:hover {
     filter: drop-shadow(0 0 16px rgba(108, 232, 236, 0.45)) drop-shadow(0 0 26px rgba(168, 121, 255, 0.22));
 }
+/* Nav gets its own, larger size — it's the one spot the mark needs to
+   read as *the* logo, not a small icon next to the wordmark. */
+[data-testid="nav-brand"] .kj-mark {
+    height: 72px;
+}
 
 .lining-nums { font-variant-numeric: lining-nums tabular-nums; }
 
@@ -949,6 +954,7 @@ html, body { overflow-x: clip; }
 @media (max-width: 767px) {
   .particles { display: none !important; }      /* perf + zero layout risk on phones */
   .kj-mark { height: 44px; }
+  [data-testid="nav-brand"] .kj-mark { height: 52px; }
   .scroll-progress { height: 2px; }
 }
 
