@@ -103,7 +103,7 @@ export const Hero = () => {
 
       <div className="flex-1 flex items-center relative z-[2]">
         <div className="max-w-[1800px] mx-auto px-6 md:px-10 xl:px-16 w-full pt-24 md:pt-28 lg:pt-32 pb-10 md:pb-14">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 xl:gap-20 items-center">
             {/* Left — content, centered within its own column rather than
                 flush to the edge. */}
             <div className="lg:col-span-6 lg:pl-12 xl:pl-20 text-center lg:text-left">

@@ -294,9 +294,13 @@ function RobotPrototype({
   };
 
   const config = {
-    moveSpeed: 0.12,
-    bodyRotSpeed: 4.0,
-    headRotSpeed: 6.0,
+    // Slower, gentler follow — the previous 0.12/1.8 travel let the body
+    // drift far enough left on wide viewports to visually cross into the
+    // headline text's column (confirmed by hiding the canvas: the text
+    // itself never overflows, the robot was just reaching it).
+    moveSpeed: 0.05,
+    bodyRotSpeed: 3.2,
+    headRotSpeed: 5.0,
     bodyTiltX: 0.0,
     bodyTiltY: 0.95,
     headLookX: 0.3,
@@ -316,7 +320,11 @@ function RobotPrototype({
     const prevHeadRotY = headRef.current.rotation.y;
     const prevHeadRotX = headRef.current.rotation.x;
 
-    const maxMoveX = state.viewport.width / 3.5;
+    // Capped tighter than viewport.width/3.5 (the old value let the body
+    // reach the canvas's own left edge, right where the headline column
+    // sits) so the sphere stays clear of the text even at full cursor
+    // deflection.
+    const maxMoveX = state.viewport.width / 7;
     const targetPosX = tx * maxMoveX;
     bodyRef.current.position.x = THREE.MathUtils.lerp(bodyRef.current.position.x, targetPosX, config.moveSpeed * dt);
 
