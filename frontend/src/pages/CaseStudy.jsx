@@ -280,12 +280,16 @@ const GallerySection = ({ project }) => {
         </div>
 
         <div className="reveal relative" data-testid="case-gallery-slideshow" ref={stageRef}>
-          {/* stage */}
+          {/* stage — capped by max-height (not just aspect-ratio) so the
+              frame, its prev/next arrows, and the label below it all stay
+              within a normal laptop viewport instead of running the image
+              full-bleed and pushing the controls below the fold. */}
           <div
             className="relative overflow-hidden rounded-[12px] border border-[var(--rule-strong)] bg-[var(--bg-elev)] mx-auto"
             style={{
               aspectRatio: isPortrait ? "9 / 16" : "16 / 9",
               maxWidth: isPortrait ? "380px" : "100%",
+              maxHeight: isPortrait ? "70vh" : "58vh",
               boxShadow: "0 40px 90px -50px rgba(0,0,0,0.7)",
             }}
           >

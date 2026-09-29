@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState, useEffect } from "react";
 import { Canvas, useFrame, useThree, invalidate } from "@react-three/fiber";
 import * as THREE from "three";
+import { PALETTE } from "../lib/palette";
 
 /**
  * RobotCompanion — a cursor-following character for the Hero's right side.
@@ -12,15 +13,14 @@ import * as THREE from "three";
  */
 
 const SITE = {
-  cyan: "#e86ce8",
-  gold: "#d4b486",
-  // Bolder cyan-tinted metal — the dark-grey pass still read as "dark
-  // blob," not a character that stands out. Leaning into the site's own
-  // primary accent for the body itself (not just the eyes/screen) makes
-  // it pop against the dark page instead of blending into it.
+  // Eyes/screen glow — was a one-off magenta (#e86ce8) invented for "attention
+  // pop" and never reconciled with the brand palette. Mapped onto the site's
+  // actual violet token so the hero's focal element stays inside the same
+  // cyan/violet/gold family as everywhere else.
+  accent: PALETTE.violet,
+  gold: PALETTE.gold,
   // Cool gunmetal body reads as an actual metal robot shell instead of a
-  // warm ceramic/ clay pot. Eyes/screen use a pink-purple glow for a clear
-  // attention pop.
+  // warm ceramic/clay pot.
   bodyDark: "#aab0bb",
   bodyMid: "#e4e7ec",
   headDark: "#20242f",
@@ -43,9 +43,8 @@ function ResponsiveGroup({ children, scale = 1 }) {
   return <group scale={s}>{children}</group>;
 }
 
-// Glass "screen" glow on the head — cyan, matching the Engine/Signature core
-// glow used everywhere else on the site instead of the original mint-teal.
-function GlassCapsule({ color = SITE.cyan, power = 3.2, intensity = 1 }) {
+// Glass "screen" glow on the head — matches the site's violet accent token.
+function GlassCapsule({ color = SITE.accent, power = 3.2, intensity = 1 }) {
   const materialRef = useRef(null);
   const uniforms = useMemo(
     () => ({
@@ -267,7 +266,7 @@ function RobotPrototype({
   },
   bodyParams = { bodyBevelR: 0.235, bodyBevelY: 0.34, bodyBevelT: 0.025 },
   color = SITE.bodyDark,
-  pantallaColor = SITE.cyan,
+  pantallaColor = SITE.accent,
   pantallaBrillo = 1.3,
   blinkCycle = 3.0,
   metalness = 0.78,
@@ -570,9 +569,9 @@ export const RobotCompanion = ({ className = "", scale = 1 }) => {
             distances now. Bumped an order of magnitude so the body
             actually catches light instead of reading as a black blob. */}
         <ambientLight intensity={3.2} color="#ffffff" />
-        <pointLight position={[2.2, 2, 3]} intensity={11} color={SITE.cyan} distance={12} decay={1.5} />
+        <pointLight position={[2.2, 2, 3]} intensity={11} color={SITE.accent} distance={12} decay={1.5} />
         <pointLight position={[-2, -1, 2]} intensity={8} color={SITE.gold} distance={12} decay={1.5} />
-        <pointLight position={[0, 1.5, -2]} intensity={6} color={SITE.cyan} distance={12} decay={1.5} />
+        <pointLight position={[0, 1.5, -2]} intensity={6} color={SITE.accent} distance={12} decay={1.5} />
         <directionalLight position={[0, 4, 3]} intensity={2} color="#ffffff" castShadow shadow-mapSize={[1024, 1024]} />
 
         <ResponsiveGroup scale={scale}>

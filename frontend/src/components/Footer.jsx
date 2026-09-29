@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { ArrowUpRight, IdCard } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ArrowUpRight } from "lucide-react";
 import FooterGlowText from "./FooterGlowText";
 
 const NAV = [
@@ -11,13 +11,29 @@ const NAV = [
 ];
 
 const SOCIAL = [
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/kunaljain" },
+  { label: "LinkedIn", href: "https://in.linkedin.com/in/kunaljainstudio" },
   { label: "Email", href: "mailto:KJCreator10@gmail.com" },
   { label: "WhatsApp", href: "https://wa.me/916353633045" },
 ];
 
 export const Footer = () => {
   const year = new Date().getFullYear();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const onHome = pathname === "/";
+
+  // Same reasoning as Nav's smoothScroll: off the home page the target
+  // section isn't in the DOM, so route to home with the hash and let
+  // Home's mount effect finish the scroll once it's rendered.
+  const goToSection = (e, href) => {
+    e.preventDefault();
+    const id = href.replace("#", "");
+    if (onHome) {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate(`/${href}`);
+    }
+  };
 
   return (
     <footer
@@ -37,41 +53,23 @@ export const Footer = () => {
       />
 
       <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 pt-16 md:pt-24 pb-10 md:pb-12">
-        {/* —— Slim wayfinding opener —— Contact (just above) already owns
-            the primary ask; this stays purely navigational so the two
-            sections aren't making the same pitch twice. */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-10 md:pb-12 border-b border-[var(--rule-strong)]">
-          <span className="live-pill" data-testid="footer-availability">
-            <span className="dot" aria-hidden />
-            Available for selected projects
-          </span>
-          <Link
-            to="/card"
-            data-testid="footer-card-cta"
-            className="inline-flex items-center gap-1.5 text-[13.5px] font-display text-[var(--ink-soft)] hover:text-[var(--cyan)] transition-colors duration-300"
-          >
-            <IdCard size={13} strokeWidth={1.8} />
-            <span>Digital business card</span>
-          </Link>
-        </div>
-
         {/* —— Columns —— */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 pt-12 md:pt-16">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10">
           {/* Brand */}
           <div className="md:col-span-5">
             <div className="flex items-center gap-3">
               <img src="/images/kj-mark.png" alt="KJ" className="kj-mark" />
               <div className="leading-tight">
-                <div className="font-display text-[var(--ink)] text-[15px]">Kunal Jain</div>
+                <div className="font-display text-[var(--ink)] text-[15px]">KJ Studio</div>
                 <div className="eyebrow text-[var(--ink-muted)] mt-1 normal-case tracking-[0.1em]">
-                  Creative Developer
+                  Creative Development
                 </div>
               </div>
             </div>
             <p className="mt-6 max-w-[42ch] text-[14px] leading-[1.85] text-[var(--ink-soft)]">
-              I design brand identities and build fast, reliable websites
-              for founders and small businesses. One person, end to end,
-              working from Ahmedabad.
+              A creative studio designing brand identities and building
+              fast, reliable websites for founders and small teams. Led by
+              Kunal Jain, based in Ahmedabad.
             </p>
           </div>
 
@@ -87,8 +85,8 @@ export const Footer = () => {
                 {NAV.map((l) => (
                   <li key={l.href}>
                     <a
-                      href={l.href}
-                      onClick={(e) => { const el = document.getElementById(l.href.replace("#", "")); if (el) { e.preventDefault(); el.scrollIntoView({ behavior: "smooth" }); } }}
+                      href={onHome ? l.href : `/${l.href}`}
+                      onClick={(e) => goToSection(e, l.href)}
                       data-testid={`footer-nav-${l.label.toLowerCase().replace(/\s/g, "-")}`}
                       className="block py-[13px] text-[14px] font-display text-[var(--ink-soft)] hover:text-[var(--cyan)] transition-colors duration-300"
                     >
@@ -135,7 +133,7 @@ export const Footer = () => {
         </div>
 
         {/* —— Baseline row —— */}
-        <div className="mt-7 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 eyebrow">
+        <div className="mt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 eyebrow">
           <span className="text-[var(--ink-muted)]">
             © {year} Kunal Jain. All rights reserved.
           </span>

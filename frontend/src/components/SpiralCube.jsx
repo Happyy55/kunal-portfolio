@@ -1,16 +1,12 @@
 import { Suspense, useMemo, useRef, useState, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Html } from "@react-three/drei";
 import * as THREE from "three";
-import { Palette, Code2, Sparkles, Zap } from "lucide-react";
+import { PALETTE } from "../lib/palette";
 
 /**
- * SpiralCube — the same cube from the hero, arrived here. It spins slowly,
- * a spiral of particles orbits it climbing and looping, and four capability
- * words cross-fade in sequence around it. This is a companion piece to
- * ParticleCube.jsx (shares the same shell-sampling approach) rather than a
- * literal persisted WebGL object — two synced components reading as one
- * continuous idea across the section boundary.
+ * SpiralCube — a slowly spinning wireframe cube with a particle shell and
+ * an orbiting spiral of particles around it. Sits alongside the five
+ * capability items in "The Craft" as the section's visual centerpiece.
  */
 
 const CUBE_HALF = 0.95;
@@ -60,7 +56,7 @@ const CubeShell = () => {
     <points geometry={geometry}>
       <pointsMaterial
         size={0.028}
-        color="#6ce8ec"
+        color={PALETTE.cyan}
         transparent
         opacity={0.85}
         depthWrite={false}
@@ -112,7 +108,7 @@ const SpiralField = () => {
     <points ref={ref} geometry={geometry}>
       <pointsMaterial
         size={0.02}
-        color="#d4b486"
+        color={PALETTE.gold}
         transparent
         opacity={0.65}
         depthWrite={false}
@@ -132,78 +128,10 @@ const CubeWireframe = () => {
   );
   return (
     <lineSegments geometry={geometry}>
-      <lineBasicMaterial color="#a879ff" transparent opacity={0.5} />
+      <lineBasicMaterial color={PALETTE.violet} transparent opacity={0.5} />
     </lineSegments>
   );
 };
-
-// Offset well past the cube's surface so these read as satellite badges
-// orbiting the cube rather than icons stuck to (and cluttering) its faces.
-const FACE_ICON_DIST = CUBE_HALF + 0.6;
-// Top/bottom badges sit ON the spin axis, so they're rendered as plain CSS
-// overlays outside the WebGL scene entirely (see TopBottomBadges below) —
-// that way no 3D rotation (including the mouse-driven tilt) can ever nudge
-// them off-center. Only the front/back badges, which genuinely orbit into
-// and out of view as the cube spins, live in the 3D scene.
-const FACE_ICONS = [
-  { Icon: Palette, pos: [FACE_ICON_DIST, 0, 0] },
-  { Icon: Code2, pos: [-FACE_ICON_DIST, 0, 0] },
-  { Icon: Sparkles, pos: [0, 0, FACE_ICON_DIST] },
-  { Icon: Zap, pos: [0, 0, -FACE_ICON_DIST] },
-];
-
-// One orbiting icon badge — fades based on whether the cube's spin has
-// carried it to the front or the back.
-const FaceIconBadge = ({ Icon, pos }) => {
-  const groupRef = useRef(null);
-  const elRef = useRef(null);
-  const opacity = useRef(0);
-  const worldPos = useMemo(() => new THREE.Vector3(), []);
-
-  useFrame((state, delta) => {
-    if (!groupRef.current || !elRef.current) return;
-    groupRef.current.getWorldPosition(worldPos);
-    // Camera sits on the +z side looking at the origin, so a badge's
-    // world-space z tells us whether it's facing the camera (front) or
-    // swung around the back.
-    const target = worldPos.z > 0.05 ? 1 : 0;
-    opacity.current = THREE.MathUtils.lerp(opacity.current, target, Math.min(delta * 6, 1));
-    elRef.current.style.opacity = opacity.current.toFixed(2);
-  });
-
-  return (
-    <group ref={groupRef} position={pos}>
-      <Html center distanceFactor={6} style={{ pointerEvents: "none" }}>
-        <div
-          ref={elRef}
-          style={{
-            width: 26,
-            height: 26,
-            borderRadius: 8,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "rgba(10,14,24,0.55)",
-            border: "1px solid rgba(108,232,236,0.4)",
-            boxShadow: "0 0 12px rgba(108,232,236,0.35)",
-            color: "#6ce8ec",
-            opacity: 0,
-          }}
-        >
-          <Icon size={14} strokeWidth={1.8} />
-        </div>
-      </Html>
-    </group>
-  );
-};
-
-const FaceIcons = () => (
-  <>
-    {FACE_ICONS.map(({ Icon, pos }, i) => (
-      <FaceIconBadge key={i} Icon={Icon} pos={pos} />
-    ))}
-  </>
-);
 
 const Scene = () => {
   const groupRef = useRef(null);
@@ -221,9 +149,8 @@ const Scene = () => {
     <group ref={groupRef}>
       <CubeShell />
       <CubeWireframe />
-      <FaceIcons />
       <SpiralField />
-      <pointLight position={[0, 0, 0]} color="#d4b486" intensity={3} distance={4} />
+      <pointLight position={[0, 0, 0]} color={PALETTE.gold} intensity={3} distance={4} />
     </group>
   );
 };
@@ -286,7 +213,7 @@ export const SpiralCube = ({ className = "" }) => {
           gl.domElement.setAttribute("role", "img");
           gl.domElement.setAttribute(
             "aria-label",
-            "Rotating wireframe cube with an orbiting spiral of particles and small icons on each face"
+            "Rotating wireframe cube with an orbiting spiral of particles"
           );
         }}
       >

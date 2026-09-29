@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { TextRoll } from "./ui/text-roll";
 
 const LINKS = [
   { href: "#signature", label: "The Craft" },
@@ -14,12 +13,11 @@ const LINKS = [
 
 export const Nav = () => {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const onHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState("");
-  const [rollNonce, setRollNonce] = useState({});
-  const triggerRoll = (href) => setRollNonce((n) => ({ ...n, [href]: (n[href] || 0) + 1 }));
 
   // scroll-spy: highlight the section currently in view
   useEffect(() => {
@@ -55,11 +53,19 @@ export const Nav = () => {
 
   const hrefFor = (href) => (onHome ? href : `/${href}`);
 
+  // From the home page this scrolls in place. From any other route (a case
+  // study, the business card) the target section doesn't exist in the DOM
+  // yet, so a plain anchor click would fall through to a full page reload
+  // that lands on top of "/" with no scroll at all. Routing there instead
+  // lets Home's own mount effect pick up the hash and scroll once it's
+  // actually rendered.
   const smoothScroll = (e, href) => {
-    const el = document.getElementById(href.replace("#", ""));
-    if (el) {
-      e.preventDefault();
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    e.preventDefault();
+    const id = href.replace("#", "");
+    if (onHome) {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      navigate(`/${href}`);
     }
   };
 
@@ -67,23 +73,34 @@ export const Nav = () => {
     <>
       <header
         data-testid="site-nav"
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${scrolled ? "py-4" : "py-8"}`}
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${scrolled ? "py-3" : "py-6"}`}
       >
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <div
             className={`flex items-center justify-between transition-all duration-500 ${
               scrolled
-                ? "rounded-full px-6 py-3 bg-[rgba(5,7,15,0.92)] border border-[rgba(255,255,255,0.09)]"
+                ? "rounded-full px-5 py-2.5 bg-[rgba(5,7,15,0.92)] border border-[rgba(255,255,255,0.09)]"
                 : "px-0 py-1.5"
             }`}
-            style={scrolled ? { boxShadow: "0 0 30px rgba(108,232,236,0.10), 0 8px 32px rgba(0,0,0,0.35)", backdropFilter: "blur(28px) saturate(1.5)", WebkitBackdropFilter: "blur(28px) saturate(1.5)" } : {}}
+            style={scrolled ? { boxShadow: "0 8px 24px rgba(0,0,0,0.35)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" } : {}}
           >
-            <Link to="/" data-testid="nav-brand" className="flex items-center gap-3" onClick={() => setOpen(false)}>
+            <Link
+              to="/"
+              data-testid="nav-brand"
+              className="flex items-center gap-3"
+              onClick={(e) => {
+                setOpen(false);
+                if (onHome) {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }
+              }}
+            >
               <img src="/images/kj-mark.png" alt="KJ" className="kj-mark" />
               <span className="hidden sm:flex flex-col leading-none">
-                <span className="font-display text-[16.5px] text-[var(--ink)]">Kunal Jain</span>
+                <span className="font-display text-[16.5px] text-[var(--ink)]">KJ Studio</span>
                 <span className="font-mono text-[9.5px] text-[var(--ink-muted)] tracking-[0.24em] mt-1">
-                  Creative Developer
+                  Creative Development
                 </span>
               </span>
             </Link>
@@ -94,9 +111,8 @@ export const Nav = () => {
                   key={l.href}
                   href={hrefFor(l.href)}
                   onClick={(e) => smoothScroll(e, l.href)}
-                  onMouseEnter={() => triggerRoll(l.href)}
                   data-testid={`nav-link-${l.label.toLowerCase()}`}
-                  className={`relative text-[14.5px] link font-display py-1 inline-flex items-center gap-2 transition-colors duration-300 ${
+                  className={`relative text-[15px] link font-display font-medium py-1 inline-flex items-center gap-2 transition-colors duration-300 ${
                     activeId === l.href.slice(1) ? "text-[var(--cyan)]" : ""
                   }`}
                 >
@@ -107,20 +123,16 @@ export const Nav = () => {
                     }`}
                     style={activeId === l.href.slice(1) ? { boxShadow: "0 0 8px var(--cyan-glow)" } : {}}
                   />
-                  <TextRoll key={rollNonce[l.href] || 0} duration={0.3} getEnterDelay={(i) => i * 0.03} getExitDelay={(i) => i * 0.03 + 0.12}>
-                    {l.label}
-                  </TextRoll>
+                  {l.label}
                 </a>
               ))}
               <a
                 href={hrefFor("#contact")}
                 onClick={(e) => smoothScroll(e, "#contact")}
                 data-testid="nav-cta"
-                className="inline-flex items-center gap-2.5 text-[13px] font-display px-[18px] py-[9px] rounded-full border border-[rgba(108,232,236,0.32)] text-[var(--ink)] hover:text-[var(--cyan)] hover:border-[var(--cyan)] transition-all duration-300 hover:-translate-y-[1px]"
-                style={{ boxShadow: "0 0 18px rgba(108,232,236,0.10), inset 0 0 12px rgba(108,232,236,0.05)" }}
+                className="inline-flex items-center text-[13px] font-display px-[18px] py-[9px] rounded-full border border-[rgba(255,255,255,0.14)] text-[var(--ink)] hover:text-[var(--cyan)] hover:border-[var(--cyan)] transition-colors duration-300"
               >
                 Let's talk
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--cyan)]" style={{ boxShadow: "0 0 8px var(--cyan-glow)" }} />
               </a>
             </nav>
 
@@ -129,8 +141,7 @@ export const Nav = () => {
               onClick={() => setOpen((v) => !v)}
               data-testid="nav-mobile-toggle"
               aria-label={open ? "Close menu" : "Open menu"}
-              className="lg:hidden inline-flex items-center justify-center w-11 h-11 rounded-full border border-[rgba(108,232,236,0.3)] bg-[rgba(5,7,15,0.55)] backdrop-blur-md text-[var(--ink)] hover:text-[var(--cyan)] hover:border-[var(--cyan)] transition-colors"
-              style={{ boxShadow: "0 0 18px rgba(108,232,236,0.18)" }}
+              className="lg:hidden inline-flex items-center justify-center w-11 h-11 rounded-full border border-[rgba(255,255,255,0.12)] bg-[rgba(5,7,15,0.55)] backdrop-blur-md text-[var(--ink)] hover:text-[var(--cyan)] hover:border-[var(--cyan)] transition-colors"
             >
               {open ? <X size={18} strokeWidth={1.7} /> : <Menu size={18} strokeWidth={1.7} />}
             </button>

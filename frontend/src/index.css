@@ -18,7 +18,7 @@
     /* ink */
     --ink: #f3eee5;
     --ink-soft: #a4a6b3;
-    --ink-muted: #7d808f;
+    --ink-muted: #7fa3ac;
     --ink-faint: #3c3e4a;
 
     /* rules */
@@ -136,34 +136,33 @@ body::after {
     background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.15 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
 
-.App { position: relative; z-index: 2; width: 100%; max-width: 100vw; overflow-x: hidden; }
+/* Per spec, pairing overflow-x:hidden with overflow-y:visible still gets
+   overflow-y computed to "auto" (a visible/clip value next to a non-
+   visible one always promotes to auto) — that quietly turned .App into
+   its own scroll container. Since .App auto-sizes to its content (no
+   max-height), matching both axes to hidden avoids the promotion without
+   clipping anything, so the window stays the one true scroll container
+   and scrollIntoView() bubbles up to it correctly. */
+.App { position: relative; z-index: 2; width: 100%; max-width: 100vw; overflow-x: hidden; overflow-y: hidden; }
 
-/* Cursor-follow ambient glow */
-.cursor-glow {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 3;
-    background: radial-gradient(
-        320px 320px at var(--cursor-x, 50%) var(--cursor-y, 50%),
-        rgba(108, 232, 236, 0.12) 0%,
-        rgba(168, 121, 255, 0.07) 35%,
-        transparent 70%
-    );
-    transition: background 200ms linear;
-    mix-blend-mode: screen;
-}
-
-/* —— Typography —— */
+/* —— Typography ——
+   Editorial serif for anything with presence (hero, section headings,
+   emphasis words), clean grotesk for everything read as body/UI copy,
+   mono reserved for labels and data. Three families with distinct jobs,
+   not one bold sans doing every job on the page. */
 .font-display { font-family: "Geist", sans-serif; font-weight: 500; letter-spacing: -0.03em; }
-.font-tight   { font-family: "Geist", sans-serif; font-weight: 500; letter-spacing: -0.04em; }
-.font-italic  { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; letter-spacing: -0.005em; }
+.font-tight   { font-family: "Geist", sans-serif; font-weight: 600; letter-spacing: -0.03em; }
+.font-italic  { font-family: "Geist", sans-serif; font-style: italic; font-weight: 500; letter-spacing: -0.02em; }
 .font-mono    { font-family: "JetBrains Mono", ui-monospace, monospace; }
-.font-hero    { font-family: "Syne", "Geist", sans-serif; font-weight: 800; letter-spacing: -0.02em; }
+.font-hero    { font-family: "Geist", sans-serif; font-weight: 800; letter-spacing: -0.04em; }
 
 .hero-word-highlight {
-    color: var(--cyan);
-    text-shadow: 0 0 30px var(--cyan-glow);
+    color: var(--violet);
+    text-shadow: 0 0 22px var(--violet-glow);
+    transition: text-shadow 300ms ease;
+}
+.hero-word-highlight:hover {
+    text-shadow: 0 0 32px var(--violet-glow);
 }
 .hero-underline {
     position: absolute;
@@ -236,20 +235,17 @@ textarea:focus-visible {
     color: var(--ink-muted);
 }
 
+/* Kept deliberately quiet — a small gray caption, not a glowing accent
+   label. A bright, glowing eyebrow on every section is one of the more
+   recognizable "AI template" tells; this reads as a footnote instead. */
 .section-mark {
     font-family: "JetBrains Mono", monospace;
-    font-size: 10.5px;
-    letter-spacing: 0.26em;
-    color: var(--cyan);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ink-muted);
     text-transform: uppercase;
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    text-shadow: 0 0 14px var(--cyan-glow);
-}
-.section-mark::before {
-    content: ""; width: 18px; height: 1px; background: var(--cyan);
-    box-shadow: 0 0 10px var(--cyan-glow);
 }
 
 /* Live indicator — keeps green */
@@ -565,13 +561,6 @@ textarea:focus-visible {
     transform: translateY(-3px);
 }
 
-/* Hero proof-point marquee — continuous scroll with faded edges */
-.hero-marquee-mask {
-    overflow: hidden;
-    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
-    mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
-}
-
 /* Shared chip — replaces the old .cap / .capability-pill duplicates.
    Accent color comes in via --chip-accent / --chip-accent-glow (see
    components/ui/Chip.jsx); glow only appears on hover — resting state
@@ -656,18 +645,6 @@ textarea:focus-visible {
     100% { transform: translate3d(20px, -120px, 0); opacity: 0; }
 }
 
-/* Marquee */
-.marquee {
-    display: flex;
-    gap: 4rem;
-    animation: marquee 68s linear infinite;
-    width: max-content;
-}
-@keyframes marquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-25%); }
-}
-
 /* Scroll progress bar */
 .scroll-progress {
     position: fixed;
@@ -683,7 +660,7 @@ textarea:focus-visible {
 /* Reduce motion */
 @media (prefers-reduced-motion: reduce) {
     .reveal { opacity: 1; transform: none; transition: none; }
-    .live-pill .dot, body::before, .marquee, .particles span { animation: none; }
+    .live-pill .dot, body::before, .particles span { animation: none; }
     .plate-wrap:hover .plate { transform: none; }
     html { scroll-behavior: auto; }
 }
@@ -691,62 +668,57 @@ textarea:focus-visible {
 /* ── refinement layer ─────────────────────────────────────── */
 .kj-mark { height: 58px; }
 
-/* Hero headline: stagger the lines off a straight left edge, and let
-   each line nudge toward the cyan accent on hover for a bit of life. */
+/* Hero headline: a quiet nudge toward the cyan accent on hover. */
 .hero-line {
   display: inline-block;
   transition: transform .4s cubic-bezier(.2,.7,.2,1), color .3s;
   user-select: none;
   -webkit-user-select: none;
 }
-.hero-line-1 { margin-left: 0; }
-.hero-line-2 { margin-left: clamp(0px, 4vw, 56px); }
-.hero-line-3 { margin-left: 0; }
 .hero-line:hover { transform: translateX(6px); color: var(--cyan); }
-@media (max-width: 640px) {
-  .hero-line-2, .hero-line-3 { margin-left: 0; }
-}
 
-/* Slight per-line tilt for a hand-set, poster-typography feel. */
-.hero-line-tilt-1 { display: block; transform: rotate(-1.1deg); }
-.hero-line-tilt-2 { display: block; transform: rotate(0.8deg); }
-.hero-line-tilt-3 { display: block; transform: rotate(-0.5deg); }
-@media (max-width: 640px) {
-  .hero-line-tilt-1, .hero-line-tilt-2, .hero-line-tilt-3 { transform: none; }
+/* Hero photo visual — the glow sits behind and beyond the frame's edges
+   (a soft halo bleeding outward), never painted flat inside the image. */
+.hero-visual {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+}
+.hero-visual-glow {
+  position: absolute;
+  inset: -14%;
+  border-radius: 36px;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(closest-side, rgba(108,232,236,0.38), transparent 70%),
+    radial-gradient(closest-side at 78% 82%, rgba(168,121,255,0.32), transparent 70%);
+  filter: blur(38px);
+  animation: hero-visual-pulse 7s ease-in-out infinite;
+}
+.hero-visual-img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 30px 80px -30px rgba(0,0,0,0.7);
+}
+@keyframes hero-visual-pulse {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-visual-glow { animation: none; }
+}
+@media (max-width: 1023px) {
+  .hero-visual { max-width: 300px; margin: 0 auto; }
 }
 
 /* Larger hero-only CTA variant, layered on top of the site-wide .btn-primary/.btn-ghost. */
 .btn-hero-lg { padding: 21px 32px; font-size: 16px; }
-
-/* A soft light beam that sweeps across the hero every ~13s. */
-.hero-light-sweep {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 1;
-}
-.hero-light-sweep::after {
-  content: "";
-  position: absolute;
-  top: -20%;
-  bottom: -20%;
-  left: -30%;
-  width: 22%;
-  background: linear-gradient(100deg, transparent 0%, rgba(108, 232, 236, 0.10) 45%, rgba(168, 121, 255, 0.14) 55%, transparent 100%);
-  transform: skewX(-14deg);
-  animation: hero-sweep 13s ease-in-out infinite;
-}
-@keyframes hero-sweep {
-  0%   { left: -30%; opacity: 0; }
-  8%   { opacity: 1; }
-  22%  { opacity: 1; }
-  30%  { left: 130%; opacity: 0; }
-  100% { left: 130%; opacity: 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-light-sweep::after { animation: none; display: none; }
-}
 
 /* ── Footer glow wordmark ─────────────────────────────────────── */
 .footer-glow-wordmark {
@@ -776,7 +748,7 @@ textarea:focus-visible {
   inset: 0;
   color: transparent;
   -webkit-text-stroke: 1.5px transparent;
-  background: linear-gradient(90deg, var(--cyan) 0%, var(--violet) 100%);
+  background: linear-gradient(90deg, var(--violet) 0%, var(--violet) 45%, var(--cyan) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   pointer-events: none;
@@ -862,20 +834,10 @@ textarea:focus-visible {
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: var(--ink-faint);
-  box-shadow: none;
-  transition: background .35s ease, box-shadow .35s ease;
-}
-.how-row:hover .how-num-dot {
   background: var(--accent-color);
   box-shadow: 0 0 14px var(--accent-glow);
 }
 .how-num {
-  color: var(--ink-muted);
-  text-shadow: none;
-  transition: color .35s ease, text-shadow .35s ease;
-}
-.how-row:hover .how-num {
   color: var(--accent-color);
   text-shadow: 0 0 14px var(--accent-glow);
 }
@@ -883,7 +845,9 @@ textarea:focus-visible {
   position: relative;
   border-radius: 20px;
   border: 1px solid var(--rule-strong);
-  background: linear-gradient(160deg, rgba(255,255,255,0.03), rgba(255,255,255,0.008));
+  background:
+    radial-gradient(120% 140% at 0% 0%, var(--accent-glow), transparent 55%),
+    linear-gradient(160deg, rgba(255,255,255,0.03), rgba(255,255,255,0.008));
   transition: border-color .35s ease, transform .35s ease, box-shadow .35s ease;
 }
 .how-row:hover .how-item-card {
@@ -940,7 +904,6 @@ html { -webkit-text-size-adjust: 100%; }
     justify-content: center;
     text-align: center;
   }
-  .marquee { font-size: 15px; }
   .section-mark { letter-spacing: 0.2em; }
 }
 
@@ -948,9 +911,6 @@ html { -webkit-text-size-adjust: 100%; }
 html, body { overflow-x: clip; }
 #root { overflow-x: clip; width: 100%; }
 
-@media (hover: none), (max-width: 767px) {
-  .cursor-glow { display: none !important; }   /* desktop-only effect */
-}
 @media (max-width: 767px) {
   .particles { display: none !important; }      /* perf + zero layout risk on phones */
   .kj-mark { height: 44px; }

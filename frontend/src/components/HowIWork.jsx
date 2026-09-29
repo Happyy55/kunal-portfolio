@@ -19,7 +19,7 @@ const POINTS = [
     accent: "cyan",
     tag: "Fast response",
     title: "Reply within a day.",
-    body: "If I can't take the work, I'll say so on the first message, not two weeks of silence or a vague maybe. You'll know where you stand before the day is out.",
+    body: "If I can't take the work, I'll say so on the first message, not two weeks of silence or a vague maybe.",
   },
   {
     num: "02",
@@ -27,23 +27,23 @@ const POINTS = [
     accent: "gold",
     tag: "Clarity first",
     title: "Scope before quote.",
-    body: "I ask questions until the brief is actually clear, then send one fixed price for exactly that scope. No hourly meter running quietly in the background, no line items that show up later.",
+    body: "I ask questions until the brief is clear, then send one fixed price for exactly that scope.",
   },
   {
     num: "03",
     icon: Activity,
-    accent: "cyan",
+    accent: "violet",
     tag: "Always in motion",
     title: "Regular progress.",
-    body: "Weekly check-ins, not a black box until launch day. You'll see the real site taking shape as it's built, not a status update that just says \"on track.\"",
+    body: "Weekly check-ins, not a black box until launch day. You'll see the real site taking shape as it's built.",
   },
   {
     num: "04",
     icon: ShieldCheck,
-    accent: "violet",
+    accent: "cyan",
     tag: "Transparency always",
     title: "Honest about limits.",
-    body: "If something's outside what I do well (heavy backend infrastructure, say), I'll tell you plainly and point you to someone better, instead of stretching to cover it badly.",
+    body: "If something's outside what I do well, I'll tell you plainly and point you to someone better.",
   },
 ];
 
@@ -80,26 +80,14 @@ export const HowIWork = () => {
       className=""
     >
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 md:py-28">
-        <div className="grid grid-cols-12 gap-6 md:gap-8 items-end mb-14 md:mb-20 reveal">
-          <div className="col-span-12 md:col-span-9">
-            <div className="section-mark mb-6">How I Build</div>
-            <h2 className="font-hero text-[36px] sm:text-[50px] lg:text-[60px] leading-[1.02] text-[var(--ink)] max-w-[16ch]">
-              No surprises.
-            </h2>
-          </div>
-          <div className="col-span-12 md:col-span-3 md:text-right">
-            <p className="text-[14px] leading-relaxed text-[var(--ink-muted)] max-w-[32ch] md:ml-auto">
-              Four things you can count on, every project.
-            </p>
-          </div>
+        <div className="mb-14 md:mb-20 reveal">
+          <div className="section-mark mb-6">How I Build</div>
+          <h2 className="font-hero text-[36px] sm:text-[50px] lg:text-[60px] leading-[1.02] text-[var(--ink)] max-w-[16ch]">
+            No surprises.
+          </h2>
         </div>
 
         <ol className="relative space-y-5 md:space-y-6" ref={listRef}>
-          <div
-            aria-hidden
-            className="absolute top-2 bottom-2 w-px bg-[var(--rule-strong)] hidden md:block"
-            style={{ left: "26px" }}
-          />
           {POINTS.map((p, i) => {
             const accent = ACCENT_VAR[p.accent];
             return (

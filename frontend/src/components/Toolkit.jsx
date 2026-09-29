@@ -20,12 +20,12 @@ const GROUPS = [
   {
     code: "04",
     label: "Tools & DevOps",
-    items: ["Git & GitHub", "VS Code", "Postman", "Docker", "Vercel", "Cursor AI"],
+    items: ["Git & GitHub", "VS Code", "Postman", "Docker", "Vercel", "Cloud Fundamentals (AWS)"],
   },
   {
     code: "05",
-    label: "Professional Development",
-    items: ["Motion Design", "Video Post-Production", "Adobe After Effects", "DaVinci Resolve", "Three.js", "Cloud Fundamentals (AWS)"],
+    label: "Motion & Creative",
+    items: ["Motion Design", "Three.js", "Video Post-Production", "Adobe After Effects", "DaVinci Resolve"],
   },
 ];
 
@@ -104,37 +104,14 @@ function HoloCard({ group, accent }) {
 
 export const Toolkit = () => {
   return (
-    <section
-      id="toolkit"
-      data-testid="toolkit-section"
-      className="relative"
-    >
+    <section id="toolkit" data-testid="toolkit-section" className="relative">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 md:py-28">
-        <div className="reveal mb-10 md:mb-14 flex flex-wrap items-center gap-x-7 gap-y-3">
-          {GROUPS.map((g, i) => (
-            <span
-              key={g.code}
-              className="inline-flex items-center gap-2.5 font-mono text-[11px] tracking-[0.16em] uppercase text-[var(--ink-muted)]"
-            >
-              <span style={{ color: ACCENT_VAR[ACCENT_CYCLE[i % ACCENT_CYCLE.length]].color }}>{g.code}</span>
-              {g.label}
-              {i < GROUPS.length - 1 && <span aria-hidden className="w-5 h-px bg-[var(--rule-strong)]" />}
-            </span>
-          ))}
-        </div>
-        <div className="grid grid-cols-12 gap-6 md:gap-8 items-end mb-14 md:mb-20 reveal">
-          <div className="col-span-12 md:col-span-9">
-            <div className="section-mark mb-6">Stack</div>
-            <h2 className="font-tight text-[34px] sm:text-[46px] lg:text-[56px] leading-[1.05] text-[var(--ink)] max-w-[20ch]">
-              What I{" "}
-              <em className="font-italic text-[var(--cyan)]">work with</em>.
-            </h2>
-          </div>
-          <div className="col-span-12 md:col-span-3 md:text-right">
-            <p className="text-[14px] leading-relaxed text-[var(--ink-muted)] max-w-[32ch] md:ml-auto">
-              Grouped the way I actually use them: design and development, side by side.
-            </p>
-          </div>
+        <div className="mb-14 md:mb-20 reveal">
+          <div className="section-mark mb-6">Stack</div>
+          <h2 className="font-tight text-[34px] sm:text-[46px] lg:text-[56px] leading-[1.05] text-[var(--ink)] max-w-[20ch]">
+            What I{" "}
+            <em className="font-italic text-[var(--cyan)]">work with</em>.
+          </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7">
@@ -142,10 +119,6 @@ export const Toolkit = () => {
             <HoloCard key={g.label} group={g} accent={ACCENT_CYCLE[i % ACCENT_CYCLE.length]} />
           ))}
         </div>
-
-        <p className="mt-8 text-[13px] text-[var(--ink-muted)]">
-          I also build with Claude and GitHub Copilot day to day. Tools, not a substitute for the thinking.
-        </p>
       </div>
     </section>
   );

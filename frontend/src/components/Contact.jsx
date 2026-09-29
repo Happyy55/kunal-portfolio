@@ -14,7 +14,7 @@ const WHATSAPP_URL = `https://wa.me/916353633045?text=${encodeURIComponent("Hi K
 const LINES = [
   { label: "WhatsApp", value: PHONE, href: WHATSAPP_URL, testid: "contact-whatsapp", external: true, icon: MessageSquare, accent: "cyan" },
   { label: "Phone", value: PHONE, href: `tel:${PHONE_TEL}`, testid: "contact-phone", icon: Phone, accent: "violet" },
-  { label: "LinkedIn", value: "linkedin.com/in/kunaljain", href: "https://www.linkedin.com/in/kunaljain", testid: "social-linkedin", external: true, icon: Linkedin, accent: "gold" },
+  { label: "LinkedIn", value: "linkedin.com/in/kunaljainstudio", href: "https://in.linkedin.com/in/kunaljainstudio", testid: "social-linkedin", external: true, icon: Linkedin, accent: "gold" },
   { label: "Email", value: EMAIL, href: `mailto:${EMAIL}`, testid: "social-email", icon: Mail, accent: "cyan" },
 ];
 
@@ -62,11 +62,8 @@ export const Contact = () => {
             Got something{" "}
             <em className="font-italic text-[var(--cyan)]">worth building?</em>
           </h2>
-          <p className="mt-6 md:mt-8 text-[15px] md:text-[16.5px] leading-[1.85] text-[var(--ink)] max-w-[46ch] mx-auto">
-            You bring the idea, and I'll make sure it survives the build.
-          </p>
-          <p className="mt-3 text-[14px] md:text-[15px] leading-[1.85] text-[var(--ink-soft)] max-w-[54ch] mx-auto">
-            Email or WhatsApp, whichever's faster for you. I read everything, and reply within a day.
+          <p className="mt-6 md:mt-8 text-[15px] md:text-[16.5px] leading-[1.85] text-[var(--ink-soft)] max-w-[46ch] mx-auto">
+            Email or WhatsApp, whichever's faster. I read everything and reply within a day.
           </p>
         </div>
 

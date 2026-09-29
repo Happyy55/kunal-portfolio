@@ -1,7 +1,6 @@
 import { lazy, Suspense, useRef } from "react";
 import { Palette, Layers, Code2, Gauge, Sparkles } from "lucide-react";
 import CapabilityCard from "./CapabilityCard";
-import { Chip } from "./ui/Chip";
 
 const SpiralCube = lazy(() => import("./SpiralCube"));
 
@@ -11,8 +10,6 @@ const CARDS = [
   { icon: Code2, number: "03", title: "Development", accent: "cyan", description: "Building scalable, high-performance applications using React, Three.js, GSAP, and modern frontend architecture." },
   { icon: Gauge, number: "04", title: "Performance", accent: "gold", description: "Optimized for speed, accessibility, responsiveness, SEO, and production-ready code." },
 ];
-
-const TECH = ["UI / UX", "React", "Three.js", "GSAP", "Motion", "Tailwind"];
 
 export const SignatureSection = () => {
   const sectionRef = useRef(null);
@@ -35,11 +32,6 @@ export const SignatureSection = () => {
             <span className="text-[var(--cyan)]">·</span> Performance{" "}
             <span className="text-[var(--gold)]">·</span> Experience
           </h2>
-          <p className="mt-5 text-[14px] md:text-[15px] leading-[1.85] text-[var(--ink-soft)] max-w-[52ch] mx-auto">
-            Every product I build blends thoughtful design, meaningful
-            interaction, clean engineering, optimized performance, and
-            memorable user experiences.
-          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-6 lg:gap-8 items-center">
@@ -69,22 +61,15 @@ export const SignatureSection = () => {
         </div>
 
         <div className="mt-6 md:mt-8">
-          <div className="capability-card flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
+          <div className="capability-card flex items-start gap-4">
             <div className="capability-card-glow" style={{ background: "radial-gradient(circle at 20% 0%, var(--violet-glow), transparent 60%)" }} aria-hidden />
-            <div className="flex items-start gap-4 md:min-w-[280px]">
-              <div className="capability-card-icon shrink-0">
-                <Sparkles size={22} strokeWidth={1.6} />
-              </div>
-              <div>
-                <span className="capability-card-number" style={{ position: "static", display: "block", marginBottom: 4 }}>05</span>
-                <h3 className="capability-card-title">Experience</h3>
-                <p className="capability-card-desc">Delivering complete digital products that users enjoy, remember, and return to.</p>
-              </div>
+            <div className="capability-card-icon shrink-0">
+              <Sparkles size={22} strokeWidth={1.6} />
             </div>
-            <div className="flex flex-wrap gap-3 md:ml-auto">
-              {TECH.map((t) => (
-                <Chip key={t}>{t}</Chip>
-              ))}
+            <div>
+              <span className="capability-card-number" style={{ position: "static", display: "block", marginBottom: 4 }}>05</span>
+              <h3 className="capability-card-title">Experience</h3>
+              <p className="capability-card-desc">Delivering complete digital products that users enjoy, remember, and return to.</p>
             </div>
           </div>
         </div>

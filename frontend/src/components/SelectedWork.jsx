@@ -1,6 +1,5 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -9,8 +8,6 @@ import { webpSrcSet, COVER_WIDTHS } from "../lib/responsiveImage";
 import { Chip } from "./ui/Chip";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
-
-const ACCENTS = ["cyan", "violet", "gold", "cyan"];
 
 export const SelectedWork = () => {
   const sectionRef = useRef(null);
@@ -42,26 +39,16 @@ export const SelectedWork = () => {
       data-testid="work-section"
       className="max-w-[1640px] mx-auto px-6 md:px-10 xl:px-14 py-16 md:py-28"
     >
-      <div className="grid grid-cols-12 gap-6 md:gap-8 items-end mb-12 md:mb-20 reveal">
-        <div className="col-span-12 md:col-span-9">
-          <div className="section-mark mb-5">Work</div>
-          <h2 className="font-tight text-[36px] sm:text-[48px] lg:text-[60px] leading-[1.05] text-[var(--ink)] max-w-[20ch]">
-            Projects built{" "}
-            <em className="font-italic text-[var(--cyan)]">end to end</em>.
-          </h2>
-        </div>
-        <div className="col-span-12 md:col-span-3 md:text-right">
-          <p className="text-[14px] leading-relaxed text-[var(--ink-muted)] max-w-[32ch] md:ml-auto">
-            Design and development handled together, from first idea to launch.
-          </p>
-        </div>
+      <div className="mb-12 md:mb-20 reveal">
+        <div className="section-mark mb-5">Work</div>
+        <h2 className="font-tight text-[36px] sm:text-[48px] lg:text-[60px] leading-[1.05] text-[var(--ink)] max-w-[20ch]">
+          Projects built{" "}
+          <em className="font-italic text-[var(--cyan)]">end to end</em>.
+        </h2>
       </div>
 
       <ul className="space-y-px">
-        {projects.map((p, idx) => {
-          const accent = ACCENTS[idx % ACCENTS.length];
-          const accentVar = accent === "gold" ? "var(--gold)" : accent === "violet" ? "var(--violet)" : "var(--cyan)";
-          return (
+        {projects.map((p, idx) => (
           <li
             key={p.slug}
             className={`reveal border-t border-[var(--rule-strong)] ${
@@ -72,8 +59,8 @@ export const SelectedWork = () => {
             <div className="grid grid-cols-12 gap-6 md:gap-8 xl:gap-10 items-stretch py-8 md:py-14 group">
               {/* index number */}
               <div className="hidden md:flex col-span-1 flex-col items-center self-stretch pt-2">
-                <span className="font-mono text-[15px] tracking-[.05em]" style={{ color: accentVar }}>{p.number}</span>
-                <span className="mt-3 flex-1 w-px" style={{ background: `linear-gradient(${accentVar}, transparent)` }} />
+                <span className="font-mono text-[15px] tracking-[.05em] text-[var(--cyan)]">{p.number}</span>
+                <span className="mt-3 flex-1 w-px" style={{ background: "linear-gradient(var(--cyan), transparent)" }} />
               </div>
 
               {/* image — box sized to the image's own native aspect ratio
@@ -116,7 +103,10 @@ export const SelectedWork = () => {
                 </div>
               </Link>
 
-              {/* content */}
+              {/* content — kept intentionally short: kicker, title, one
+                  strong sentence, small metadata, then straight to the
+                  case study. Goal/outcome/role/stack detail lives there
+                  instead of repeating it here. */}
               <div className="col-span-12 md:col-span-7">
                 <div className="eyebrow mb-3 text-[var(--ink-muted)]">{p.kicker}</div>
                 <Link to={`/work/${p.slug}`} className="block">
@@ -124,23 +114,17 @@ export const SelectedWork = () => {
                     {p.title}
                   </h3>
                 </Link>
-                <p className="mt-4 md:mt-5 max-w-[56ch] text-[14.5px] md:text-[15px] leading-[1.8] text-[var(--ink-soft)]">
-                  {p.summary}
-                </p>
 
                 {p.pull && (
-                  <blockquote
-                    className="mt-5 pl-4 max-w-[52ch] text-[15px] md:text-[16.5px] italic leading-[1.6] text-[var(--ink)]"
-                    style={{ borderLeft: `2px solid ${accentVar}` }}
-                  >
-                    "{p.pull}"
-                  </blockquote>
+                  <p className="mt-4 md:mt-5 max-w-[52ch] text-[16px] md:text-[17px] leading-[1.6] text-[var(--ink-soft)]">
+                    {p.pull}
+                  </p>
                 )}
 
                 {p.highlights?.length > 0 && (
                   <div className="mt-5 flex flex-wrap gap-2.5">
                     {p.highlights.map((h) => (
-                      <Chip key={h.label} accent={accent}>
+                      <Chip key={h.label}>
                         <span className="text-[var(--ink-muted)]">{h.label}</span>{" "}
                         <span className="text-[var(--ink)]">{h.value}</span>
                       </Chip>
@@ -148,59 +132,22 @@ export const SelectedWork = () => {
                   </div>
                 )}
 
-                {/* case-study meta — a technical meta-list rather than another
-                    round of glass cards; CapabilityCard already owns that
-                    language up in The Craft, and repeating it 16x here (4
-                    projects × 4 fields) read as a re-skinned copy of that
-                    section instead of project-specific data. */}
-                <dl className="mt-7 md:mt-8 pt-6 border-t border-[var(--rule)] grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5">
-                  {[
-                    { label: "Goal", value: p.businessGoal, accent: "var(--cyan)" },
-                    { label: "Outcome", value: p.outcome, accent: "var(--gold)" },
-                    { label: "Role & Services", value: `${p.role}: ${p.services.join(", ")}`, accent: "var(--cyan)" },
-                    { label: "Stack", value: p.stack.join(" · "), accent: "var(--gold)" },
-                  ].map((item) => (
-                    <div key={item.label}>
-                      <dt
-                        className="font-mono text-[10.5px] tracking-[0.2em] uppercase mb-1.5"
-                        style={{ color: item.accent }}
-                      >
-                        <span className="sr-only">{p.title}: </span>
-                        {item.label}
-                      </dt>
-                      <dd className="text-[13.5px] leading-[1.65] text-[var(--ink-soft)]">{item.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-
-                {/* actions */}
-                <div className="mt-7 md:mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+                <div className="mt-7 md:mt-8">
                   <Link
                     to={`/work/${p.slug}`}
                     className="relative inline-flex items-center gap-3 text-[13.5px] font-display text-[var(--ink)] hover:gap-4 hover:text-[var(--cyan)] transition-all duration-400 after:content-[''] after:absolute after:inset-x-0 after:-top-3 after:-bottom-3"
                     data-testid={`project-view-${p.slug}`}
                   >
-                    <span className="link">View project</span>
+                    <span className="link">View case study</span>
                     <svg width="22" height="10" viewBox="0 0 22 10" fill="none" className="text-[var(--cyan)]">
                       <path d="M0 5h20m0 0L16 1m4 4l-4 4" stroke="currentColor" strokeLinecap="round" />
                     </svg>
                   </Link>
-                  {p.links?.live && (
-                    <a
-                      href={p.links.live}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-[13.5px] font-display text-[var(--ink-soft)] hover:text-[var(--cyan)] transition-colors"
-                    >
-                      Live website <ArrowUpRight size={13} strokeWidth={1.8} />
-                    </a>
-                  )}
                 </div>
               </div>
             </div>
           </li>
-          );
-        })}
+        ))}
       </ul>
     </section>
   );

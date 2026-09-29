@@ -85,24 +85,6 @@ export const About = () => {
                 it's done.
               </p>
             </div>
-
-            <div className="mt-8 md:mt-10 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[11px] md:text-[12px] tracking-[0.08em] uppercase text-[var(--ink-muted)]">
-              {["One person, start to finish", "Ahmedabad, India", "Real clients only"].map((fact, i) => (
-                <span key={fact} className="inline-flex items-center gap-3">
-                  <span className="inline-flex items-center gap-2">
-                    <span
-                      className="w-[5px] h-[5px] rounded-full"
-                      style={{
-                        background: i % 2 === 0 ? "var(--cyan)" : "var(--gold)",
-                        boxShadow: `0 0 6px ${i % 2 === 0 ? "var(--cyan-glow)" : "var(--gold)"}`,
-                      }}
-                    />
-                    {fact}
-                  </span>
-                  {i < 2 && <span className="w-6 h-px bg-[var(--rule-strong)]" />}
-                </span>
-              ))}
-            </div>
           </div>
         </div>
       </div>
