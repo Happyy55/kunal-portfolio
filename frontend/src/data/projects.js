@@ -1,29 +1,23 @@
-// Project content — written as real case studies, not portfolio filler.
-
 export const projects = [
   {
     slug: "smalblu",
     number: "01",
     title: "SmalBlu",
     kicker: "Cloud infrastructure product",
-    year: "2025",
     summary:
       "SmalBlu optimises cloud infrastructure automatically, but its website couldn't explain that to the people who mattered. I designed and built a site that speaks to engineers and decision-makers at the same time.",
     overview: "Marketing site for a cloud infrastructure product.",
-    businessGoal:
-      "Make a technical product legible, so engineers take it seriously and decision-makers understand the value without a demo.",
     role: "Design & development",
     services: ["Web design", "Front-end development", "Content structure"],
     stack: ["React", "Tailwind", "Node.js", "MongoDB"],
-    outcome:
-      "The site became the sales team's main reference. Demo requests now come in already understanding what the product does.",
     image: "/images/cover_smalblu.png",
     gallery: [
+      "/images/smalblu_landing.png",
       "/images/smalblu_features.png",
-      "/images/smalblu_integrations.png",
-      "/images/smalblu_hero.png",
+      "/images/smalblu_benefits.png",
+      "/images/smalblu_console.png",
     ],
-    imageLabels: ["Feature overview", "Integrations", "Landing section"],
+    imageLabels: ["Landing section", "Features", "Benefits", "Product console"],
     pull: "Cloud-agnostic by design. Built to explain everything underneath.",
     highlights: [
       { label: "Role", value: "Design & dev" },
@@ -48,17 +42,12 @@ export const projects = [
     number: "02",
     title: "Alpha Radar India",
     kicker: "Business analytics consultancy",
-    year: "2025",
     summary:
       "A consultancy that finds where businesses leak revenue, with a website that previously said none of that. I rebuilt it around one idea: a radar scanning for the next opportunity.",
     overview: "Website for a business analytics and growth consultancy.",
-    businessGoal:
-      "Position the consultancy as a serious, numbers-first partner and turn visitors into qualified strategy calls.",
     role: "Design & development",
     services: ["Web design", "Brand direction", "Front-end development"],
     stack: ["React", "Tailwind", "Framer Motion", "Node.js"],
-    outcome:
-      "Enquiries now arrive pre-qualified. Founders come to the first call already knowing what the engagement covers.",
     image: "/images/cover_alpharadar.png",
     gallery: [
       "/images/alpharadar_hero.png",
@@ -90,17 +79,12 @@ export const projects = [
     number: "03",
     title: "Ledger Book",
     kicker: "Mobile finance tool",
-    year: "2026",
     summary:
       "Shopkeepers track who owes what in paper notebooks because every app demands accounts, ads and subscriptions. I built the digital notebook they actually asked for.",
     overview: "A party-wise credit and debit tracker for small shopkeepers.",
-    businessGoal:
-      "Replace the paper ledger without adding a single thing the notebook didn't have: no signup, no cloud, no ads.",
     role: "Concept, design & development",
     services: ["Product design", "Mobile development"],
     stack: ["React Native", "Tailwind", "Local storage"],
-    outcome:
-      "Used daily by shopkeepers in Ahmedabad. The WhatsApp balance-share became the most-used feature within a week.",
     image: "/images/cover_ledger.png",
     gallery: [
       "/images/ledger_home.png",
@@ -132,18 +116,13 @@ export const projects = [
     number: "04",
     title: "Attendly (AttendPro)",
     kicker: "On-device face + location attendance",
-    year: "2026",
     summary:
       "An attendance app that verifies who clocked in and where, entirely on-device, with no photos ever leaving the phone. I took it from a prototype that recognised almost no one to a system that tells identical-looking siblings apart and enrols a bearded face in bad light.",
     overview:
       "Face-and-location attendance app, rebuilt around a face-recognition pipeline that actually works in real conditions.",
-    businessGoal:
-      "Attendance you can trust: proving identity and location at the moment someone clocks in, not by trusting a tapped button.",
     role: "Design & development",
     services: ["Mobile app development", "On-device AI", "Face-recognition pipeline", "Backend & data"],
     stack: ["React Native", "Expo", "TypeScript", "TensorFlow Lite", "Supabase"],
-    outcome:
-      "Enrollment that used to fail silently now saves reliably across beards, glasses and dim rooms. Check-in tells apart faces that fooled it before, including siblings.",
     image: "/images/cover_attendly.png",
     gallery: [
       "/images/attendly/attendly-signin.jpeg",

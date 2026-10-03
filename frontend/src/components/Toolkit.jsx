@@ -2,31 +2,11 @@ import { useRef, useEffect } from "react";
 import { Chip } from "./ui/Chip";
 
 const GROUPS = [
-  {
-    code: "01",
-    label: "Frontend",
-    items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Responsive Design"],
-  },
-  {
-    code: "02",
-    label: "Backend",
-    items: ["Node.js", "Express.js", "MongoDB", "REST APIs", "Authentication (JWT)", "SQL"],
-  },
-  {
-    code: "03",
-    label: "Design & Branding",
-    items: ["Brand Identity", "Logo Design", "UI/UX Design", "Graphic Design", "Adobe Photoshop", "Figma"],
-  },
-  {
-    code: "04",
-    label: "Tools & DevOps",
-    items: ["Git & GitHub", "VS Code", "Postman", "Docker", "Vercel", "Cloud Fundamentals (AWS)"],
-  },
-  {
-    code: "05",
-    label: "Motion & Creative",
-    items: ["Motion Design", "Three.js", "Video Post-Production", "Adobe After Effects", "DaVinci Resolve"],
-  },
+  { label: "Frontend", items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Responsive Design"] },
+  { label: "Backend", items: ["Node.js", "Express.js", "MongoDB", "REST APIs", "Authentication (JWT)", "SQL"] },
+  { label: "Design & Branding", items: ["Brand Identity", "Logo Design", "UI/UX Design", "Graphic Design", "Adobe Photoshop", "Figma"] },
+  { label: "Tools & DevOps", items: ["Git & GitHub", "VS Code", "Postman", "Docker", "Vercel", "Cloud Fundamentals (AWS)"] },
+  { label: "Motion & Creative", items: ["Motion Design", "Three.js", "Video Post-Production", "Adobe After Effects", "DaVinci Resolve"] },
 ];
 
 const ACCENT_VAR = {
@@ -36,7 +16,7 @@ const ACCENT_VAR = {
 };
 const ACCENT_CYCLE = ["cyan", "gold", "violet"];
 
-function HoloCard({ group, accent }) {
+function HoloCard({ group, accent, className }) {
   const ref = useRef(null);
   const a = ACCENT_VAR[accent];
 
@@ -64,10 +44,8 @@ function HoloCard({ group, accent }) {
   return (
     <article
       ref={ref}
-      className="holo-card p-6 md:p-7 lg:p-8 relative transition-transform"
+      className={`holo-card p-6 md:p-7 lg:p-8 ${className}`}
       style={{
-        minHeight: 210,
-        transformStyle: "preserve-3d",
         "--card-accent": a.color,
         "--card-accent-soft": a.soft,
         "--card-accent-glow": a.glow,
@@ -102,21 +80,28 @@ function HoloCard({ group, accent }) {
   );
 }
 
+// Five groups: three across, then two wider cards, so no row ends with a gap.
+const SPAN = ["lg:col-span-2", "lg:col-span-2", "lg:col-span-2", "lg:col-span-3", "lg:col-span-3"];
+
 export const Toolkit = () => {
   return (
     <section id="toolkit" data-testid="toolkit-section" className="relative">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 md:py-28">
-        <div className="mb-14 md:mb-20 reveal">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-32">
+        <div className="mb-12 md:mb-20 reveal">
           <div className="section-mark mb-6">Stack</div>
-          <h2 className="font-tight text-[34px] sm:text-[46px] lg:text-[56px] leading-[1.05] text-[var(--ink)] max-w-[20ch]">
-            What I{" "}
-            <em className="font-italic text-[var(--cyan)]">work with</em>.
+          <h2 className="font-tight text-[36px] sm:text-[48px] lg:text-[58px] leading-[1.04] text-[var(--ink)] max-w-[20ch]">
+            What I <span className="text-[var(--cyan)]">work with</span>.
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 md:gap-6">
           {GROUPS.map((g, i) => (
-            <HoloCard key={g.label} group={g} accent={ACCENT_CYCLE[i % ACCENT_CYCLE.length]} />
+            <HoloCard
+              key={g.label}
+              group={g}
+              accent={ACCENT_CYCLE[i % ACCENT_CYCLE.length]}
+              className={`${SPAN[i]} ${i === GROUPS.length - 1 ? "md:col-span-2" : ""}`}
+            />
           ))}
         </div>
       </div>

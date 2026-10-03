@@ -1,56 +1,26 @@
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import Nav from "../components/Nav";
 import Hero from "../components/Hero";
-import SelectedWork from "../components/SelectedWork";
-import About from "../components/About";
-import HowIWork from "../components/HowIWork";
-import Toolkit from "../components/Toolkit";
-import Contact from "../components/Contact";
 import Footer from "../components/Footer";
-import ScrollTrace from "../components/ScrollTrace";
-import SignatureSection from "../components/SignatureSection";
 import { useReveal } from "../hooks/useReveal";
+import { usePageMeta } from "../hooks/usePageMeta";
+
+const BelowFold = lazy(() => import("../components/BelowFold"));
 
 export default function Home() {
   const ref = useReveal();
 
-  useEffect(() => {
-    document.title =
-      "Kunal Jain, Creative Developer";
-  }, []);
+  usePageMeta({
+    title: "KJ Studio (KJ Creator) · Web design & development by Kunal Jain, Ahmedabad",
+    description:
+      "KJ Studio, also known as KJ Creator, is the creative development studio of Kunal Jain in Ahmedabad, India. Websites, brand identities and apps for founders and small teams.",
+    path: "/",
+  });
 
-  // Arriving here from another route (a case study's "Back to index", the
-  // nav/footer links, the business card) is a fresh mount, not an in-page
-  // click — so the usual el.scrollIntoView() from Nav/Footer never runs.
-  // Pick up the hash (or the lack of one) here instead: scroll to that
-  // section once the page has actually laid out, or reset to top for a
-  // plain "/" landing so a stale scroll position from the previous page
-  // isn't carried over.
+  // A plain "/" landing starts at the top; "/#section" is handled by
+  // BelowFold once those sections exist.
   useEffect(() => {
-    const hash = window.location.hash;
-    if (!hash) {
-      window.scrollTo({ top: 0, behavior: "instant" });
-      return;
-    }
-    const id = hash.slice(1);
-    let cancelled = false;
-    let attempts = 0;
-    let timer = null;
-    const tryScroll = () => {
-      if (cancelled) return;
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      } else if (attempts < 20) {
-        attempts += 1;
-        timer = setTimeout(tryScroll, 50);
-      }
-    };
-    timer = setTimeout(tryScroll, 50);
-    return () => {
-      cancelled = true;
-      clearTimeout(timer);
-    };
+    if (!window.location.hash) window.scrollTo({ top: 0, behavior: "instant" });
   }, []);
 
   return (
@@ -58,18 +28,9 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
-        <ScrollTrace />
-        <SignatureSection />
-        <ScrollTrace />
-        <SelectedWork />
-        <ScrollTrace />
-        <About />
-        <ScrollTrace />
-        <HowIWork />
-        <ScrollTrace />
-        <Toolkit />
-        <ScrollTrace />
-        <Contact />
+        <Suspense fallback={<div className="min-h-screen" aria-hidden />}>
+          <BelowFold />
+        </Suspense>
       </main>
       <Footer />
     </div>

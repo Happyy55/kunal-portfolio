@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
-import { ArrowLeft, ChevronLeft, ChevronRight, Users, Layers3, Code2 } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
-import CapabilityCard from "../components/CapabilityCard";
 import { Chip } from "../components/ui/Chip";
 import { getProject, projects } from "../data/projects";
 import { useReveal } from "../hooks/useReveal";
+import { usePageMeta } from "../hooks/usePageMeta";
 import { webpSrcSet, COVER_WIDTHS, WIDE_WIDTHS, PORTRAIT_WIDTHS } from "../lib/responsiveImage";
 
 export default function CaseStudy() {
@@ -14,12 +14,15 @@ export default function CaseStudy() {
   const project = getProject(slug);
   const ref = useReveal();
 
+  usePageMeta({
+    title: project ? `${project.title} case study · KJ Studio` : "KJ Studio",
+    description: project ? project.summary : "",
+    path: `/work/${slug}`,
+  });
+
   useEffect(() => {
-    if (project) {
-      document.title = `${project.title} · Case study · Kunal Jain`;
-      window.scrollTo({ top: 0, behavior: "instant" });
-    }
-  }, [project]);
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [slug]);
 
   useEffect(() => {
     const bar = document.querySelector(".scroll-progress");
@@ -107,11 +110,18 @@ const CaseHeader = ({ project }) => (
         <p className="mt-7 md:mt-10 max-w-[62ch] text-[15px] md:text-[17px] leading-[1.8] md:leading-[1.85] text-[var(--ink-soft)]">
           {project.summary}
         </p>
-        <div className="mt-9 md:mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-[900px]">
-          <CapabilityCard icon={Users} number="" title="Role" description={project.role} accent="cyan" className="!p-5" />
-          <CapabilityCard icon={Layers3} number="" title="Services" description={project.services.join(", ")} accent="gold" className="!p-5" />
-          <CapabilityCard icon={Code2} number="" title="Stack" description={project.stack.join(" · ")} accent="cyan" className="!p-5" />
-        </div>
+        <dl className="mt-10 md:mt-12 pt-8 border-t border-[var(--rule-strong)] grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-10 max-w-[980px]">
+          {[
+            ["Role", project.role],
+            ["Services", project.services.join(", ")],
+            ["Stack", project.stack.join(" · ")],
+          ].map(([term, value]) => (
+            <div key={term}>
+              <dt className="eyebrow">{term}</dt>
+              <dd className="mt-2 text-[15px] leading-[1.6] text-[var(--ink)]">{value}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </div>
   </header>
@@ -172,17 +182,14 @@ const CaseHeroPlate = ({ project }) => {
               />
               <img
                 src={project.image}
-                alt={`${project.title}: primary plate`}
+                alt={`${project.title}: ${project.overview}`}
+                fetchPriority="high"
                 className="w-full h-full object-cover"
                 data-testid="case-hero-image"
               />
             </picture>
             <div className="grain" />
           </div>
-          <figcaption className="mt-3 eyebrow flex items-center justify-between">
-            <span>{project.kicker}</span>
-            <span className="text-[var(--ink-muted)]">Mockup · 16:9</span>
-          </figcaption>
         </figure>
       </div>
     </section>
@@ -220,9 +227,9 @@ const ArticleSection = ({ code, eyebrow, body }) => (
 const PullQuote = ({ text }) => (
   <section className="border-t border-[var(--rule)] relative z-10">
     <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-14 md:py-24 text-center reveal">
-      <div className="font-italic text-[var(--cyan)] text-[26px] sm:text-[38px] md:text-[46px] leading-[1.3] tracking-[-0.01em] mx-auto max-w-[28ch]">
-          “{text}”
-      </div>
+      <blockquote className="font-tight text-[var(--cyan)] text-[26px] sm:text-[38px] md:text-[46px] leading-[1.25] mx-auto max-w-[28ch]">
+        “{text}”
+      </blockquote>
     </div>
   </section>
 );
@@ -261,22 +268,11 @@ const GallerySection = ({ project }) => {
       className="border-t border-[var(--rule)] relative z-10"
     >
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 md:py-32">
-        <div className="flex items-end justify-between mb-12 reveal">
-          <div>
-            <div className="section-mark mb-4">Gallery</div>
-            <h3 className="font-tight text-[26px] sm:text-[36px] leading-[1.05] text-[var(--ink)] max-w-[22ch]">
-              From the project.
-            </h3>
-            {project.imageLabels?.[i] && (
-              <div className="flex items-center gap-2 mt-3">
-                <span style={{ display:"inline-block", width:"3px", height:"12px", borderRadius:"99px", background:"var(--cyan)", flexShrink:0 }} />
-                <span className="eyebrow" style={{ color:"var(--cyan)", letterSpacing:"0.12em" }}>
-                  {project.imageLabels[i]}
-                </span>
-              </div>
-            )}
-          </div>
-          <div />
+        <div className="mb-12 reveal">
+          <div className="section-mark mb-4">Gallery</div>
+          <h2 className="font-tight text-[26px] sm:text-[36px] leading-[1.05] text-[var(--ink)]">
+            From the project.
+          </h2>
         </div>
 
         <div className="reveal relative" data-testid="case-gallery-slideshow" ref={stageRef}>
@@ -344,9 +340,8 @@ const GallerySection = ({ project }) => {
             )}
           </div>
 
-          {/* dots */}
           {total > 1 && (
-            <div className="mt-6 flex items-center justify-center gap-2.5">
+            <div className="mt-4 flex items-center justify-center">
               {gallery.map((_, idx) => (
                 <button
                   key={idx}
@@ -354,16 +349,22 @@ const GallerySection = ({ project }) => {
                   onClick={() => setI(idx)}
                   data-testid={`case-gallery-dot-${idx}`}
                   aria-label={`Go to frame ${idx + 1}`}
-                  className={`h-1.5 rounded-full transition-all duration-500 ${idx === i ? "w-8 bg-[var(--cyan)]" : "w-1.5 bg-[var(--rule-strong)] hover:bg-[var(--ink-muted)]"}`}
-                  style={idx === i ? { boxShadow: "0 0 12px var(--cyan-glow)" } : undefined}
-                />
+                  aria-current={idx === i ? "true" : undefined}
+                  className="px-1.5 py-4"
+                >
+                  <span
+                    className={`block h-1.5 rounded-full transition-all duration-500 ${
+                      idx === i ? "w-8 bg-[var(--cyan)]" : "w-1.5 bg-[var(--rule-strong)]"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
           )}
 
           <div className="mt-5 eyebrow flex items-center justify-between">
             <span>{project.imageLabels?.[i] ?? project.title}</span>
-            <span className="text-[var(--ink-muted)]">Use ← → keys</span>
+            <span className="hidden md:inline">Use ← → keys</span>
           </div>
         </div>
       </div>
@@ -409,7 +410,7 @@ const BuildSection = ({ code, eyebrow, body, stack }) => {
                     <span className="w-3 h-3 rounded-full bg-[var(--cyan)]" />
                   </span>
                   <div>
-                    <div className="font-mono text-[10px] tracking-[0.24em] text-[var(--cyan)] uppercase">
+                    <div className="font-mono text-[11px] tracking-[0.2em] text-[var(--cyan)] uppercase">
                       Phase 0{i + 1}
                     </div>
                     <div className="font-display text-[var(--ink)] mt-1 text-[15px]">{p.label}</div>
@@ -448,9 +449,9 @@ const OutcomeSection = ({ project }) => (
     <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 md:py-28 relative">
       <div className="reveal">
         <div className="eyebrow text-[var(--ink-muted)] mb-5">05 · Final outcome</div>
-        <h3 className="font-tight text-[30px] sm:text-[44px] lg:text-[54px] leading-[1.15] text-[var(--ink)] max-w-[22ch]">
+        <h2 className="font-tight text-[30px] sm:text-[44px] lg:text-[54px] leading-[1.15] text-[var(--ink)] max-w-[22ch]">
           {firstSentence(project.caseStudy.outcome)}
-        </h3>
+        </h2>
         <p className="mt-6 md:mt-8 max-w-[62ch] text-[15px] md:text-[16px] leading-[1.85] text-[var(--ink-soft)]">
           {restOfBody(project.caseStudy.outcome)}
         </p>

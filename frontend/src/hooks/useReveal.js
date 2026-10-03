@@ -8,11 +8,9 @@ export function useReveal(rootMargin = "0px 0px -8% 0px") {
   useEffect(() => {
     const root = ref.current;
     if (!root) return;
-    const targets = root.querySelectorAll(".reveal");
-    if (!targets.length) return;
 
     if (typeof IntersectionObserver === "undefined") {
-      targets.forEach((t) => t.classList.add("is-visible"));
+      root.querySelectorAll(".reveal").forEach((t) => t.classList.add("is-visible"));
       return;
     }
 
@@ -28,8 +26,26 @@ export function useReveal(rootMargin = "0px 0px -8% 0px") {
       { rootMargin, threshold: 0.05 }
     );
 
-    targets.forEach((t) => io.observe(t));
-    return () => io.disconnect();
+    const seen = new WeakSet();
+    const observeAll = () => {
+      root.querySelectorAll(".reveal:not(.is-visible)").forEach((t) => {
+        if (!seen.has(t)) {
+          seen.add(t);
+          io.observe(t);
+        }
+      });
+    };
+    observeAll();
+
+    // Sections below the hero load as a separate chunk after first paint, so
+    // new .reveal nodes appear after mount and need to be picked up too.
+    const mo = new MutationObserver(observeAll);
+    mo.observe(root, { childList: true, subtree: true });
+
+    return () => {
+      io.disconnect();
+      mo.disconnect();
+    };
   }, [rootMargin]);
 
   return ref;

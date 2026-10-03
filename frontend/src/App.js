@@ -1,28 +1,23 @@
-import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Particles from "./components/Particles";
-import PageTransition from "./components/PageTransition";
 import Home from "./pages/Home";
-import CaseStudy from "./pages/CaseStudy";
 
-function AnimatedRoutes() {
-  return (
-    <Routes>
-      <Route path="/" element={<PageTransition><Home /></PageTransition>} />
-      <Route path="/work/:slug" element={<PageTransition><CaseStudy /></PageTransition>} />
-    </Routes>
-  );
-}
+const CaseStudy = lazy(() => import("./pages/CaseStudy"));
 
-function App() {
+export default function App() {
   return (
     <div className="App">
-      <Particles count={30} starCount={26} className="!fixed inset-0 z-[0] pointer-events-none" />
+      <Particles count={30} starCount={26} />
       <BrowserRouter>
-        <AnimatedRoutes />
+        <Suspense fallback={null}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/work/:slug" element={<CaseStudy />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </div>
   );
 }
-
-export default App;
